@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BFA 1 — Formation Commerce International</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1B3A;
+      --gold:   #C89B3C;
+      --gold2:  #E5BE6D;
+      --white:  #F5F7FA;
+      --mid:    #8A99B3;
+      --card:   #132043;
+      --green:  #2ECC71;
+      --red:    #E74C3C;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ── ÉCRAN 1 : Accueil ── */
+    #screen-home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn .6s ease;
+    }
+
+    .logo-badge {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--navy);
+      box-shadow: 0 0 0 8px rgba(200,155,60,.15);
+    }
+
+    .home-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    h1 span { color: var(--gold2); }
+
+    .home-sub {
+      font-size: 15px; color: var(--mid); line-height: 1.6;
+    }
+
+    .divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 2px;
+    }
+
+    .info-box {
+      background: var(--card);
+      border: 1px solid rgba(200,155,60,.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 12px;
+      text-align: left; width: 100%;
+    }
+    .info-box .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .info-box p { font-size: 13px; color: var(--mid); line-height: 1.55; }
+    .info-box p strong { color: var(--white); }
+
+    .btn-enter {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border: none; border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      letter-spacing: .5px;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(200,155,60,.35);
+    }
+    .btn-enter:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,155,60,.5); }
+    .btn-enter:active { transform: translateY(0); }
+
+    /* ── ÉCRAN 2 : Chargement ── */
+    #screen-loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 56px; height: 56px;
+      border: 3px solid rgba(200,155,60,.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text { font-size: 15px; color: var(--mid); }
+    .loading-step {
+      font-size: 13px; color: var(--gold);
+      min-height: 20px;
+      transition: opacity .3s;
+    }
+
+    /* ── ÉCRAN 3 : Bienvenue ── */
+    #screen-welcome {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn .5s ease;
+    }
+
+    .success-ring {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: rgba(46,204,113,.12);
+      border: 2px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      animation: pop .4s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .welcome-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 700;
+    }
+    .welcome-title span { color: var(--gold2); }
+
+    .welcome-sub {
+      font-size: 14px; color: var(--mid); line-height: 1.6;
+    }
+
+    /* Carte coordonnées */
+    .coord-card {
+      background: var(--card);
+      border: 1px solid rgba(200,155,60,.25);
+      border-radius: 14px;
+      padding: 20px 24px;
+      width: 100%;
+    }
+    .coord-card-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .coord-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .coord-row:last-child { border-bottom: none; }
+    .coord-label { font-size: 12px; color: var(--mid); }
+    .coord-value { font-size: 13px; font-weight: 600; font-family: monospace; color: var(--white); }
+
+    /* Mail section */
+    .mail-section {
+      background: var(--card);
+      border: 1px solid rgba(200,155,60,.25);
+      border-radius: 14px;
+      padding: 20px 24px;
+      width: 100%;
+      text-align: left;
+    }
+    .mail-section h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px; font-weight: 600; margin-bottom: 6px;
+    }
+    .mail-section p { font-size: 13px; color: var(--mid); line-height: 1.55; margin-bottom: 16px; }
+
+    .input-row { display: flex; gap: 10px; }
+    .input-matricule {
+      flex: 1;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(200,155,60,.25);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .input-matricule::placeholder { color: var(--mid); }
+    .input-matricule:focus { border-color: var(--gold); }
+
+    .btn-mail {
+      padding: 12px 18px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border: none; border-radius: 10px;
+      font-weight: 700; font-size: 13px;
+      color: var(--navy); cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .2s;
+    }
+    .btn-mail:hover { opacity: .85; }
+
+    .mail-status {
+      font-size: 12px; margin-top: 10px; min-height: 18px;
+      transition: opacity .3s;
+    }
+    .mail-status.ok { color: var(--green); }
+    .mail-status.err { color: var(--red); }
+
+    /* ── ÉCRAN 4 : Erreur ── */
+    #screen-error {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 400px;
+      text-align: center;
+    }
+    .error-icon { font-size: 48px; }
+    .error-title { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--red); }
+    .error-msg { font-size: 14px; color: var(--mid); line-height: 1.6; }
+    .btn-retry {
+      padding: 12px 28px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      color: var(--gold); font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-retry:hover { background: rgba(200,155,60,.1); }
+
+    /* ── Saved list ── */
+    .saved-section {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 20px 24px;
+      width: 100%;
+      text-align: left;
+    }
+    .saved-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px;
+    }
+    .saved-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; }
+    .saved-count {
+      background: rgba(200,155,60,.15);
+      color: var(--gold);
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .saved-list { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
+    .saved-item {
+      background: rgba(255,255,255,.04);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 12px; color: var(--mid);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+    .saved-item .mat { color: var(--white); font-weight: 600; grid-column: 1/-1; margin-bottom: 2px; }
+    .saved-empty { font-size: 13px; color: var(--mid); text-align: center; padding: 12px 0; }
+
+    /* ── Animations ── */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pop {
+      0%   { transform: scale(.5); opacity: 0; }
+      100% { transform: scale(1);  opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ÉCRAN 1 : HOME -->
+  <div id="screen-home">
+    <div class="logo-badge">BFA</div>
+    <div>
+      <p class="home-tag">Formation Commerce International</p>
+    </div>
+    <h1>Bienvenue en<br/><span>BFA 1</span></h1>
+    <div class="divider"></div>
+    <p class="home-sub">
+      En cliquant sur le bouton ci-dessous, vous autorisez ce site à enregistrer votre <strong>position géographique</strong> pour valider votre présence.
+    </p>
+    <div class="info-box">
+      <span class="icon">📍</span>
+      <p>
+        <strong>Comment ça fonctionne ?</strong><br/>
+        Votre navigateur vous demandera la permission d'accéder à votre localisation. Une fois acceptée, vos coordonnées GPS sont enregistrées automatiquement.
+      </p>
+    </div>
+    <button class="btn-enter" onclick="requestLocation()">
+      📡 Entrer & partager ma position
+    </button>
+  </div>
+
+  <!-- ÉCRAN 2 : CHARGEMENT -->
+  <div id="screen-loading">
+    <div class="spinner"></div>
+    <p class="loading-text">Récupération de votre position…</p>
+    <p class="loading-step" id="loading-step">En attente de votre autorisation</p>
+  </div>
+
+  <!-- ÉCRAN 3 : BIENVENUE + DONNÉES -->
+  <div id="screen-welcome">
+    <div class="success-ring">✓</div>
+    <div>
+      <p class="home-tag">Formation Commerce International</p>
+    </div>
+    <h1 class="welcome-title">Bienvenue en <span>BFA 1</span> !</h1>
+    <p class="welcome-sub">Votre position a été enregistrée avec succès.<br/>Veuillez maintenant soumettre votre matricule par mail.</p>
+
+    <!-- Coordonnées -->
+    <div class="coord-card">
+      <p class="coord-card-title">📍 Coordonnées enregistrées</p>
+      <div class="coord-row">
+        <span class="coord-label">Latitude</span>
+        <span class="coord-value" id="val-lat">—</span>
+      </div>
+      <div class="coord-row">
+        <span class="coord-label">Longitude</span>
+        <span class="coord-value" id="val-lng">—</span>
+      </div>
+      <div class="coord-row">
+        <span class="coord-label">Précision</span>
+        <span class="coord-value" id="val-acc">—</span>
+      </div>
+      <div class="coord-row">
+        <span class="coord-label">Horodatage</span>
+        <span class="coord-value" id="val-time">—</span>
+      </div>
+      <div class="coord-row">
+        <span class="coord-label">Statut</span>
+        <span class="coord-value" style="color: var(--green)">✓ Enregistré</span>
+      </div>
+    </div>
+
+    <!-- Envoi matricule -->
+    <div class="mail-section">
+      <h3>📧 Envoyer votre matricule</h3>
+      <p>Entrez votre matricule ci-dessous. Il sera envoyé par mail accompagné de votre localisation.</p>
+      <div class="input-row">
+        <input type="text" class="input-matricule" id="input-mat" placeholder="Ex : BFA1-2024-042" maxlength="30"/>
+        <button class="btn-mail" onclick="sendMail()">Envoyer</button>
+      </div>
+      <p class="mail-status" id="mail-status"></p>
+    </div>
+
+    <!-- Historique local -->
+    <div class="saved-section">
+      <div class="saved-header">
+        <h3>Historique des présences</h3>
+        <span class="saved-count" id="saved-count">0</span>
+      </div>
+      <div class="saved-list" id="saved-list">
+        <p class="saved-empty">Aucune entrée pour le moment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN 4 : ERREUR -->
+  <div id="screen-error">
+    <div class="error-icon">🚫</div>
+    <p class="error-title">Accès refusé</p>
+    <p class="error-msg" id="error-msg">Vous avez refusé l'accès à votre localisation. L'accès à votre position est requis pour entrer sur la plateforme BFA 1.</p>
+    <button class="btn-retry" onclick="retry()">↩ Réessayer</button>
+  </div>
+
+<script>
+  const STORAGE_KEY = 'bfa1_presences';
+
+  function show(id) {
+    ['screen-home','screen-loading','screen-welcome','screen-error'].forEach(s => {
+      document.getElementById(s).style.display = 'none';
+    });
+    document.getElementById(id).style.display = 'flex';
+  }
+
+  function requestLocation() {
+    if (!navigator.geolocation) {
+      showError("Votre navigateur ne supporte pas la géolocalisation.");
+      return;
+    }
+    show('screen-loading');
+    setStep("En attente de votre autorisation…");
+
+    navigator.geolocation.getCurrentPosition(
+      onSuccess,
+      onError,
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  }
+
+  function setStep(msg) {
+    document.getElementById('loading-step').textContent = msg;
+  }
+
+  function onSuccess(pos) {
+    setStep("Position obtenue ! Enregistrement en cours…");
+
+    const { latitude, longitude, accuracy } = pos.coords;
+    const timestamp = new Date().toLocaleString('fr-FR');
+
+    const entry = { latitude, longitude, accuracy, timestamp, matricule: null };
+
+    // Enregistrement localStorage
+    const all = getAll();
+    all.push(entry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
+    // Affichage
+    document.getElementById('val-lat').textContent  = latitude.toFixed(6) + '°';
+    document.getElementById('val-lng').textContent  = longitude.toFixed(6) + '°';
+    document.getElementById('val-acc').textContent  = '± ' + Math.round(accuracy) + ' m';
+    document.getElementById('val-time').textContent = timestamp;
+
+    refreshList();
+
+    setTimeout(() => show('screen-welcome'), 600);
+  }
+
+  function onError(err) {
+    let msg = "Une erreur inconnue s'est produite.";
+    if (err.code === 1) msg = "Vous avez refusé l'accès à votre localisation. L'accès est requis pour accéder à la plateforme BFA 1.";
+    if (err.code === 2) msg = "Position indisponible. Vérifiez que le GPS de votre appareil est activé.";
+    if (err.code === 3) msg = "La demande de localisation a expiré. Réessayez dans un endroit avec un meilleur signal.";
+    showError(msg);
+  }
+
+  function showError(msg) {
+    document.getElementById('error-msg').textContent = msg;
+    show('screen-error');
+  }
+
+  function retry() { show('screen-home'); }
+
+  function getAll() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function refreshList() {
+    const all = getAll();
+    const list = document.getElementById('saved-list');
+    const count = document.getElementById('saved-count');
+    count.textContent = all.length;
+
+    if (all.length === 0) {
+      list.innerHTML = '<p class="saved-empty">Aucune entrée pour le moment.</p>';
+      return;
+    }
+
+    list.innerHTML = all.slice().reverse().map(e => `
+      <div class="saved-item">
+        <span class="mat">${e.matricule ? '🎓 ' + e.matricule : '⏳ Matricule non renseigné'}</span>
+        <span>📍 ${e.latitude.toFixed(5)}°</span>
+        <span>${e.longitude.toFixed(5)}°</span>
+        <span>🕐 ${e.timestamp}</span>
+        <span>± ${Math.round(e.accuracy)} m</span>
+      </div>
+    `).join('');
+  }
+
+  function sendMail() {
+    const mat = document.getElementById('input-mat').value.trim();
+    const status = document.getElementById('mail-status');
+
+    if (!mat) {
+      status.className = 'mail-status err';
+      status.textContent = '⚠ Veuillez entrer votre matricule avant d\'envoyer.';
+      return;
+    }
+
+    const all = getAll();
+    if (all.length === 0) {
+      status.className = 'mail-status err';
+      status.textContent = '⚠ Aucune position enregistrée.';
+      return;
+    }
+
+    // Récupérer la dernière entrée
+    const last = all[all.length - 1];
+    last.matricule = mat;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+
+    // Construire le lien mailto
+    const subject = encodeURIComponent(`[BFA 1] Matricule : ${mat}`);
+    const body = encodeURIComponent(
+`Formation Commerce International — BFA 1
+────────────────────────────────
+Matricule  : ${mat}
+Latitude   : ${last.latitude.toFixed(6)}°
+Longitude  : ${last.longitude.toFixed(6)}°
+Précision  : ± ${Math.round(last.accuracy)} m
+Horodatage : ${last.timestamp}
+────────────────────────────────
+Lien carte : https://maps.google.com/?q=${last.latitude},${last.longitude}
+`);
+
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+
+    status.className = 'mail-status ok';
+    status.textContent = '✓ Client mail ouvert — envoyez le message pour valider votre présence.';
+
+    refreshList();
+  }
+
+  // Init
+  refreshList();
+</script>
+</body>
+</html>
