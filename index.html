@@ -1,538 +1,265 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BFA 1 — Formation Commerce International</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syndicat de la Fraternité des Célibataires Heureux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F1E4;
+    --cream-dark:#EFE6D0;
+    --navy:#142048;
+    --navy-light:#22306b;
+    --gold:#B68D40;
+    --gold-light:#D9B873;
+    --ink:#23284a;
+    --white:#ffffff;
+    --green:#3f7a4d;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Poppins',sans-serif;}
+  h1,h2,h3{font-family:'Playfair Display',serif;margin:0;}
+  .hidden{display:none !important;}
 
-    :root {
-      --navy:   #0B1B3A;
-      --gold:   #C89B3C;
-      --gold2:  #E5BE6D;
-      --white:  #F5F7FA;
-      --mid:    #8A99B3;
-      --card:   #132043;
-      --green:  #2ECC71;
-      --red:    #E74C3C;
-    }
+  .hero{max-width:760px;margin:0 auto;padding:40px 20px 8px;text-align:center;}
+  .logo-emblem{width:96px;height:96px;margin:0 auto 14px;}
+  .hero h1{font-size:30px;color:var(--navy);font-weight:800;line-height:1.15;}
+  .hero .sub1{font-size:13px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-top:6px;text-transform:uppercase;}
+  .hero .sub2{font-size:22px;color:var(--navy);font-weight:800;margin-top:2px;}
+  .hero .tagline{font-family:'Dancing Script',cursive;font-size:22px;color:var(--gold);margin-top:10px;}
+  .hero .divider{width:90px;height:2px;background:var(--gold);margin:14px auto;position:relative;}
+  .hero .divider::before{content:'♥';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--cream);color:var(--navy);font-size:14px;padding:0 8px;}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+  .info-note{
+    max-width:680px;margin:0 auto 10px;padding:12px 18px;background:#fffdf6;
+    border:1px solid #e6dfc9;border-left:4px solid var(--gold);border-radius:10px;
+    font-size:12.5px;color:#555;text-align:center;
+  }
 
-    /* ── ÉCRAN 1 : Accueil ── */
-    #screen-home {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 32px;
-      max-width: 480px;
-      width: 100%;
-      text-align: center;
-      animation: fadeIn .6s ease;
-    }
+  .wrap{max-width:760px;margin:0 auto;padding:10px 16px 60px;}
+  .card{background:var(--white);border-radius:var(--radius);border:1px solid #e6dfc9;margin-bottom:22px;overflow:hidden;box-shadow:0 4px 18px rgba(20,32,72,.05);}
+  .card-head{background:var(--navy);color:#fff;padding:12px 18px;font-weight:700;font-size:14px;letter-spacing:.4px;display:flex;align-items:center;gap:8px;}
+  .card-head .num{background:var(--gold);color:var(--navy);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none;}
+  .card-body{padding:20px 18px 22px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+  .field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=date],.field textarea{
+    width:100%;padding:11px 12px;border:1.5px solid #ddd4b8;border-radius:10px;
+    font-family:'Poppins',sans-serif;font-size:14px;background:#fffdf8;color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:80px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:560px){.row2{grid-template-columns:1fr;}}
+  .choice-group{display:flex;flex-wrap:wrap;gap:10px;}
+  .choice-pill{border:1.5px solid #ddd4b8;border-radius:999px;padding:9px 16px;font-size:13px;cursor:pointer;background:#fffdf8;font-weight:500;transition:.15s;user-select:none;}
+  .choice-pill.selected{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .engagement-text{font-size:13.5px;line-height:1.7;color:#444;background:var(--cream-dark);padding:14px 16px;border-radius:12px;border-left:4px solid var(--gold);}
+  .check-row{display:flex;align-items:flex-start;gap:10px;margin-top:14px;font-size:13px;color:var(--ink);}
+  .check-row input{margin-top:3px;}
+  .submit-btn{width:100%;padding:15px;border:none;border-radius:12px;background:var(--navy);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Poppins',sans-serif;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .submit-btn:hover{background:var(--navy-light);}
+  .submit-note{text-align:center;font-size:11.5px;color:#888;margin-top:10px;}
 
-    .logo-badge {
-      width: 96px; height: 96px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px; font-weight: 700;
-      color: var(--navy);
-      box-shadow: 0 0 0 8px rgba(200,155,60,.15);
-    }
+  .footer-strip{background:var(--navy);color:#fff;text-align:center;padding:22px 16px;font-size:11.5px;}
+  .footer-strip .tagline{font-family:'Dancing Script',cursive;font-size:19px;color:var(--gold-light);margin-top:6px;}
 
-    .home-tag {
-      font-size: 11px; font-weight: 600; letter-spacing: 3px;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 700;
-      line-height: 1.15;
-    }
-    h1 span { color: var(--gold2); }
-
-    .home-sub {
-      font-size: 15px; color: var(--mid); line-height: 1.6;
-    }
-
-    .divider {
-      width: 48px; height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      border-radius: 2px;
-    }
-
-    .info-box {
-      background: var(--card);
-      border: 1px solid rgba(200,155,60,.2);
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex; align-items: flex-start; gap: 12px;
-      text-align: left; width: 100%;
-    }
-    .info-box .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-    .info-box p { font-size: 13px; color: var(--mid); line-height: 1.55; }
-    .info-box p strong { color: var(--white); }
-
-    .btn-enter {
-      width: 100%;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      border: none; border-radius: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px; font-weight: 700;
-      color: var(--navy);
-      cursor: pointer;
-      letter-spacing: .5px;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 20px rgba(200,155,60,.35);
-    }
-    .btn-enter:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(200,155,60,.5); }
-    .btn-enter:active { transform: translateY(0); }
-
-    /* ── ÉCRAN 2 : Chargement ── */
-    #screen-loading {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      text-align: center;
-    }
-
-    .spinner {
-      width: 56px; height: 56px;
-      border: 3px solid rgba(200,155,60,.2);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    .loading-text { font-size: 15px; color: var(--mid); }
-    .loading-step {
-      font-size: 13px; color: var(--gold);
-      min-height: 20px;
-      transition: opacity .3s;
-    }
-
-    /* ── ÉCRAN 3 : Bienvenue ── */
-    #screen-welcome {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-      animation: fadeIn .5s ease;
-    }
-
-    .success-ring {
-      width: 88px; height: 88px;
-      border-radius: 50%;
-      background: rgba(46,204,113,.12);
-      border: 2px solid var(--green);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
-      animation: pop .4s cubic-bezier(.34,1.56,.64,1);
-    }
-
-    .welcome-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(22px, 5vw, 34px);
-      font-weight: 700;
-    }
-    .welcome-title span { color: var(--gold2); }
-
-    .welcome-sub {
-      font-size: 14px; color: var(--mid); line-height: 1.6;
-    }
-
-    /* Carte coordonnées */
-    .coord-card {
-      background: var(--card);
-      border: 1px solid rgba(200,155,60,.25);
-      border-radius: 14px;
-      padding: 20px 24px;
-      width: 100%;
-    }
-    .coord-card-title {
-      font-size: 11px; font-weight: 600; letter-spacing: 2px;
-      color: var(--gold); text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .coord-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .coord-row:last-child { border-bottom: none; }
-    .coord-label { font-size: 12px; color: var(--mid); }
-    .coord-value { font-size: 13px; font-weight: 600; font-family: monospace; color: var(--white); }
-
-    /* Mail section */
-    .mail-section {
-      background: var(--card);
-      border: 1px solid rgba(200,155,60,.25);
-      border-radius: 14px;
-      padding: 20px 24px;
-      width: 100%;
-      text-align: left;
-    }
-    .mail-section h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px; font-weight: 600; margin-bottom: 6px;
-    }
-    .mail-section p { font-size: 13px; color: var(--mid); line-height: 1.55; margin-bottom: 16px; }
-
-    .input-row { display: flex; gap: 10px; }
-    .input-matricule {
-      flex: 1;
-      padding: 12px 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(200,155,60,.25);
-      border-radius: 10px;
-      color: var(--white);
-      font-size: 14px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .input-matricule::placeholder { color: var(--mid); }
-    .input-matricule:focus { border-color: var(--gold); }
-
-    .btn-mail {
-      padding: 12px 18px;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      border: none; border-radius: 10px;
-      font-weight: 700; font-size: 13px;
-      color: var(--navy); cursor: pointer;
-      white-space: nowrap;
-      transition: opacity .2s;
-    }
-    .btn-mail:hover { opacity: .85; }
-
-    .mail-status {
-      font-size: 12px; margin-top: 10px; min-height: 18px;
-      transition: opacity .3s;
-    }
-    .mail-status.ok { color: var(--green); }
-    .mail-status.err { color: var(--red); }
-
-    /* ── ÉCRAN 4 : Erreur ── */
-    #screen-error {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      max-width: 400px;
-      text-align: center;
-    }
-    .error-icon { font-size: 48px; }
-    .error-title { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--red); }
-    .error-msg { font-size: 14px; color: var(--mid); line-height: 1.6; }
-    .btn-retry {
-      padding: 12px 28px;
-      background: transparent;
-      border: 1.5px solid var(--gold);
-      border-radius: 10px;
-      color: var(--gold); font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: background .2s;
-    }
-    .btn-retry:hover { background: rgba(200,155,60,.1); }
-
-    /* ── Saved list ── */
-    .saved-section {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      padding: 20px 24px;
-      width: 100%;
-      text-align: left;
-    }
-    .saved-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 14px;
-    }
-    .saved-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; }
-    .saved-count {
-      background: rgba(200,155,60,.15);
-      color: var(--gold);
-      font-size: 11px; font-weight: 700;
-      padding: 3px 10px; border-radius: 20px;
-    }
-    .saved-list { display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; }
-    .saved-item {
-      background: rgba(255,255,255,.04);
-      border-radius: 8px; padding: 10px 12px;
-      font-size: 12px; color: var(--mid);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4px;
-    }
-    .saved-item .mat { color: var(--white); font-weight: 600; grid-column: 1/-1; margin-bottom: 2px; }
-    .saved-empty { font-size: 13px; color: var(--mid); text-align: center; padding: 12px 0; }
-
-    /* ── Animations ── */
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes pop {
-      0%   { transform: scale(.5); opacity: 0; }
-      100% { transform: scale(1);  opacity: 1; }
-    }
-  </style>
+  .success-box{text-align:center;padding:50px 20px;}
+  .success-box .check{font-size:50px;color:var(--green);}
+  .success-box h2{color:var(--navy);margin:14px 0 6px;}
+  .success-box p{color:#666;font-size:14px;max-width:420px;margin:0 auto;line-height:1.6;}
+  .success-box button{margin-top:20px;background:none;border:1.5px solid var(--navy);color:var(--navy);padding:9px 18px;border-radius:999px;font-weight:600;cursor:pointer;font-size:13px;}
+</style>
 </head>
 <body>
 
-  <!-- ÉCRAN 1 : HOME -->
-  <div id="screen-home">
-    <div class="logo-badge">BFA</div>
-    <div>
-      <p class="home-tag">Formation Commerce International</p>
-    </div>
-    <h1>Bienvenue en<br/><span>BFA 1</span></h1>
+  <div class="hero">
+    <svg class="logo-emblem" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="56" fill="none" stroke="#142048" stroke-width="2.5"/>
+      <circle cx="60" cy="60" r="50" fill="none" stroke="#142048" stroke-width="1"/>
+      <path d="M60 38 C56 32 46 32 44 40 C42 48 52 56 60 64 C68 56 78 48 76 40 C74 32 64 32 60 38 Z" fill="#142048"/>
+      <circle cx="60" cy="80" r="4" fill="#142048"/>
+      <circle cx="46" cy="86" r="4" fill="#142048"/>
+      <circle cx="74" cy="86" r="4" fill="#142048"/>
+    </svg>
+    <h1>FICHE D'INSCRIPTION</h1>
+    <div class="sub1">au syndicat de la</div>
+    <div class="sub2">Fraternité des Célibataires Heureux</div>
     <div class="divider"></div>
-    <p class="home-sub">
-      En cliquant sur le bouton ci-dessous, vous autorisez ce site à enregistrer votre <strong>position géographique</strong> pour valider votre présence.
-    </p>
-    <div class="info-box">
-      <span class="icon">📍</span>
-      <p>
-        <strong>Comment ça fonctionne ?</strong><br/>
-        Votre navigateur vous demandera la permission d'accéder à votre localisation. Une fois acceptée, vos coordonnées GPS sont enregistrées automatiquement.
-      </p>
-    </div>
-    <button class="btn-enter" onclick="requestLocation()">
-      📡 Entrer & partager ma position
-    </button>
+    <div class="tagline">Unis par le choix, heureux par nature !</div>
   </div>
 
-  <!-- ÉCRAN 2 : CHARGEMENT -->
-  <div id="screen-loading">
-    <div class="spinner"></div>
-    <p class="loading-text">Récupération de votre position…</p>
-    <p class="loading-step" id="loading-step">En attente de votre autorisation</p>
+  <div class="info-note">📩 Votre fiche est envoyée directement par email au bureau du syndicat. La réponse (acceptée / en attente / refusée) vous sera communiquée par email, à l'adresse que vous renseignez ci-dessous.</div>
+
+  <div class="wrap">
+    <form id="inscriptionForm" onsubmit="return submitInscription(event)">
+
+      <div class="card">
+        <div class="card-head"><span class="num">1</span> INFORMATIONS PERSONNELLES</div>
+        <div class="card-body">
+          <div class="row2">
+            <div class="field"><label>Nom *</label><input type="text" id="f_nom" required></div>
+            <div class="field"><label>Prénom(s) *</label><input type="text" id="f_prenom" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Date de naissance</label><input type="date" id="f_naissance"></div>
+            <div class="field"><label>Sexe</label>
+              <div class="choice-group" id="g_sexe">
+                <div class="choice-pill" data-val="M">M</div>
+                <div class="choice-pill" data-val="F">F</div>
+                <div class="choice-pill" data-val="Autre">Autre</div>
+              </div>
+            </div>
+          </div>
+          <div class="field"><label>Adresse</label><input type="text" id="f_adresse"></div>
+          <div class="row2">
+            <div class="field"><label>Ville *</label><input type="text" id="f_ville" required></div>
+            <div class="field"><label>Pays</label><input type="text" id="f_pays" value="Burkina Faso"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Téléphone *</label><input type="tel" id="f_telephone" required></div>
+            <div class="field"><label>Email *</label><input type="email" id="f_email" required placeholder="pour recevoir la réponse"></div>
+          </div>
+          <div class="field"><label>Situation actuelle</label>
+            <div class="choice-group" id="g_situation">
+              <div class="choice-pill" data-val="Célibataire fier(e)">Célibataire fier(e)</div>
+              <div class="choice-pill" data-val="Célibataire assumé(e)">Célibataire assumé(e)</div>
+              <div class="choice-pill" data-val="Célibataire heureux(se)">Célibataire heureux(se)</div>
+            </div>
+          </div>
+          <div class="field"><label>Profession / Activité</label><input type="text" id="f_profession"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="num">2</span> MOTIVATION</div>
+        <div class="card-body">
+          <div class="field">
+            <label>Pourquoi souhaitez-vous rejoindre le Syndicat de la Fraternité des Célibataires Heureux ?</label>
+            <textarea id="f_motivation" placeholder="Votre réponse..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="num">3</span> ENGAGEMENT</div>
+        <div class="card-body">
+          <div class="engagement-text">
+            En rejoignant le Syndicat de la Fraternité des Célibataires Heureux, je m'engage à promouvoir la fraternité, le respect, la liberté de choix et le bonheur au célibat. Je m'engage également à participer aux activités et à contribuer positivement à la communauté.
+          </div>
+          <div class="row2" style="margin-top:16px;">
+            <div class="field"><label>Fait à</label><input type="text" id="f_lieu"></div>
+            <div class="field"><label>Le</label><input type="date" id="f_date_eng"></div>
+          </div>
+          <div class="field"><label>Signature (tapez votre nom complet)</label><input type="text" id="f_signature" placeholder="Nom et prénom"></div>
+          <div class="check-row">
+            <input type="checkbox" id="f_accept" required>
+            <label for="f_accept">Je confirme l'exactitude des informations ci-dessus et j'accepte l'engagement.</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">♥ Envoyer mon inscription par email</button>
+      <div class="submit-note">Votre application mail va s'ouvrir avec le message déjà rempli : il ne restera qu'à l'envoyer.</div>
+    </form>
+
+    <div id="successBox" class="card hidden">
+      <div class="success-box">
+        <div class="check">✓</div>
+        <h2>Presque terminé !</h2>
+        <p>Votre application mail s'est ouverte avec votre fiche pré-remplie. Envoyez le message pour finaliser votre inscription. Vous recevrez la réponse du syndicat directement par email, à l'adresse que vous avez indiquée.</p>
+        <button onclick="resetForm()">Faire une nouvelle inscription</button>
+      </div>
+    </div>
   </div>
 
-  <!-- ÉCRAN 3 : BIENVENUE + DONNÉES -->
-  <div id="screen-welcome">
-    <div class="success-ring">✓</div>
-    <div>
-      <p class="home-tag">Formation Commerce International</p>
-    </div>
-    <h1 class="welcome-title">Bienvenue en <span>BFA 1</span> !</h1>
-    <p class="welcome-sub">Votre position a été enregistrée avec succès.<br/>Veuillez maintenant soumettre votre matricule par mail.</p>
-
-    <!-- Coordonnées -->
-    <div class="coord-card">
-      <p class="coord-card-title">📍 Coordonnées enregistrées</p>
-      <div class="coord-row">
-        <span class="coord-label">Latitude</span>
-        <span class="coord-value" id="val-lat">—</span>
-      </div>
-      <div class="coord-row">
-        <span class="coord-label">Longitude</span>
-        <span class="coord-value" id="val-lng">—</span>
-      </div>
-      <div class="coord-row">
-        <span class="coord-label">Précision</span>
-        <span class="coord-value" id="val-acc">—</span>
-      </div>
-      <div class="coord-row">
-        <span class="coord-label">Horodatage</span>
-        <span class="coord-value" id="val-time">—</span>
-      </div>
-      <div class="coord-row">
-        <span class="coord-label">Statut</span>
-        <span class="coord-value" style="color: var(--green)">✓ Enregistré</span>
-      </div>
-    </div>
-
-    <!-- Envoi matricule -->
-    <div class="mail-section">
-      <h3>📧 Envoyer votre matricule</h3>
-      <p>Entrez votre matricule ci-dessous. Il sera envoyé par mail accompagné de votre localisation.</p>
-      <div class="input-row">
-        <input type="text" class="input-matricule" id="input-mat" placeholder="Ex : BFA1-2024-042" maxlength="30"/>
-        <button class="btn-mail" onclick="sendMail()">Envoyer</button>
-      </div>
-      <p class="mail-status" id="mail-status"></p>
-    </div>
-
-    <!-- Historique local -->
-    <div class="saved-section">
-      <div class="saved-header">
-        <h3>Historique des présences</h3>
-        <span class="saved-count" id="saved-count">0</span>
-      </div>
-      <div class="saved-list" id="saved-list">
-        <p class="saved-empty">Aucune entrée pour le moment.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ÉCRAN 4 : ERREUR -->
-  <div id="screen-error">
-    <div class="error-icon">🚫</div>
-    <p class="error-title">Accès refusé</p>
-    <p class="error-msg" id="error-msg">Vous avez refusé l'accès à votre localisation. L'accès à votre position est requis pour entrer sur la plateforme BFA 1.</p>
-    <button class="btn-retry" onclick="retry()">↩ Réessayer</button>
+  <div class="footer-strip">
+    LIBRE D'ÊTRE SEUL, HEUREUX D'ÊTRE SOI &nbsp;·&nbsp; ENSEMBLE ON EST HEUREUX &nbsp;·&nbsp; RESPECT, FRATERNITÉ
+    <div class="tagline">Seul on va vite, ensemble on est heureux ! ♥</div>
   </div>
 
 <script>
-  const STORAGE_KEY = 'bfa1_presences';
+const ADMIN_EMAIL = "businessdelfa@gmail.com";
 
-  function show(id) {
-    ['screen-home','screen-loading','screen-welcome','screen-error'].forEach(s => {
-      document.getElementById(s).style.display = 'none';
+function setupPills(groupId){
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.choice-pill').forEach(p=>{
+    p.addEventListener('click', ()=>{
+      group.querySelectorAll('.choice-pill').forEach(x=>x.classList.remove('selected'));
+      p.classList.toggle('selected');
     });
-    document.getElementById(id).style.display = 'flex';
-  }
+  });
+}
+setupPills('g_sexe');
+setupPills('g_situation');
 
-  function requestLocation() {
-    if (!navigator.geolocation) {
-      showError("Votre navigateur ne supporte pas la géolocalisation.");
-      return;
-    }
-    show('screen-loading');
-    setStep("En attente de votre autorisation…");
+function getSelectedPill(groupId){
+  const sel = document.querySelector('#'+groupId+' .choice-pill.selected');
+  return sel ? sel.dataset.val : '—';
+}
 
-    navigator.geolocation.getCurrentPosition(
-      onSuccess,
-      onError,
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-    );
-  }
+function v(id){
+  const el = document.getElementById(id);
+  return (el.value || '').trim() || '—';
+}
 
-  function setStep(msg) {
-    document.getElementById('loading-step').textContent = msg;
-  }
+function submitInscription(e){
+  e.preventDefault();
 
-  function onSuccess(pos) {
-    setStep("Position obtenue ! Enregistrement en cours…");
+  const nom = v('f_nom');
+  const prenom = v('f_prenom');
+  const email = v('f_email');
 
-    const { latitude, longitude, accuracy } = pos.coords;
-    const timestamp = new Date().toLocaleString('fr-FR');
+  const lines = [
+    "Nouvelle demande d'inscription au Syndicat de la Fraternité des Célibataires Heureux",
+    "",
+    "— INFORMATIONS PERSONNELLES —",
+    "Nom complet : " + prenom + " " + nom,
+    "Date de naissance : " + v('f_naissance'),
+    "Sexe : " + getSelectedPill('g_sexe'),
+    "Adresse : " + v('f_adresse'),
+    "Ville : " + v('f_ville'),
+    "Pays : " + v('f_pays'),
+    "Téléphone : " + v('f_telephone'),
+    "Email (réponse à envoyer ici) : " + email,
+    "Situation actuelle : " + getSelectedPill('g_situation'),
+    "Profession / Activité : " + v('f_profession'),
+    "",
+    "— MOTIVATION —",
+    v('f_motivation'),
+    "",
+    "— ENGAGEMENT —",
+    "Fait à : " + v('f_lieu'),
+    "Le : " + v('f_date_eng'),
+    "Signature : " + v('f_signature'),
+    "",
+    "---",
+    "Pour répondre au candidat, répondez directement à cet email (Répondre à : " + email + ")."
+  ];
 
-    const entry = { latitude, longitude, accuracy, timestamp, matricule: null };
+  const subject = "Nouvelle inscription SFCH - " + prenom + " " + nom;
+  const body = lines.join("\n");
 
-    // Enregistrement localStorage
-    const all = getAll();
-    all.push(entry);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  const mailtoLink = "mailto:" + ADMIN_EMAIL
+    + "?subject=" + encodeURIComponent(subject)
+    + "&body=" + encodeURIComponent(body)
+    + "&cc=" ; // pas de cc par défaut
 
-    // Affichage
-    document.getElementById('val-lat').textContent  = latitude.toFixed(6) + '°';
-    document.getElementById('val-lng').textContent  = longitude.toFixed(6) + '°';
-    document.getElementById('val-acc').textContent  = '± ' + Math.round(accuracy) + ' m';
-    document.getElementById('val-time').textContent = timestamp;
+  window.location.href = mailtoLink;
 
-    refreshList();
+  document.getElementById('inscriptionForm').classList.add('hidden');
+  document.getElementById('successBox').classList.remove('hidden');
+  return false;
+}
 
-    setTimeout(() => show('screen-welcome'), 600);
-  }
-
-  function onError(err) {
-    let msg = "Une erreur inconnue s'est produite.";
-    if (err.code === 1) msg = "Vous avez refusé l'accès à votre localisation. L'accès est requis pour accéder à la plateforme BFA 1.";
-    if (err.code === 2) msg = "Position indisponible. Vérifiez que le GPS de votre appareil est activé.";
-    if (err.code === 3) msg = "La demande de localisation a expiré. Réessayez dans un endroit avec un meilleur signal.";
-    showError(msg);
-  }
-
-  function showError(msg) {
-    document.getElementById('error-msg').textContent = msg;
-    show('screen-error');
-  }
-
-  function retry() { show('screen-home'); }
-
-  function getAll() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch { return []; }
-  }
-
-  function refreshList() {
-    const all = getAll();
-    const list = document.getElementById('saved-list');
-    const count = document.getElementById('saved-count');
-    count.textContent = all.length;
-
-    if (all.length === 0) {
-      list.innerHTML = '<p class="saved-empty">Aucune entrée pour le moment.</p>';
-      return;
-    }
-
-    list.innerHTML = all.slice().reverse().map(e => `
-      <div class="saved-item">
-        <span class="mat">${e.matricule ? '🎓 ' + e.matricule : '⏳ Matricule non renseigné'}</span>
-        <span>📍 ${e.latitude.toFixed(5)}°</span>
-        <span>${e.longitude.toFixed(5)}°</span>
-        <span>🕐 ${e.timestamp}</span>
-        <span>± ${Math.round(e.accuracy)} m</span>
-      </div>
-    `).join('');
-  }
-
-  function sendMail() {
-    const mat = document.getElementById('input-mat').value.trim();
-    const status = document.getElementById('mail-status');
-
-    if (!mat) {
-      status.className = 'mail-status err';
-      status.textContent = '⚠ Veuillez entrer votre matricule avant d\'envoyer.';
-      return;
-    }
-
-    const all = getAll();
-    if (all.length === 0) {
-      status.className = 'mail-status err';
-      status.textContent = '⚠ Aucune position enregistrée.';
-      return;
-    }
-
-    // Récupérer la dernière entrée
-    const last = all[all.length - 1];
-    last.matricule = mat;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-
-    // Construire le lien mailto
-    const subject = encodeURIComponent(`[BFA 1] Matricule : ${mat}`);
-    const body = encodeURIComponent(
-`Formation Commerce International — BFA 1
-────────────────────────────────
-Matricule  : ${mat}
-Latitude   : ${last.latitude.toFixed(6)}°
-Longitude  : ${last.longitude.toFixed(6)}°
-Précision  : ± ${Math.round(last.accuracy)} m
-Horodatage : ${last.timestamp}
-────────────────────────────────
-Lien carte : https://maps.google.com/?q=${last.latitude},${last.longitude}
-`);
-
-    window.location.href = `mailto:businessdelfa@gmail.com?subject=${subject}&body=${body}`;
-
-    status.className = 'mail-status ok';
-    status.textContent = '✓ Client mail ouvert — envoyez le message pour valider votre présence.';
-
-    refreshList();
-  }
-
-  // Init
-  refreshList();
+function resetForm(){
+  document.getElementById('inscriptionForm').reset();
+  document.querySelectorAll('.choice-pill.selected').forEach(p=>p.classList.remove('selected'));
+  document.getElementById('inscriptionForm').classList.remove('hidden');
+  document.getElementById('successBox').classList.add('hidden');
+}
 </script>
 </body>
 </html>
