@@ -2,264 +2,347 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Syndicat de la Fraternité des Célibataires Heureux</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Une question pour toi 💌</title>
 <style>
   :root{
-    --cream:#F6F1E4;
-    --cream-dark:#EFE6D0;
-    --navy:#142048;
-    --navy-light:#22306b;
-    --gold:#B68D40;
-    --gold-light:#D9B873;
-    --ink:#23284a;
-    --white:#ffffff;
-    --green:#3f7a4d;
-    --radius:18px;
+    --blush: #FFF5F8;
+    --pink-soft: #FFD9E8;
+    --pink: #FF6FA5;
+    --pink-deep: #E84393;
+    --text: #4A2A35;
+    --white: #FFFFFF;
   }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Poppins',sans-serif;}
-  h1,h2,h3{font-family:'Playfair Display',serif;margin:0;}
-  .hidden{display:none !important;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    height:100%;
+    overflow:hidden;
+    font-family:'Poppins', -apple-system, sans-serif;
+    background:linear-gradient(160deg, var(--blush) 0%, var(--pink-soft) 100%);
+    color:var(--text);
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap');
 
-  .hero{max-width:760px;margin:0 auto;padding:40px 20px 8px;text-align:center;}
-  .logo-emblem{width:96px;height:96px;margin:0 auto 14px;}
-  .hero h1{font-size:30px;color:var(--navy);font-weight:800;line-height:1.15;}
-  .hero .sub1{font-size:13px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-top:6px;text-transform:uppercase;}
-  .hero .sub2{font-size:22px;color:var(--navy);font-weight:800;margin-top:2px;}
-  .hero .tagline{font-family:'Dancing Script',cursive;font-size:22px;color:var(--gold);margin-top:10px;}
-  .hero .divider{width:90px;height:2px;background:var(--gold);margin:14px auto;position:relative;}
-  .hero .divider::before{content:'♥';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--cream);color:var(--navy);font-size:14px;padding:0 8px;}
-
-  .info-note{
-    max-width:680px;margin:0 auto 10px;padding:12px 18px;background:#fffdf6;
-    border:1px solid #e6dfc9;border-left:4px solid var(--gold);border-radius:10px;
-    font-size:12.5px;color:#555;text-align:center;
+  #hearts{
+    position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;
+  }
+  .heart{
+    position:absolute;
+    bottom:-40px;
+    font-size:20px;
+    opacity:0.35;
+    color:var(--pink);
+    animation:float linear infinite;
+  }
+  @keyframes float{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.4; }
+    100%{ transform:translateY(-110vh) rotate(25deg); opacity:0; }
   }
 
-  .wrap{max-width:760px;margin:0 auto;padding:10px 16px 60px;}
-  .card{background:var(--white);border-radius:var(--radius);border:1px solid #e6dfc9;margin-bottom:22px;overflow:hidden;box-shadow:0 4px 18px rgba(20,32,72,.05);}
-  .card-head{background:var(--navy);color:#fff;padding:12px 18px;font-weight:700;font-size:14px;letter-spacing:.4px;display:flex;align-items:center;gap:8px;}
-  .card-head .num{background:var(--gold);color:var(--navy);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none;}
-  .card-body{padding:20px 18px 22px;}
-  .field{margin-bottom:16px;}
-  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:6px;}
-  .field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=date],.field textarea{
-    width:100%;padding:11px 12px;border:1.5px solid #ddd4b8;border-radius:10px;
-    font-family:'Poppins',sans-serif;font-size:14px;background:#fffdf8;color:var(--ink);
+  .screen{
+    position:relative;
+    z-index:1;
+    height:100vh;
+    width:100vw;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:32px;
   }
-  .field textarea{resize:vertical;min-height:80px;}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  @media(max-width:560px){.row2{grid-template-columns:1fr;}}
-  .choice-group{display:flex;flex-wrap:wrap;gap:10px;}
-  .choice-pill{border:1.5px solid #ddd4b8;border-radius:999px;padding:9px 16px;font-size:13px;cursor:pointer;background:#fffdf8;font-weight:500;transition:.15s;user-select:none;}
-  .choice-pill.selected{background:var(--navy);color:#fff;border-color:var(--navy);}
-  .engagement-text{font-size:13.5px;line-height:1.7;color:#444;background:var(--cream-dark);padding:14px 16px;border-radius:12px;border-left:4px solid var(--gold);}
-  .check-row{display:flex;align-items:flex-start;gap:10px;margin-top:14px;font-size:13px;color:var(--ink);}
-  .check-row input{margin-top:3px;}
-  .submit-btn{width:100%;padding:15px;border:none;border-radius:12px;background:var(--navy);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Poppins',sans-serif;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px;}
-  .submit-btn:hover{background:var(--navy-light);}
-  .submit-note{text-align:center;font-size:11.5px;color:#888;margin-top:10px;}
+  .screen.active{ display:flex; }
 
-  .footer-strip{background:var(--navy);color:#fff;text-align:center;padding:22px 16px;font-size:11.5px;}
-  .footer-strip .tagline{font-family:'Dancing Script',cursive;font-size:19px;color:var(--gold-light);margin-top:6px;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--pink-deep);
+    margin-bottom:14px;
+    font-weight:600;
+  }
 
-  .success-box{text-align:center;padding:50px 20px;}
-  .success-box .check{font-size:50px;color:var(--green);}
-  .success-box h2{color:var(--navy);margin:14px 0 6px;}
-  .success-box p{color:#666;font-size:14px;max-width:420px;margin:0 auto;line-height:1.6;}
-  .success-box button{margin-top:20px;background:none;border:1.5px solid var(--navy);color:var(--navy);padding:9px 18px;border-radius:999px;font-weight:600;cursor:pointer;font-size:13px;}
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:clamp(28px, 7vw, 44px);
+    line-height:1.25;
+    max-width:520px;
+    margin-bottom:36px;
+  }
+
+  h1 em{
+    font-style:italic;
+    color:var(--pink-deep);
+  }
+
+  .btn-row{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  button{
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size:17px;
+    border:none;
+    border-radius:100px;
+    padding:16px 38px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  button:active{ transform:scale(0.96); }
+
+  .btn-yes{
+    background:var(--pink-deep);
+    color:var(--white);
+    box-shadow:0 10px 24px rgba(232,67,147,0.35);
+  }
+  .btn-yes:hover{ transform:translateY(-2px); box-shadow:0 14px 28px rgba(232,67,147,0.45); }
+
+  .btn-no{
+    background:var(--white);
+    color:var(--pink-deep);
+    border:2px solid var(--pink-soft);
+    position:fixed;
+    z-index:5;
+  }
+
+  .btn-no.roaming{
+    position:fixed;
+  }
+
+  .btn-continue{
+    background:var(--pink-deep);
+    color:var(--white);
+    margin-top:36px;
+    box-shadow:0 10px 24px rgba(232,67,147,0.35);
+  }
+
+  .emoji-big{
+    font-size:46px;
+    margin-bottom:18px;
+    animation:pop .5s ease;
+  }
+  @keyframes pop{
+    0%{ transform:scale(0.3); opacity:0; }
+    70%{ transform:scale(1.15); }
+    100%{ transform:scale(1); opacity:1; }
+  }
+
+  /* Planning screen */
+  .card{
+    background:var(--white);
+    border-radius:24px;
+    padding:36px 30px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 20px 50px rgba(232,67,147,0.15);
+  }
+  .card h2{
+    font-family:'Playfair Display', serif;
+    font-size:24px;
+    margin-bottom:6px;
+    color:var(--pink-deep);
+  }
+  .card p.sub{
+    font-size:14px;
+    color:#8a6a75;
+    margin-bottom:26px;
+  }
+  .field{
+    text-align:left;
+    margin-bottom:18px;
+  }
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:6px;
+    letter-spacing:0.3px;
+  }
+  .field input, .field textarea{
+    width:100%;
+    padding:13px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--pink-soft);
+    font-family:'Poppins', sans-serif;
+    font-size:15px;
+    color:var(--text);
+    background:var(--blush);
+    outline:none;
+  }
+  .field input:focus, .field textarea:focus{
+    border-color:var(--pink-deep);
+  }
+  .field textarea{ resize:none; height:70px; }
+
+  .btn-send{
+    background:#25D366;
+    color:var(--white);
+    width:100%;
+    margin-top:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:16px;
+  }
+  .btn-send:hover{ transform:translateY(-2px); }
+
+  .final-message{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:clamp(26px, 6vw, 38px);
+    color:var(--pink-deep);
+    margin-top:26px;
+  }
+
+  .small-note{
+    font-size:13px;
+    color:#a97a88;
+    margin-top:22px;
+    max-width:340px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .heart{ animation:none; display:none; }
+  }
 </style>
 </head>
 <body>
 
-  <div class="hero">
-    <svg class="logo-emblem" viewBox="0 0 120 120">
-      <circle cx="60" cy="60" r="56" fill="none" stroke="#142048" stroke-width="2.5"/>
-      <circle cx="60" cy="60" r="50" fill="none" stroke="#142048" stroke-width="1"/>
-      <path d="M60 38 C56 32 46 32 44 40 C42 48 52 56 60 64 C68 56 78 48 76 40 C74 32 64 32 60 38 Z" fill="#142048"/>
-      <circle cx="60" cy="80" r="4" fill="#142048"/>
-      <circle cx="46" cy="86" r="4" fill="#142048"/>
-      <circle cx="74" cy="86" r="4" fill="#142048"/>
-    </svg>
-    <h1>FICHE D'INSCRIPTION</h1>
-    <div class="sub1">au syndicat de la</div>
-    <div class="sub2">Fraternité des Célibataires Heureux</div>
-    <div class="divider"></div>
-    <div class="tagline">Unis par le choix, heureux par nature !</div>
+<div id="hearts"></div>
+
+<!-- ECRAN 1 : La question -->
+<div class="screen active" id="screen1">
+  <div class="eyebrow">Une question sérieuse</div>
+  <h1>Veux-tu sortir <em>avec moi</em> ? 🥺</h1>
+  <div class="btn-row">
+    <button class="btn-yes" id="btnYes">Oui 💗</button>
+    <button class="btn-no" id="btnNo">Non</button>
   </div>
+  <p class="small-note">(le bouton "Non" est un peu timide, il n'aime pas être cliqué)</p>
+</div>
 
-  <div class="info-note">📩 Votre fiche est envoyée directement par email au bureau du syndicat. La réponse (acceptée / en attente / refusée) vous sera communiquée par email, à l'adresse que vous renseignez ci-dessous.</div>
+<!-- ECRAN 2 : Confirmation -->
+<div class="screen" id="screen2">
+  <div class="emoji-big">😭🥳❤️</div>
+  <h1>Tu veux <em>vraiment</em> sortir avec moi ?</h1>
+  <button class="btn-continue" id="btnContinue">Oui, pour de vrai →</button>
+</div>
 
-  <div class="wrap">
-    <form id="inscriptionForm" onsubmit="return submitInscription(event)">
+<!-- ECRAN 3 : Planification -->
+<div class="screen" id="screen3">
+  <div class="card">
+    <h2>On programme ça 📅</h2>
+    <p class="sub">Choisis une date, une heure, et envoie-moi tout ça sur WhatsApp.</p>
 
-      <div class="card">
-        <div class="card-head"><span class="num">1</span> INFORMATIONS PERSONNELLES</div>
-        <div class="card-body">
-          <div class="row2">
-            <div class="field"><label>Nom *</label><input type="text" id="f_nom" required></div>
-            <div class="field"><label>Prénom(s) *</label><input type="text" id="f_prenom" required></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Date de naissance</label><input type="date" id="f_naissance"></div>
-            <div class="field"><label>Sexe</label>
-              <div class="choice-group" id="g_sexe">
-                <div class="choice-pill" data-val="M">M</div>
-                <div class="choice-pill" data-val="F">F</div>
-                <div class="choice-pill" data-val="Autre">Autre</div>
-              </div>
-            </div>
-          </div>
-          <div class="field"><label>Adresse</label><input type="text" id="f_adresse"></div>
-          <div class="row2">
-            <div class="field"><label>Ville *</label><input type="text" id="f_ville" required></div>
-            <div class="field"><label>Pays</label><input type="text" id="f_pays" value="Burkina Faso"></div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Téléphone *</label><input type="tel" id="f_telephone" required></div>
-            <div class="field"><label>Email *</label><input type="email" id="f_email" required placeholder="pour recevoir la réponse"></div>
-          </div>
-          <div class="field"><label>Situation actuelle</label>
-            <div class="choice-group" id="g_situation">
-              <div class="choice-pill" data-val="Célibataire fier(e)">Célibataire fier(e)</div>
-              <div class="choice-pill" data-val="Célibataire assumé(e)">Célibataire assumé(e)</div>
-              <div class="choice-pill" data-val="Célibataire heureux(se)">Célibataire heureux(se)</div>
-            </div>
-          </div>
-          <div class="field"><label>Profession / Activité</label><input type="text" id="f_profession"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><span class="num">2</span> MOTIVATION</div>
-        <div class="card-body">
-          <div class="field">
-            <label>Pourquoi souhaitez-vous rejoindre le Syndicat de la Fraternité des Célibataires Heureux ?</label>
-            <textarea id="f_motivation" placeholder="Votre réponse..."></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><span class="num">3</span> ENGAGEMENT</div>
-        <div class="card-body">
-          <div class="engagement-text">
-            En rejoignant le Syndicat de la Fraternité des Célibataires Heureux, je m'engage à promouvoir la fraternité, le respect, la liberté de choix et le bonheur au célibat. Je m'engage également à participer aux activités et à contribuer positivement à la communauté.
-          </div>
-          <div class="row2" style="margin-top:16px;">
-            <div class="field"><label>Fait à</label><input type="text" id="f_lieu"></div>
-            <div class="field"><label>Le</label><input type="date" id="f_date_eng"></div>
-          </div>
-          <div class="field"><label>Signature (tapez votre nom complet)</label><input type="text" id="f_signature" placeholder="Nom et prénom"></div>
-          <div class="check-row">
-            <input type="checkbox" id="f_accept" required>
-            <label for="f_accept">Je confirme l'exactitude des informations ci-dessus et j'accepte l'engagement.</label>
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" class="submit-btn">♥ Envoyer mon inscription par email</button>
-      <div class="submit-note">Votre application mail va s'ouvrir avec le message déjà rempli : il ne restera qu'à l'envoyer.</div>
-    </form>
-
-    <div id="successBox" class="card hidden">
-      <div class="success-box">
-        <div class="check">✓</div>
-        <h2>Presque terminé !</h2>
-        <p>Votre application mail s'est ouverte avec votre fiche pré-remplie. Envoyez le message pour finaliser votre inscription. Vous recevrez la réponse du syndicat directement par email, à l'adresse que vous avez indiquée.</p>
-        <button onclick="resetForm()">Faire une nouvelle inscription</button>
-      </div>
+    <div class="field">
+      <label for="dateInput">Date</label>
+      <input type="date" id="dateInput">
     </div>
-  </div>
+    <div class="field">
+      <label for="timeInput">Heure</label>
+      <input type="time" id="timeInput">
+    </div>
+    <div class="field">
+      <label for="msgInput">Petit mot (optionnel)</label>
+      <textarea id="msgInput" placeholder="J'ai hâte..."></textarea>
+    </div>
 
-  <div class="footer-strip">
-    LIBRE D'ÊTRE SEUL, HEUREUX D'ÊTRE SOI &nbsp;·&nbsp; ENSEMBLE ON EST HEUREUX &nbsp;·&nbsp; RESPECT, FRATERNITÉ
-    <div class="tagline">Seul on va vite, ensemble on est heureux ! ♥</div>
+    <button class="btn-send" id="btnSend">
+      Envoyer sur WhatsApp
+    </button>
   </div>
+</div>
+
+<!-- ECRAN 4 : Final -->
+<div class="screen" id="screen4">
+  <div class="emoji-big">👀😍</div>
+  <h1 class="final-message">Je t'aime 👉❤️</h1>
+  <p class="small-note">Message envoyé sur WhatsApp, à très vite !</p>
+</div>
 
 <script>
-const ADMIN_EMAIL = "businessdelfa@gmail.com";
+  const WHATSAPP_NUMBER = "22605614145"; // sans le +
 
-function setupPills(groupId){
-  const group = document.getElementById(groupId);
-  group.querySelectorAll('.choice-pill').forEach(p=>{
-    p.addEventListener('click', ()=>{
-      group.querySelectorAll('.choice-pill').forEach(x=>x.classList.remove('selected'));
-      p.classList.toggle('selected');
-    });
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // --- Bouton NON qui fuit ---
+  const btnNo = document.getElementById('btnNo');
+  const btnYes = document.getElementById('btnYes');
+
+  function moveNoButton(){
+    const margin = 20;
+    const btnW = btnNo.offsetWidth;
+    const btnH = btnNo.offsetHeight;
+    const maxX = window.innerWidth - btnW - margin;
+    const maxY = window.innerHeight - btnH - margin;
+    const newX = Math.max(margin, Math.random() * maxX);
+    const newY = Math.max(margin, Math.random() * maxY);
+    btnNo.classList.add('roaming');
+    btnNo.style.left = newX + 'px';
+    btnNo.style.top = newY + 'px';
+  }
+
+  btnNo.addEventListener('mouseenter', moveNoButton);
+  btnNo.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveNoButton();
   });
-}
-setupPills('g_sexe');
-setupPills('g_situation');
+  btnNo.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    moveNoButton();
+  }, {passive:false});
 
-function getSelectedPill(groupId){
-  const sel = document.querySelector('#'+groupId+' .choice-pill.selected');
-  return sel ? sel.dataset.val : '—';
-}
+  // --- Bouton OUI ---
+  btnYes.addEventListener('click', () => showScreen('screen2'));
 
-function v(id){
-  const el = document.getElementById(id);
-  return (el.value || '').trim() || '—';
-}
+  // --- Continuer vers planification ---
+  document.getElementById('btnContinue').addEventListener('click', () => showScreen('screen3'));
 
-function submitInscription(e){
-  e.preventDefault();
+  // --- Envoi WhatsApp ---
+  document.getElementById('btnSend').addEventListener('click', () => {
+    const date = document.getElementById('dateInput').value;
+    const time = document.getElementById('timeInput').value;
+    const msg = document.getElementById('msgInput').value;
 
-  const nom = v('f_nom');
-  const prenom = v('f_prenom');
-  const email = v('f_email');
+    let text = "Salut ! J'ai dit OUI 💗 On se voit";
+    if(date) text += ` le ${date}`;
+    if(time) text += ` à ${time}`;
+    text += " ?";
+    if(msg) text += ` ${msg}`;
 
-  const lines = [
-    "Nouvelle demande d'inscription au Syndicat de la Fraternité des Célibataires Heureux",
-    "",
-    "— INFORMATIONS PERSONNELLES —",
-    "Nom complet : " + prenom + " " + nom,
-    "Date de naissance : " + v('f_naissance'),
-    "Sexe : " + getSelectedPill('g_sexe'),
-    "Adresse : " + v('f_adresse'),
-    "Ville : " + v('f_ville'),
-    "Pays : " + v('f_pays'),
-    "Téléphone : " + v('f_telephone'),
-    "Email (réponse à envoyer ici) : " + email,
-    "Situation actuelle : " + getSelectedPill('g_situation'),
-    "Profession / Activité : " + v('f_profession'),
-    "",
-    "— MOTIVATION —",
-    v('f_motivation'),
-    "",
-    "— ENGAGEMENT —",
-    "Fait à : " + v('f_lieu'),
-    "Le : " + v('f_date_eng'),
-    "Signature : " + v('f_signature'),
-    "",
-    "---",
-    "Pour répondre au candidat, répondez directement à cet email (Répondre à : " + email + ")."
-  ];
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    showScreen('screen4');
+  });
 
-  const subject = "Nouvelle inscription SFCH - " + prenom + " " + nom;
-  const body = lines.join("\n");
-
-  const mailtoLink = "mailto:" + ADMIN_EMAIL
-    + "?subject=" + encodeURIComponent(subject)
-    + "&body=" + encodeURIComponent(body)
-    + "&cc=" ; // pas de cc par défaut
-
-  window.location.href = mailtoLink;
-
-  document.getElementById('inscriptionForm').classList.add('hidden');
-  document.getElementById('successBox').classList.remove('hidden');
-  return false;
-}
-
-function resetForm(){
-  document.getElementById('inscriptionForm').reset();
-  document.querySelectorAll('.choice-pill.selected').forEach(p=>p.classList.remove('selected'));
-  document.getElementById('inscriptionForm').classList.remove('hidden');
-  document.getElementById('successBox').classList.add('hidden');
-}
+  // --- Coeurs flottants en fond ---
+  const heartsContainer = document.getElementById('hearts');
+  const heartChars = ['❤','💗','💕'];
+  function spawnHeart(){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.fontSize = (14 + Math.random()*16) + 'px';
+    h.style.animationDuration = (7 + Math.random()*6) + 's';
+    heartsContainer.appendChild(h);
+    setTimeout(() => h.remove(), 14000);
+  }
+  setInterval(spawnHeart, 900);
+  spawnHeart();
 </script>
+
 </body>
 </html>
