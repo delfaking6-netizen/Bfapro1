@@ -2,571 +2,743 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pour toi, Chaïma 🌸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BARAKA shop — Vos achats, livrés avec bénédiction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --plum: #2a1b2f;
-    --plum-deep: #1c1121;
-    --rose: #e091b3;
-    --rose-soft: #f4c9dc;
-    --gold: #d4af37;
-    --cream: #fbf1e7;
-    --lav: #9a7cad;
+    --white:#FFFFFF;
+    --cream:#FFF7F5;
+    --pink:#FFE2E7;
+    --pink-soft:#FFF0F2;
+    --coral:#FF5A6E;
+    --coral-dark:#E8384F;
+    --red-deep:#C81E3A;
+    --ink:#2B1420;
+    --ink-soft:#6B4B52;
+    --gray:#A6898F;
+    --success:#2E9E5B;
+    --radius:22px;
+    --radius-sm:14px;
+    --shadow:0 10px 32px rgba(200,30,58,0.12);
+    --shadow-card:0 6px 20px rgba(200,30,58,0.10);
   }
-  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-  html,body{margin:0; padding:0; height:100%; overflow-x:hidden;}
+  [data-theme="dark"]{
+    --white:#241016;
+    --cream:#2B141C;
+    --pink:#3A1E27;
+    --pink-soft:#33191F;
+    --ink:#FFF3F4;
+    --ink-soft:#E8C8CE;
+    --gray:#B98D93;
+    --shadow:0 10px 32px rgba(0,0,0,0.35);
+    --shadow-card:0 6px 20px rgba(0,0,0,0.3);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{
-    background: radial-gradient(ellipse at top, #3a2440 0%, var(--plum) 45%, var(--plum-deep) 100%);
-    font-family:'Quicksand', sans-serif;
-    color:var(--cream);
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
     min-height:100vh;
-    position:relative;
+    overflow-x:hidden;
+    transition:background .3s,color .3s;
   }
-  h1,h2,.serif{font-family:'Playfair Display', serif;}
-
-  /* ---------- pétales flottants ---------- */
-  #petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
-  .petal{
-    position:absolute; top:-5vh; font-size:1.2rem; opacity:.75;
-    animation: fall linear forwards;
-    will-change: transform;
-  }
-  @keyframes fall{
-    to{ transform: translateY(110vh) translateX(var(--drift,0px)) rotate(360deg); opacity:0; }
+  h1,h2,h3,.display{font-family:'Fraunces',serif}
+  #phone-frame{max-width:480px;margin:0 auto;position:relative;min-height:100vh;background:var(--cream);box-shadow:none}
+  @media(min-width:560px){
+    body{background:var(--pink)}
+    #phone-frame{box-shadow:var(--shadow);min-height:100vh;overflow:hidden}
   }
 
-  /* ---------- barre de progression bouquet ---------- */
-  #bouquet-bar{
-    position:fixed; top:0; left:0; right:0; z-index:20;
-    display:flex; justify-content:center; gap:6px;
-    padding:14px 10px 10px;
-    background:linear-gradient(to bottom, rgba(28,17,33,.85), transparent);
-  }
-  .bud{
-    width:9px; height:9px; border-radius:50%;
-    background: rgba(255,255,255,.18);
-    transition: all .5s ease;
-  }
-  .bud.bloom{
-    background: radial-gradient(circle at 35% 35%, var(--gold), var(--rose));
-    box-shadow: 0 0 8px var(--rose);
-    transform: scale(1.3);
-  }
+  /* SPLASH */
+  #splash{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,var(--coral),var(--red-deep));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:splashOut .6s ease 1.9s forwards}
+  #splash .seal{width:88px;height:88px;position:relative;animation:sealIn .7s cubic-bezier(.34,1.56,.64,1) .2s both}
+  #splash .seal svg{width:100%;height:100%}
+  #splash .logo-big{font-size:34px;font-weight:800;color:#fff;letter-spacing:.5px;animation:logoIn .7s ease .5s both}
+  #splash .logo-big span{color:#FFD9CF}
+  #splash p{color:#FFE4E8;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;animation:logoIn .7s ease .8s both}
+  @keyframes sealIn{from{opacity:0;transform:scale(.5) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+  @keyframes logoIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes splashOut{to{opacity:0;pointer-events:none;visibility:hidden}}
 
-  /* ---------- écrans ---------- */
-  .screen{
-    display:none;
-    min-height:100vh;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    padding: 90px 22px 50px;
-    position:relative; z-index:5;
-    text-align:center;
-    animation: rise .7s ease;
-  }
-  .screen.active{display:flex;}
-  @keyframes rise{ from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);} }
+  /* CLOSED BANNER */
+  #closed-banner{display:none;position:fixed;inset:0;z-index:8000;background:rgba(43,20,32,.96);align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:32px;color:#fff}
+  #closed-banner .display{font-size:24px}
 
-  .card{
-    max-width:440px; width:100%;
-    background: rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter: blur(6px);
-    border-radius:22px;
-    padding: 30px 24px;
-    box-shadow: 0 10px 40px rgba(0,0,0,.35);
-  }
+  /* TOAST */
+  #toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--white);padding:12px 22px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:7000;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  h1{font-size: clamp(1.5rem, 6vw, 2.1rem); margin:0 0 8px; font-weight:700; color:var(--rose-soft);}
-  h2{font-size: clamp(1.2rem, 5vw, 1.6rem); margin:0 0 14px; color:var(--gold); font-weight:600;}
-  p{font-size:1rem; line-height:1.65; margin:0 0 16px; color: var(--cream); opacity:.95;}
-  .tag{ font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; color:var(--lav); margin-bottom:6px; font-weight:600;}
+  /* GEO CONSENT MODAL */
+  .overlay{position:fixed;inset:0;background:rgba(43,20,32,.55);z-index:6000;display:none;align-items:flex-end;justify-content:center}
+  @media(min-width:560px){.overlay{align-items:center}}
+  .overlay.show{display:flex}
+  .sheet{background:var(--white);width:100%;max-width:480px;border-radius:26px 26px 0 0;padding:28px 24px 30px;animation:sheetUp .35s ease both}
+  @media(min-width:560px){.sheet{border-radius:26px;margin:20px}}
+  @keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-icon{width:56px;height:56px;border-radius:18px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:26px}
+  .sheet h3{font-size:20px;margin-bottom:8px}
+  .sheet p{color:var(--ink-soft);font-size:14px;line-height:1.5;margin-bottom:22px}
+  .btn-row{display:flex;gap:10px}
+  .btn{flex:1;padding:15px;border:none;border-radius:16px;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
+  .btn-primary{background:linear-gradient(135deg,var(--coral),var(--red-deep));color:#fff}
+  .btn-primary:active{transform:scale(.97)}
+  .btn-ghost{background:var(--pink-soft);color:var(--ink)}
+  .btn-ghost:active{transform:scale(.97)}
+  .geo-status{margin-top:14px;font-size:12px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+  .geo-status.ok{color:var(--success);font-weight:700}
 
-  .poem{
-    font-family:'Playfair Display', serif;
-    font-style:italic;
-    font-size: clamp(1rem, 4.4vw, 1.18rem);
-    line-height:1.9;
-    color: var(--rose-soft);
-    white-space:pre-line;
-    opacity:0;
-    animation: poemIn 1.4s ease forwards;
-  }
-  @keyframes poemIn{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  /* TOPBAR */
+  #topbar{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--cream);backdrop-filter:blur(8px)}
+  #topbar .logo{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+  #topbar .logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--coral),var(--red-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800}
+  #topbar .logo span{color:var(--coral-dark)}
+  #theme-toggle{width:38px;height:38px;border-radius:12px;background:var(--pink-soft);border:none;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--ink)}
 
-  .btn-row{display:flex; flex-direction:column; gap:12px; margin-top:18px; width:100%;}
-  button, .btn{
-    font-family:'Quicksand', sans-serif;
-    font-weight:600; font-size:1rem;
-    padding:15px 20px; border-radius:50px; border:none;
-    cursor:pointer;
-    background: linear-gradient(135deg, var(--rose), #c26a95);
-    color: var(--plum-deep);
-    box-shadow: 0 6px 18px rgba(224,145,179,.35);
-    transition: transform .15s ease, box-shadow .15s ease;
-    -webkit-appearance:none;
-  }
-  button:active{transform:scale(.96);}
-  button.secondary{
-    background: transparent;
-    border:1.5px solid var(--lav);
-    color: var(--cream);
-    box-shadow:none;
-  }
-  button.gold{
-    background: linear-gradient(135deg, var(--gold), #b98d22);
-  }
-  button:disabled{opacity:.5;}
+  /* HERO */
+  #hero{position:relative;margin:4px 20px 18px;border-radius:var(--radius);overflow:hidden;padding:30px 22px;background:linear-gradient(150deg,var(--coral) 0%,var(--red-deep) 100%);isolation:isolate}
+  #hero::before,#hero::after{content:'';position:absolute;border-radius:50%;filter:blur(2px);opacity:.35;z-index:-1}
+  #hero::before{width:150px;height:150px;background:#fff;top:-60px;right:-40px;animation:float1 7s ease-in-out infinite}
+  #hero::after{width:100px;height:100px;background:#FFD9CF;bottom:-40px;left:-20px;animation:float2 8s ease-in-out infinite}
+  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-14px,16px)}}
+  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,-14px)}}
+  #hero .eyebrow{color:#FFE4E8;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+  #hero h1{color:#fff;font-size:27px;line-height:1.15;margin-bottom:8px}
+  #hero p{color:#FFE4E8;font-size:13.5px;margin-bottom:18px;max-width:85%}
+  #hero button{background:#fff;color:var(--red-deep);border:none;padding:12px 22px;border-radius:14px;font-weight:800;font-size:13px;cursor:pointer}
 
-  textarea, input[type=text]{
-    width:100%; border-radius:16px; border:1.5px solid rgba(255,255,255,.2);
-    background: rgba(255,255,255,.06); color:var(--cream);
-    padding:14px; font-family:'Quicksand'; font-size:1rem; margin-bottom:14px;
-    resize:none;
-  }
-  textarea:focus, input:focus{outline:2px solid var(--rose); border-color:transparent;}
+  /* SEARCH */
+  #search-wrap{padding:0 20px 14px}
+  #search-input{width:100%;padding:13px 16px 13px 42px;border-radius:16px;border:none;background:var(--pink-soft);color:var(--ink);font-family:'Manrope',sans-serif;font-size:14px;outline:none;background-image:none}
+  #search-wrap{position:relative}
+  #search-wrap::before{content:'🔍';position:absolute;left:34px;top:12px;font-size:14px;opacity:.6}
 
-  .hidden{display:none !important;}
+  /* CATEGORIES */
+  #cats-scroll{display:flex;gap:8px;padding:0 20px 16px;overflow-x:auto;scrollbar-width:none}
+  #cats-scroll::-webkit-scrollbar{display:none}
+  .cat-chip{flex:none;padding:9px 16px;border-radius:20px;background:var(--pink-soft);color:var(--ink-soft);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s;border:1.5px solid transparent}
+  .cat-chip.active{background:var(--ink);color:var(--white)}
 
-  /* coeur canvas */
-  #heartCanvas{position:fixed; inset:0; pointer-events:none; z-index:15;}
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:baseline;justify-content:space-between;padding:6px 20px 12px}
+  .section-header h2{font-size:18px}
+  .section-count{font-size:12px;color:var(--gray);font-weight:600}
 
-  /* compliments qui tombent */
-  #compliment-zone{position:relative; width:100%; min-height:180px; margin-top:10px;}
-  .falling-heart{
-    position:absolute; top:-40px; font-size:1.6rem; cursor:pointer;
-    animation: dropdown 4.5s linear forwards;
-  }
-  @keyframes dropdown{ to{ transform: translateY(230px); opacity:0;} }
-  #compliment-reveal{
-    min-height:50px; font-family:'Playfair Display'; font-style:italic;
-    color:var(--gold); font-size:1.05rem; margin-top:10px;
-  }
+  /* PRODUCTS GRID */
+  .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 20px 30px}
+  .product-card{background:var(--white);border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-card);cursor:pointer;position:relative;display:flex;flex-direction:column;transition:transform .15s}
+  .product-card:active{transform:scale(.97)}
+  .product-img{width:100%;aspect-ratio:1/1;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;overflow:hidden}
+  .product-img img{width:100%;height:100%;object-fit:cover}
+  .badge{position:absolute;top:8px;left:8px;background:var(--red-deep);color:#fff;font-size:9.5px;font-weight:800;padding:4px 8px;border-radius:8px;letter-spacing:.4px;text-transform:uppercase;z-index:2}
+  .product-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .product-name{font-size:13px;font-weight:700;line-height:1.25}
+  .product-price-row{display:flex;align-items:baseline;gap:6px;margin-top:auto}
+  .product-price{font-size:14.5px;font-weight:800;color:var(--red-deep)}
+  .product-price-old{font-size:11px;color:var(--gray);text-decoration:line-through}
+  .quick-add{position:absolute;bottom:10px;right:10px;width:30px;height:30px;border-radius:10px;background:var(--ink);color:#fff;border:none;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+  .no-results{text-align:center;padding:40px 20px;color:var(--gray);font-size:13px}
 
-  /* flip cards */
-  .flip-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px;}
-  .flip-card{ perspective:1000px; height:110px; }
-  .flip-inner{position:relative; width:100%; height:100%; transition:transform .6s; transform-style:preserve-3d;}
-  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
-  .flip-front, .flip-back{
-    position:absolute; inset:0; backface-visibility:hidden;
-    border-radius:14px; display:flex; align-items:center; justify-content:center;
-    padding:8px; text-align:center; font-size:.85rem; cursor:pointer;
-  }
-  .flip-front{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); font-family:'Playfair Display'; font-style:italic; color:var(--rose-soft);}
-  .flip-back{background:linear-gradient(135deg, var(--rose), #b9628e); color:var(--plum-deep); transform:rotateY(180deg); font-weight:600;}
+  /* BOTTOM NAV */
+  #bottom-nav{position:sticky;bottom:0;z-index:500;display:flex;background:var(--white);box-shadow:0 -4px 20px rgba(200,30,58,.08);padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+  .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--gray);font-size:10px;font-weight:700;position:relative}
+  .nav-item.active{color:var(--red-deep)}
+  .nav-icon{font-size:19px}
+  .cart-badge{position:absolute;top:-4px;right:22%;background:var(--red-deep);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 
-  /* quiz */
-  .quiz-stmt{font-size:1.05rem; margin-bottom:16px; color:var(--cream);}
-  .quiz-row{display:flex; gap:12px;}
-  .quiz-row button{flex:1;}
-  #quiz-feedback{margin-top:14px; min-height:24px; color:var(--gold); font-weight:600;}
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(43,20,32,.55);z-index:5000;display:none;align-items:flex-end;justify-content:center}
+  @media(min-width:560px){.modal-overlay{align-items:center}}
+  .modal-overlay.show{display:flex}
+  .modal-card{background:var(--white);width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-radius:26px 26px 0 0;animation:sheetUp .3s ease both}
+  @media(min-width:560px){.modal-card{border-radius:26px;margin:20px}}
+  .modal-drag{width:36px;height:4px;background:var(--pink);border-radius:2px;margin:10px auto}
+  #modal-img-wrap{width:100%;aspect-ratio:4/3;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden}
+  #modal-img-wrap img{width:100%;height:100%;object-fit:cover}
+  .modal-content{padding:20px 22px 26px}
+  .modal-name{font-size:20px;font-weight:700;margin-bottom:6px}
+  .modal-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px}
+  .modal-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:20px}
+  .modal-price{font-size:22px;font-weight:800;color:var(--red-deep)}
+  .modal-price-old{font-size:14px;color:var(--gray);text-decoration:line-through}
+  .qty-row{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .qty-btn{width:36px;height:36px;border-radius:12px;background:var(--pink-soft);border:none;font-size:17px;cursor:pointer;font-weight:700;color:var(--ink)}
+  .qty-val{font-size:16px;font-weight:800;min-width:20px;text-align:center}
 
-  .final-emoji{font-size:2.6rem; margin-bottom:6px;}
-  footer.brand{margin-top:26px; font-size:.7rem; letter-spacing:.12em; color:rgba(255,255,255,.3); text-transform:uppercase;}
+  /* CART PAGE */
+  #cart-page{display:none;position:fixed;inset:0;z-index:4000;background:var(--cream);flex-direction:column}
+  #cart-page.show{display:flex}
+  .page-topbar{display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--white);box-shadow:0 2px 10px rgba(200,30,58,.06)}
+  .icon-btn{width:36px;height:36px;border-radius:11px;background:var(--pink-soft);border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .page-title{font-size:17px;font-weight:700}
+  #cart-content{flex:1;overflow-y:auto;padding:16px 20px 20px}
+  .cart-item{display:flex;gap:12px;background:var(--white);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;box-shadow:var(--shadow-card)}
+  .cart-item-img{width:60px;height:60px;border-radius:10px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;overflow:hidden}
+  .cart-item-img img{width:100%;height:100%;object-fit:cover}
+  .cart-item-info{flex:1;display:flex;flex-direction:column;gap:4px}
+  .cart-item-name{font-size:13px;font-weight:700}
+  .cart-item-price{font-size:12.5px;color:var(--red-deep);font-weight:700}
+  .cart-item-ctrl{display:flex;align-items:center;gap:10px}
+  .mini-btn{width:24px;height:24px;border-radius:8px;background:var(--pink-soft);border:none;font-size:13px;cursor:pointer;font-weight:700}
+  .remove-link{font-size:11px;color:var(--gray);text-decoration:underline;cursor:pointer;margin-left:auto}
+  .empty-state{text-align:center;padding:60px 20px;color:var(--gray)}
+  .empty-state .em{font-size:44px;margin-bottom:14px}
+  .cart-summary{background:var(--white);border-radius:var(--radius-sm);padding:16px;margin-top:6px;box-shadow:var(--shadow-card)}
+  .summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);margin-bottom:8px}
+  .summary-row.total{font-size:16px;font-weight:800;color:var(--ink);margin-top:6px;padding-top:10px;border-top:1px dashed var(--pink)}
+  .summary-row.discount{color:var(--success);font-weight:700}
+  #cart-checkout-bar{padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:var(--white);box-shadow:0 -4px 20px rgba(200,30,58,.08)}
 
-  @media (max-width:360px){
-    .card{padding:22px 18px;}
-  }
+  /* CHECKOUT STEPS */
+  .step-dots{display:flex;gap:6px;justify-content:center;margin:14px 0 6px}
+  .step-dot{width:22px;height:4px;border-radius:2px;background:var(--pink)}
+  .step-dot.active{background:var(--red-deep)}
+  .field-group{margin-bottom:16px}
+  .field-label{font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:7px;display:block}
+  .field-input{width:100%;padding:13px 14px;border-radius:14px;border:1.5px solid var(--pink);background:var(--pink-soft);font-family:'Manrope',sans-serif;font-size:14px;color:var(--ink);outline:none}
+  .field-input:focus{border-color:var(--coral)}
+  .field-hint{font-size:11px;color:var(--gray);margin-top:6px}
+  .promo-status{font-size:12px;font-weight:700;margin-top:7px}
+  .promo-status.ok{color:var(--success)}
+  .promo-status.err{color:var(--red-deep)}
+  .loc-box{border:1.5px dashed var(--pink);border-radius:16px;padding:16px;text-align:center;margin-bottom:14px}
+  .loc-box.ok{border-style:solid;border-color:var(--success);background:rgba(46,158,91,.06)}
+  .recap-row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--pink-soft)}
+  .recap-row span:first-child{color:var(--ink-soft)}
+  .recap-row span:last-child{font-weight:700}
+
+  ::selection{background:var(--pink)}
 </style>
 </head>
 <body>
 
-<div id="petals"></div>
-<div id="bouquet-bar"></div>
-<canvas id="heartCanvas"></canvas>
+<div id="phone-frame">
 
-<!-- ================= SCREEN 1 : réveil + rêve ================= -->
-<section class="screen active" id="s1">
-  <div class="card">
-    <div id="s1-step1">
-      <div class="final-emoji">👸👑</div>
-      <h1>Bonjour princesse</h1>
-      <p>Tu es bien réveillée ?</p>
-      <div class="btn-row">
-        <button onclick="wakeAnswer(true)">Oui</button>
-        <button class="secondary" onclick="wakeAnswer(false)">Pas encore vraiment...</button>
-      </div>
-    </div>
-
-    <div id="s1-step2" class="hidden">
-      <p id="wake-msg" class="serif" style="font-size:1.15rem; color:var(--rose-soft);"></p>
-      <h2 style="margin-top:18px;">Dis-moi... à quoi as-tu rêvé cette nuit ?</h2>
-      <div class="btn-row">
-        <button onclick="chooseDream('moi')">De moi 🥰</button>
-        <button onclick="chooseDream('futur')">D'un futur proche</button>
-        <button onclick="chooseDream('aleatoire')">D'un rêve aléatoire</button>
-        <button class="secondary" onclick="chooseDream('oublie')">Je ne m'en rappelle plus</button>
-      </div>
-    </div>
+<!-- SPLASH -->
+<div id="splash">
+  <div class="seal">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 5"/><text x="50" y="58" text-anchor="middle" font-size="34" fill="#fff" font-family="Fraunces, serif" font-weight="900">B</text></svg>
   </div>
-</section>
+  <div class="logo-big">BARAKA <span>shop</span></div>
+  <p>La bénédiction dans chaque achat</p>
+</div>
 
-<!-- ================= SCREEN 2 : branche selon le rêve ================= -->
-<section class="screen" id="s2">
-  <div class="card">
+<!-- CLOSED BANNER -->
+<div id="closed-banner">
+  <div class="display">Boutique fermée</div>
+  <p id="closed-msg" style="opacity:.85;font-size:13px">Nous préparons de belles nouveautés.<br>Revenez très bientôt !</p>
+</div>
 
-    <div id="branch-moi" class="hidden">
-      <div class="final-emoji">💗</div>
-      <h2>De moi, vraiment ?</h2>
-      <p>Alors laisse-moi te montrer à quel point tu occupes mes pensées aussi... Ferme les yeux une seconde, et regarde.</p>
-      <button class="gold" onclick="revealPoem()">Découvrir</button>
-    </div>
+<!-- TOAST -->
+<div id="toast"></div>
 
-    <div id="branch-question" class="hidden">
-      <div class="final-emoji" id="branch-emoji">🌙</div>
-      <h2 id="branch-title">Raconte-moi</h2>
-      <p id="branch-sub">Ça parlait de quoi ?</p>
-      <textarea id="dream-input" rows="3" placeholder="Écris ici..."></textarea>
-      <button onclick="submitDream()">Envoyer</button>
-    </div>
-
-    <div id="branch-oublie" class="hidden">
-      <div class="final-emoji">😅</div>
-      <h2>Waouh, dommage !</h2>
-      <p>Mais essaie quand même de t'en souvenir, même un petit bout...</p>
-      <input type="text" id="oublie-input" placeholder="Peut-être que...">
-      <button onclick="submitOublie()">C'est tout ce dont je me souviens</button>
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= SCREEN 3 : LE POÈME ================= -->
-<section class="screen" id="s3">
-  <div class="card">
-    <div class="tag">Partie III · Le poème</div>
-    <h2>Mon rêve de toi</h2>
-    <p class="poem">Cette nuit, mon cœur s'est envolé vers toi,
-Un rêve doux, tissé de joie,
-Ton sourire éclairait chaque instant, je crois,
-Toi, mon univers, ma douce Chaïma.
-
-Dans ce songe, ta voix résonnait tout bas,
-Comme une mélodie qu'on n'oublie pas,
-Chaque geste de toi est un doux repas,
-Pour mon âme qui t'aime, ma tendre Adjara.
-
-Je me suis réveillé le sourire aux lèvres,
-Avec l'envie de t'écrire ces mots sans fièvre,
-Car même endormi, tu hantes mes rêves,
-Chaïma, Adjara, mon cœur vers toi s'élève.</p>
-    <button onclick="goTo('s4')">Continuer 🌸</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 4 : pluie de compliments ================= -->
-<section class="screen" id="s4">
-  <div class="card">
-    <div class="tag">Partie IV · Une petite pluie</div>
-    <h2>Attrape un cœur</h2>
-    <p>Chaque cœur cache un petit mot pour toi. Touche-en un.</p>
-    <div id="compliment-zone"></div>
-    <div id="compliment-reveal"></div>
-    <button style="margin-top:16px;" onclick="startHearts(); goToDelayed('s5')">Continuer 🌸</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 5 : quiz mignon ================= -->
-<section class="screen" id="s5">
-  <div class="card">
-    <div class="tag">Partie V · Vrai ou faux</div>
-    <h2 id="quiz-title">Petit jeu</h2>
-    <p class="quiz-stmt" id="quiz-stmt"></p>
-    <div class="quiz-row">
-      <button onclick="answerQuiz(true)">Vrai</button>
-      <button class="secondary" onclick="answerQuiz(false)">Faux</button>
-    </div>
-    <div id="quiz-feedback"></div>
-    <button id="quiz-next" class="hidden" style="margin-top:14px;" onclick="nextQuiz()">Suivant</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 6 : raisons de t'aimer ================= -->
-<section class="screen" id="s6">
-  <div class="card">
-    <div class="tag">Partie VI · Mon petit carnet</div>
-    <h2>Quelques raisons</h2>
-    <p>Touche chaque carte.</p>
-    <div class="flip-grid" id="flip-grid"></div>
-    <button style="margin-top:18px;" onclick="goTo('s7')">Continuer 🌸</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 7 : lettre courte ================= -->
-<section class="screen" id="s7">
-  <div class="card">
-    <div class="tag">Partie VII · Une lettre</div>
-    <h2>À toi</h2>
-    <p class="poem">Si les mots pouvaient peindre un visage,
-Le tien serait mon plus beau paysage,
-Chaque jour à tes côtés est un cadeau,
-Chaïma, tu illumines même mes mots.
-
-Tu es la douceur dans mon vacarme,
-La paix que je cherche, mon arme,
-Rien ne me touche autant que ton charme,
-Adjara, tu es la plus belle des âmes.</p>
-    <button onclick="goTo('s8')">Continuer 🌸</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 8 : bouquet final ================= -->
-<section class="screen" id="s8">
-  <div class="card">
-    <div class="tag">Partie VIII · Le bouquet</div>
-    <div class="final-emoji" id="bouquet-emoji">🌷</div>
-    <h2>Notre bouquet</h2>
-    <p class="poem">Pétale après pétale, j'ai construit ce chemin,
-Pour te dire ce que je ressens, enfin,
-Chaque fleur est un mot, chaque mot est sincère,
-Toi et moi, c'est simple, c'est clair.
-
-Chaïma, Adjara, quel que soit ton nom pour moi,
-Tu resteras toujours ma plus belle joie,
-Ce bouquet n'est qu'un début, crois-moi,
-Il y en aura mille autres, je te le dois.</p>
-    <button class="gold" onclick="goTo('s9')">J'ai encore une dernière question 🌸</button>
-  </div>
-</section>
-
-<!-- ================= SCREEN 9 : choix final ================= -->
-<section class="screen" id="s9">
-  <div class="card">
-    <div class="tag">Partie IX · Dernière étape</div>
-    <div class="final-emoji">💌</div>
-    <h2>Et toi, tu en penses quoi ?</h2>
-    <p>Choisis la réponse qui te ressemble le plus.</p>
+<!-- GEO CONSENT -->
+<div class="overlay" id="geo-overlay">
+  <div class="sheet">
+    <div class="sheet-icon">📍</div>
+    <h3>Où livrer vos articles ?</h3>
+    <p>Partagez votre position pour qu'on puisse préparer une livraison rapide et précise, où que vous soyez.</p>
     <div class="btn-row">
-      <button onclick="finalChoice('J\'aime cette attention que tu as envers moi 🥰')">J'aime cette attention que tu as envers moi 🥰</button>
-      <button class="secondary" onclick="finalChoice('C\'est gênant 😳')">C'est gênant 😳</button>
-      <button class="gold" onclick="finalChoice('Merci 🙏')">Merci 🙏</button>
+      <button class="btn btn-ghost" onclick="declineGeo()">Plus tard</button>
+      <button class="btn btn-primary" onclick="requestGeo()">Partager ma position</button>
     </div>
-    <p id="final-thanks" class="hidden" style="margin-top:18px; color:var(--gold);">Message envoyé 💌 merci d'avoir joué le jeu jusqu'au bout.</p>
-    <footer class="brand">BAF Industrie</footer>
+    <div class="geo-status" id="geo-status-text" style="display:none"></div>
   </div>
-</section>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="logo"><div class="mark">B</div>BARAKA <span>shop</span></div>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="eyebrow">Nouveautés &amp; promos</div>
+    <h1 class="display" id="hero-title">Vos coups de cœur,<br>à prix béni</h1>
+    <p id="hero-slogan">Articles sélectionnés, livraison suivie, petits prix.</p>
+    <button onclick="scrollToProducts()">Découvrir la boutique</button>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="search-wrap">
+    <input type="text" id="search-input" placeholder="Rechercher un article..." oninput="filterProducts()">
+  </div>
+
+  <!-- CATEGORIES -->
+  <div id="cats-scroll"></div>
+
+  <!-- PRODUCTS -->
+  <div class="section-header" id="products-anchor">
+    <h2>Tous les articles</h2>
+    <div class="section-count" id="prod-count"></div>
+  </div>
+  <div class="products-grid" id="products-grid"></div>
+  <div class="no-results" id="no-results" style="display:none">Aucun article trouvé 😕</div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="showHome()"><span class="nav-icon">🏠</span>Accueil</button>
+    <button class="nav-item" id="nav-search" onclick="focusSearch()"><span class="nav-icon">🔍</span>Recherche</button>
+    <button class="nav-item" id="nav-cart" onclick="openCart()"><span class="nav-icon">🛍️</span>Panier<span class="cart-badge" id="cart-badge" style="display:none">0</span></button>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="prod-modal" onclick="closeModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-drag"></div>
+    <div id="modal-img-wrap"></div>
+    <div class="modal-content">
+      <div id="modal-badge-wrap"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-price-row">
+        <div class="modal-price" id="modal-price"></div>
+        <div class="modal-price-old" id="modal-price-old"></div>
+      </div>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <div class="qty-val" id="modal-qty">1</div>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:15px" onclick="addFromModal()">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART PAGE -->
+<div id="cart-page">
+  <div class="page-topbar">
+    <button class="icon-btn" onclick="closeCart()">←</button>
+    <div class="page-title">Mon panier</div>
+  </div>
+  <div id="cart-content"></div>
+  <div id="cart-checkout-bar" style="display:none">
+    <button class="btn btn-primary" style="width:100%;padding:16px;font-size:15px" onclick="openCheckout()">Commander sur WhatsApp</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal-card" style="max-height:92vh">
+    <div class="modal-drag"></div>
+    <div class="modal-content" id="checkout-content"></div>
+  </div>
+</div>
+
+</div><!-- /phone-frame -->
 
 <script>
-/* ---------------- utilitaires ---------------- */
-const buds = [];
-function initBar(){
-  const bar = document.getElementById('bouquet-bar');
-  for(let i=0;i<9;i++){
-    const d = document.createElement('div');
-    d.className='bud';
-    bar.appendChild(d);
-    buds.push(d);
-  }
-  bloom(0);
-}
-function bloom(index){
-  buds.forEach((b,i)=>{ if(i<=index) b.classList.add('bloom'); });
-}
-const order = ['s1','s2','s3','s4','s5','s6','s7','s8','s9'];
-function goTo(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  bloom(order.indexOf(id));
-  window.scrollTo(0,0);
-}
-function goToDelayed(id){ setTimeout(()=>goTo(id), 600); }
+/* ============ CONFIGURATION (à remplacer plus tard par Supabase) ============ */
+// TODO: quand tu me donneras l'URL + clé anon Supabase, on remplace PRODUCTS/SETTINGS/AFFILIATES
+// par des tables (ex: baraka_products, baraka_settings, baraka_affiliates, baraka_orders)
+// et loadData() ci-dessous fera un vrai fetch au lieu de lire ces variables locales.
 
-/* ---------------- pétales flottants ---------------- */
-const petalEmojis = ['🌸','💮','🌷','✨','💗'];
-function spawnPetal(){
-  const p = document.createElement('div');
-  p.className='petal';
-  p.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
-  p.style.left = Math.random()*100+'vw';
-  p.style.setProperty('--drift', (Math.random()*80-40)+'px');
-  p.style.animationDuration = (6+Math.random()*5)+'s';
-  document.getElementById('petals').appendChild(p);
-  setTimeout(()=>p.remove(), 12000);
-}
-setInterval(spawnPetal, 900);
+const SETTINGS = {
+  shopOpen: true,
+  slogan: "Articles sélectionnés, livraison suivie, petits prix.",
+  whatsappNumber: "2250585728940", // sans le +
+  categories: ["Tout","Mode","Beauté","Maison","Électronique","Accessoires"],
+  affiliateDiscountPercent: 10
+};
 
-/* ---------------- écran 1 : réveil ---------------- */
-function wakeAnswer(yes){
-  document.getElementById('s1-step1').classList.add('hidden');
-  document.getElementById('s1-step2').classList.remove('hidden');
-  document.getElementById('wake-msg').textContent = yes
-    ? "Bonjour 🌞 je suis heureux que tu sois bien réveillée."
-    : "Prends ton temps mon cœur, on y va tout en douceur ☁️";
-}
-
-let dreamChoice = null;
-function chooseDream(choice){
-  dreamChoice = choice;
-  goTo('s2');
-  document.querySelectorAll('#s2 .card > div').forEach(d=>d.classList.add('hidden'));
-
-  if(choice==='moi'){
-    document.getElementById('branch-moi').classList.remove('hidden');
-  } else if(choice==='futur'){
-    document.getElementById('branch-question').classList.remove('hidden');
-    document.getElementById('branch-emoji').textContent='🔮';
-    document.getElementById('branch-title').textContent="Un futur proche...";
-    document.getElementById('branch-sub').textContent="Raconte-moi, ça parlait de quoi ?";
-  } else if(choice==='aleatoire'){
-    document.getElementById('branch-question').classList.remove('hidden');
-    document.getElementById('branch-emoji').textContent='🌙';
-    document.getElementById('branch-title').textContent="Un rêve mystère...";
-    document.getElementById('branch-sub').textContent="Raconte-moi quand même, ça parlait de quoi ?";
-  } else if(choice==='oublie'){
-    document.getElementById('branch-oublie').classList.remove('hidden');
-  }
-}
-function revealPoem(){ goTo('s3'); launchHeartBurst(); }
-function submitDream(){ goTo('s3'); launchHeartBurst(); }
-function submitOublie(){ goTo('s3'); launchHeartBurst(); }
-
-/* ---------------- canvas coeur particules ---------------- */
-const canvas = document.getElementById('heartCanvas');
-const ctx = canvas.getContext('2d');
-function resizeCanvas(){ canvas.width=innerWidth; canvas.height=innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-function heartPoint(t){
-  const x = 16*Math.pow(Math.sin(t),3);
-  const y = 13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
-  return {x,y};
-}
-function launchHeartBurst(){
-  const cx = canvas.width/2, cy = canvas.height*0.35, scale = Math.min(canvas.width,canvas.height)/22;
-  const particles = [];
-  for(let i=0;i<90;i++){
-    const t = Math.random()*Math.PI*2;
-    const pt = heartPoint(t);
-    particles.push({
-      x: cx, y: cy,
-      tx: cx + pt.x*scale, ty: cy - pt.y*scale,
-      color: Math.random()>0.5 ? '#e091b3' : '#d4af37',
-      size: 2+Math.random()*2.5,
-      delay: Math.random()*20
-    });
-  }
-  let frame=0;
-  const duration=70;
-  function animate(){
-    frame++;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    let alive=false;
-    particles.forEach(p=>{
-      const localFrame = Math.max(0, frame-p.delay);
-      const prog = Math.min(1, localFrame/duration);
-      if(prog<1) alive=true;
-      const ease = 1-Math.pow(1-prog,3);
-      const x = p.x + (p.tx-p.x)*ease;
-      const y = p.y + (p.ty-p.y)*ease;
-      ctx.globalAlpha = prog<1 ? 0.9 : Math.max(0, 1-(frame-p.delay-duration)/40);
-      ctx.fillStyle=p.color;
-      ctx.beginPath();
-      ctx.arc(x,y,p.size,0,Math.PI*2);
-      ctx.fill();
-    });
-    ctx.globalAlpha=1;
-    if(frame<duration+60) requestAnimationFrame(animate);
-    else ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
-  animate();
-}
-
-/* ---------------- compliments qui tombent ---------------- */
-const compliments = [
-  "Ton sourire est mon rayon de soleil préféré.",
-  "Tu rends les journées ordinaires spéciales.",
-  "Ta présence suffit à tout apaiser.",
-  "Tu es plus belle que tu ne le crois.",
-  "Ton rire est un son que je pourrais écouter toute une vie.",
-  "Tu mérites tout ce qu'il y a de meilleur.",
-  "Chaque détail chez toi a quelque chose de précieux.",
-  "Tu illumines la pièce sans même le vouloir."
+const AFFILIATES = [
+  // codes d'exemple — à remplacer par la vraie source (site de parrainage à venir)
+  { code:"BARAKA10", active:true },
+  { code:"AMINA5", active:true }
 ];
-let heartTimer=null;
-function startHearts(){
-  const zone = document.getElementById('compliment-zone');
-  let count=0;
-  heartTimer = setInterval(()=>{
-    if(count>=6){ clearInterval(heartTimer); return; }
-    count++;
-    const h = document.createElement('div');
-    h.className='falling-heart';
-    h.textContent='💗';
-    h.style.left = (10+Math.random()*80)+'%';
-    h.onclick = ()=>{
-      document.getElementById('compliment-reveal').textContent =
-        '"'+compliments[Math.floor(Math.random()*compliments.length)]+'"';
-      h.remove();
-    };
-    zone.appendChild(h);
-    setTimeout(()=>h.remove(), 4500);
-  }, 700);
+
+let PRODUCTS = [
+  { id:1, name:"Robe wax élégante", desc:"Robe imprimée wax, coupe cintrée, idéale pour toutes occasions. Tissu 100% coton, entretien facile.", price:12000, promo:9500, cat:"Mode", emoji:"👗", img:"", badge:"promo" },
+  { id:2, name:"Sac à main tressé", desc:"Sac fait main en fibres tressées, doublure intérieure, fermeture zip. Léger et résistant.", price:8000, promo:null, cat:"Accessoires", emoji:"👜", img:"", badge:"" },
+  { id:3, name:"Baskets unisexe", desc:"Baskets confortables, semelle amortissante, plusieurs pointures disponibles.", price:15000, promo:12000, cat:"Mode", emoji:"👟", img:"", badge:"promo" },
+  { id:4, name:"Crème hydratante karité", desc:"Crème corporelle au beurre de karité pur, nourrit intensément la peau.", price:4500, promo:null, cat:"Beauté", emoji:"🧴", img:"", badge:"nouveau" },
+  { id:5, name:"Écouteurs sans fil", desc:"Écouteurs Bluetooth, autonomie 6h, boîtier de charge inclus.", price:18000, promo:14500, cat:"Électronique", emoji:"🎧", img:"", badge:"promo" },
+  { id:6, name:"Set de vaisselle 12 pièces", desc:"Assiettes et bols en céramique, design épuré, résistant au lave-vaisselle.", price:22000, promo:null, cat:"Maison", emoji:"🍽️", img:"", badge:"" },
+  { id:7, name:"Montre classique", desc:"Montre bracelet cuir, cadran minimaliste, étanche éclaboussures.", price:16000, promo:null, cat:"Accessoires", emoji:"⌚", img:"", badge:"nouveau" },
+  { id:8, name:"Lunettes de soleil", desc:"Monture légère, protection UV400, style intemporel.", price:6000, promo:4500, cat:"Mode", emoji:"🕶️", img:"", badge:"promo" }
+];
+
+/* ============ ÉTAT ============ */
+let cart = JSON.parse(localStorage.getItem('baraka_cart')||'[]');
+let currentCat = "Tout";
+let activeProduct = null;
+let modalQty = 1;
+let userLocation = null; // { lat, lng, link }
+let appliedPromo = null; // { code, percent }
+
+/* ============ INIT ============ */
+function init(){
+  applySettings();
+  renderCats();
+  renderProducts();
+  updateCartBadge();
+  const savedTheme = localStorage.getItem('baraka_theme');
+  if(savedTheme==='dark'){ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('theme-toggle').textContent='☀️'; }
+  const savedLoc = JSON.parse(localStorage.getItem('baraka_location')||'null');
+  if(savedLoc) userLocation = savedLoc;
+
+  setTimeout(()=>{
+    document.getElementById('app').style.display='block';
+    const askedBefore = localStorage.getItem('baraka_geo_asked');
+    if(!askedBefore){
+      document.getElementById('geo-overlay').classList.add('show');
+    }
+  }, 2000);
 }
 
-/* ---------------- quiz vrai/faux ---------------- */
-const quiz = [
-  {stmt:"Vrai ou faux : tu es la personne à qui je pense le plus souvent.", answer:true, fb:"Vrai. Toujours."},
-  {stmt:"Vrai ou faux : ton sourire n'a aucun effet sur moi.", answer:false, fb:"Faux, il fait tout l'effet du monde."},
-  {stmt:"Vrai ou faux : je suis fier(e) de te connaître.", answer:true, fb:"Vrai, sincèrement."},
-  {stmt:"Vrai ou faux : rien ne pourrait te rendre encore plus précieuse à mes yeux.", answer:false, fb:"Faux... chaque jour tu trouves un moyen."}
-];
-let qIndex=0;
-function loadQuiz(){
-  document.getElementById('quiz-stmt').textContent = quiz[qIndex].stmt;
-  document.getElementById('quiz-feedback').textContent='';
-  document.getElementById('quiz-next').classList.add('hidden');
-}
-function answerQuiz(userAns){
-  const correct = quiz[qIndex].answer;
-  document.getElementById('quiz-feedback').textContent =
-    (userAns===correct ? "✨ " : "") + quiz[qIndex].fb;
-  document.getElementById('quiz-next').classList.remove('hidden');
-}
-function nextQuiz(){
-  qIndex++;
-  if(qIndex>=quiz.length){ goTo('s6'); buildFlipCards(); return; }
-  loadQuiz();
+function applySettings(){
+  if(!SETTINGS.shopOpen){
+    document.getElementById('closed-banner').style.display='flex';
+  }
+  document.getElementById('hero-slogan').textContent = SETTINGS.slogan;
 }
 
-/* ---------------- flip cards ---------------- */
-const reasons = [
-  {f:"01", b:"Ta douceur"},
-  {f:"02", b:"Ton rire"},
-  {f:"03", b:"Ta force tranquille"},
-  {f:"04", b:"Ta façon d'être toi, tout simplement"}
-];
-function buildFlipCards(){
-  const grid = document.getElementById('flip-grid');
-  if(grid.children.length) return;
-  reasons.forEach(r=>{
-    const card = document.createElement('div');
-    card.className='flip-card';
-    card.innerHTML = `<div class="flip-inner">
-      <div class="flip-front">${r.f}</div>
-      <div class="flip-back">${r.b}</div>
-    </div>`;
-    card.onclick = ()=>card.classList.toggle('flipped');
-    grid.appendChild(card);
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+  if(isDark){ document.documentElement.removeAttribute('data-theme'); document.getElementById('theme-toggle').textContent='🌙'; localStorage.setItem('baraka_theme','light'); }
+  else{ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('theme-toggle').textContent='☀️'; localStorage.setItem('baraka_theme','dark'); }
+}
+
+/* ============ GEOLOCATION ============ */
+function requestGeo(){
+  const statusEl = document.getElementById('geo-status-text');
+  statusEl.style.display='flex';
+  statusEl.className='geo-status';
+  statusEl.textContent='Localisation en cours...';
+  if(!navigator.geolocation){
+    statusEl.textContent="La géolocalisation n'est pas disponible sur cet appareil.";
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      const { latitude, longitude } = pos.coords;
+      userLocation = { lat:latitude, lng:longitude, link:`https://www.google.com/maps?q=${latitude},${longitude}` };
+      localStorage.setItem('baraka_location', JSON.stringify(userLocation));
+      localStorage.setItem('baraka_geo_asked','1');
+      statusEl.className='geo-status ok';
+      statusEl.textContent='✓ Position enregistrée';
+      showToast('Position partagée avec succès 📍');
+      setTimeout(()=>{ document.getElementById('geo-overlay').classList.remove('show'); }, 700);
+    },
+    err=>{
+      statusEl.textContent="Position non partagée — vous pourrez saisir votre adresse manuellement à la commande.";
+      localStorage.setItem('baraka_geo_asked','1');
+    }
+  );
+}
+function declineGeo(){
+  localStorage.setItem('baraka_geo_asked','1');
+  document.getElementById('geo-overlay').classList.remove('show');
+}
+
+/* ============ CATEGORIES & PRODUCTS ============ */
+function renderCats(){
+  const wrap = document.getElementById('cats-scroll');
+  wrap.innerHTML = SETTINGS.categories.map(c=>
+    `<div class="cat-chip ${c===currentCat?'active':''}" onclick="selectCat(this,'${c}')">${c}</div>`
+  ).join('');
+}
+function selectCat(el, cat){
+  currentCat = cat;
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts();
+}
+function getFiltered(){
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  return PRODUCTS.filter(p=>{
+    const matchCat = currentCat==='Tout' || p.cat===currentCat;
+    const matchSearch = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+    return matchCat && matchSearch;
   });
 }
+function renderProducts(){
+  const list = getFiltered();
+  const grid = document.getElementById('products-grid');
+  document.getElementById('prod-count').textContent = list.length + (list.length>1?' articles':' article');
+  document.getElementById('no-results').style.display = list.length? 'none':'block';
+  grid.innerHTML = list.map(p=>{
+    const badgeText = p.badge==='promo' ? 'Promo' : p.badge==='nouveau' ? 'Nouveau' : '';
+    return `
+    <div class="product-card" onclick="openModal(${p.id})">
+      ${badgeText?`<div class="badge">${badgeText}</div>`:''}
+      <div class="product-img">${p.img?`<img src="${p.img}">`:p.emoji}</div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-price-row">
+          <div class="product-price">${fmt(p.promo||p.price)} F</div>
+          ${p.promo?`<div class="product-price-old">${fmt(p.price)} F</div>`:''}
+        </div>
+      </div>
+      <button class="quick-add" onclick="event.stopPropagation();quickAdd(${p.id})">+</button>
+    </div>`;
+  }).join('');
+}
+function filterProducts(){ renderProducts(); }
+function scrollToProducts(){ document.getElementById('products-anchor').scrollIntoView({behavior:'smooth'}); }
+function focusSearch(){ scrollToProducts(); document.getElementById('search-input').focus(); }
+function fmt(n){ return n.toLocaleString('fr-FR'); }
 
-/* ---------------- choix final + whatsapp ---------------- */
-function finalChoice(text){
-  const message = "Chaïma a répondu à ton site : \"" + text + "\" 💌";
-  const url = "https://wa.me/22605614145?text=" + encodeURIComponent(message);
-  document.getElementById('final-thanks').classList.remove('hidden');
-  window.open(url, '_blank');
+/* ============ PRODUCT MODAL ============ */
+function openModal(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  activeProduct = p; modalQty = 1;
+  document.getElementById('modal-img-wrap').innerHTML = p.img? `<img src="${p.img}">` : p.emoji;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-price').textContent = fmt(p.promo||p.price)+' F';
+  document.getElementById('modal-price-old').textContent = p.promo? fmt(p.price)+' F' : '';
+  document.getElementById('modal-qty').textContent = modalQty;
+  const badgeText = p.badge==='promo' ? 'Promo' : p.badge==='nouveau' ? 'Nouveau' : '';
+  document.getElementById('modal-badge-wrap').innerHTML = badgeText? `<div class="badge" style="position:static;display:inline-block;margin-bottom:10px">${badgeText}</div>` : '';
+  document.getElementById('prod-modal').classList.add('show');
+}
+function closeModal(e){ if(!e || e.target.id==='prod-modal'){ document.getElementById('prod-modal').classList.remove('show'); } }
+function changeQty(d){ modalQty = Math.max(1, modalQty+d); document.getElementById('modal-qty').textContent = modalQty; }
+function addFromModal(){ addToCart(activeProduct, modalQty); document.getElementById('prod-modal').classList.remove('show'); }
+function quickAdd(id){ const p = PRODUCTS.find(x=>x.id===id); addToCart(p,1); }
+
+/* ============ CART ============ */
+function addToCart(p, qty){
+  const existing = cart.find(i=>i.id===p.id);
+  if(existing) existing.qty += qty;
+  else cart.push({ id:p.id, name:p.name, price:p.promo||p.price, emoji:p.emoji, img:p.img, qty });
+  localStorage.setItem('baraka_cart', JSON.stringify(cart));
+  updateCartBadge();
+  showToast(`${p.name} ajouté au panier 🛍️`);
+}
+function updateCartBadge(){
+  const total = cart.reduce((s,i)=>s+i.qty,0);
+  const badge = document.getElementById('cart-badge');
+  if(total>0){ badge.style.display='flex'; badge.textContent = total; } else badge.style.display='none';
+}
+function openCart(){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('nav-cart').classList.add('active');
+  renderCart();
+  document.getElementById('cart-page').classList.add('show');
+}
+function closeCart(){
+  document.getElementById('cart-page').classList.remove('show');
+  document.getElementById('nav-cart').classList.remove('active');
+  document.getElementById('nav-home').classList.add('active');
+}
+function renderCart(){
+  const wrap = document.getElementById('cart-content');
+  const bar = document.getElementById('cart-checkout-bar');
+  if(cart.length===0){
+    wrap.innerHTML = `<div class="empty-state"><div class="em">🛍️</div>Votre panier est vide<br><span style="font-size:12px">Ajoutez des articles pour commencer</span></div>`;
+    bar.style.display='none';
+    return;
+  }
+  bar.style.display='block';
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  wrap.innerHTML = cart.map(i=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${i.img?`<img src="${i.img}">`:i.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-item-price">${fmt(i.price)} F</div>
+        <div class="cart-item-ctrl">
+          <button class="mini-btn" onclick="changeCartQty(${i.id},-1)">−</button>
+          <span style="font-weight:700;font-size:12.5px">${i.qty}</span>
+          <button class="mini-btn" onclick="changeCartQty(${i.id},1)">+</button>
+          <span class="remove-link" onclick="removeFromCart(${i.id})">Retirer</span>
+        </div>
+      </div>
+    </div>`).join('') +
+    `<div class="cart-summary">
+      <div class="summary-row"><span>Sous-total</span><span>${fmt(subtotal)} F</span></div>
+      <div class="summary-row"><span>Livraison</span><span>À confirmer</span></div>
+      <div class="summary-row total"><span>Total estimé</span><span>${fmt(subtotal)} F</span></div>
+    </div>`;
+}
+function changeCartQty(id,d){
+  const item = cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qty += d;
+  if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
+  localStorage.setItem('baraka_cart', JSON.stringify(cart));
+  renderCart(); updateCartBadge();
+}
+function removeFromCart(id){
+  cart = cart.filter(i=>i.id!==id);
+  localStorage.setItem('baraka_cart', JSON.stringify(cart));
+  renderCart(); updateCartBadge();
 }
 
-/* ---------------- init ---------------- */
-initBar();
-loadQuiz();
+/* ============ CHECKOUT (3 étapes) ============ */
+let checkoutStep = 1;
+let checkoutData = { name:'', phone:'', promoCode:'', manualAddress:'' };
+
+function openCheckout(){
+  checkoutStep = 1;
+  checkoutData = { name:'', phone:'', promoCode:'', manualAddress:'' };
+  appliedPromo = null;
+  renderCheckout();
+  document.getElementById('checkout-modal').classList.add('show');
+}
+function closeCheckout(){ document.getElementById('checkout-modal').classList.remove('show'); }
+
+function renderCheckout(){
+  const c = document.getElementById('checkout-content');
+  const dots = [1,2,3].map(n=>`<div class="step-dot ${n===checkoutStep?'active':''}"></div>`).join('');
+
+  if(checkoutStep===1){
+    c.innerHTML = `
+      <div class="step-dots">${dots}</div>
+      <h3 style="margin:14px 0 18px;font-size:18px">Vos coordonnées</h3>
+      <div class="field-group">
+        <label class="field-label">Nom complet</label>
+        <input class="field-input" id="ck-name" placeholder="Ex: Awa Koné" value="${checkoutData.name}">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Numéro de téléphone</label>
+        <input class="field-input" id="ck-phone" type="tel" placeholder="Ex: 07 00 00 00 00" value="${checkoutData.phone}">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Code promo / parrainage (facultatif)</label>
+        <input class="field-input" id="ck-promo" placeholder="Ex: BARAKA10" value="${checkoutData.promoCode}" oninput="checkPromoLive()">
+        <div class="promo-status" id="promo-status"></div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:15px;margin-top:6px" onclick="goStep2()">Continuer</button>
+    `;
+  } else if(checkoutStep===2){
+    const hasLoc = !!userLocation;
+    c.innerHTML = `
+      <div class="step-dots">${dots}</div>
+      <h3 style="margin:14px 0 18px;font-size:18px">Lieu de livraison</h3>
+      <div class="loc-box ${hasLoc?'ok':''}" id="loc-box">
+        ${hasLoc
+          ? `<div style="font-size:24px;margin-bottom:6px">✅</div><div style="font-weight:700;font-size:13px">Position partagée</div><div class="field-hint">Vos coordonnées GPS seront jointes à la commande</div>`
+          : `<div style="font-size:24px;margin-bottom:6px">📍</div><div style="font-weight:700;font-size:13px">Aucune position partagée</div><div class="field-hint">Partagez votre position ou saisissez une adresse</div>`
+        }
+      </div>
+      <button class="btn btn-ghost" style="width:100%;padding:13px;margin-bottom:16px" onclick="requestGeoInCheckout()">${hasLoc? 'Mettre à jour ma position':'Partager ma position GPS'}</button>
+      <div class="field-group">
+        <label class="field-label">Ou décrivez votre adresse</label>
+        <input class="field-input" id="ck-address" placeholder="Ex: Cocody Angré, 8e tranche..." value="${checkoutData.manualAddress}">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="checkoutStep=1;renderCheckout()">Retour</button>
+        <button class="btn btn-primary" onclick="goStep3()">Continuer</button>
+      </div>
+    `;
+  } else {
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const discount = appliedPromo? Math.round(subtotal*appliedPromo.percent/100) : 0;
+    const total = subtotal - discount;
+    c.innerHTML = `
+      <div class="step-dots">${dots}</div>
+      <h3 style="margin:14px 0 18px;font-size:18px">Récapitulatif</h3>
+      <div class="recap-row"><span>Client</span><span>${checkoutData.name||'—'}</span></div>
+      <div class="recap-row"><span>Téléphone</span><span>${checkoutData.phone||'—'}</span></div>
+      <div class="recap-row"><span>Livraison</span><span>${userLocation? 'Position GPS':(checkoutData.manualAddress||'Non précisée')}</span></div>
+      ${appliedPromo? `<div class="recap-row"><span>Code promo</span><span>${appliedPromo.code} (−${appliedPromo.percent}%)</span></div>`:''}
+      <div class="recap-row"><span>Sous-total</span><span>${fmt(subtotal)} F</span></div>
+      ${discount? `<div class="recap-row" style="color:var(--success)"><span>Réduction</span><span>−${fmt(discount)} F</span></div>`:''}
+      <div class="recap-row" style="border:none;font-size:16px;font-weight:800;margin-top:8px"><span>Total</span><span>${fmt(total)} F</span></div>
+      <div class="btn-row" style="margin-top:20px">
+        <button class="btn btn-ghost" onclick="checkoutStep=2;renderCheckout()">Retour</button>
+        <button class="btn btn-primary" onclick="sendOrder()">Envoyer sur WhatsApp</button>
+      </div>
+    `;
+  }
+}
+
+function checkPromoLive(){
+  const val = document.getElementById('ck-promo').value.trim().toUpperCase();
+  const statusEl = document.getElementById('promo-status');
+  if(!val){ statusEl.textContent=''; appliedPromo=null; return; }
+  const found = AFFILIATES.find(a=>a.code.toUpperCase()===val && a.active);
+  if(found){
+    appliedPromo = { code: val, percent: SETTINGS.affiliateDiscountPercent };
+    statusEl.className='promo-status ok';
+    statusEl.textContent = `✓ Code valide — ${SETTINGS.affiliateDiscountPercent}% de réduction appliquée`;
+  } else {
+    appliedPromo = null;
+    statusEl.className='promo-status err';
+    statusEl.textContent = 'Code invalide';
+  }
+}
+
+function goStep2(){
+  const name = document.getElementById('ck-name').value.trim();
+  const phone = document.getElementById('ck-phone').value.trim();
+  if(!name || !phone){ showToast('Merci de renseigner votre nom et numéro'); return; }
+  checkoutData.name = name; checkoutData.phone = phone;
+  checkoutData.promoCode = document.getElementById('ck-promo').value.trim();
+  checkoutStep = 2; renderCheckout();
+}
+function goStep3(){
+  checkoutData.manualAddress = document.getElementById('ck-address').value.trim();
+  if(!userLocation && !checkoutData.manualAddress){ showToast('Partagez votre position ou décrivez votre adresse'); return; }
+  checkoutStep = 3; renderCheckout();
+}
+function requestGeoInCheckout(){
+  if(!navigator.geolocation){ showToast("Géolocalisation non disponible sur cet appareil"); return; }
+  showToast('Localisation en cours...');
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      const { latitude, longitude } = pos.coords;
+      userLocation = { lat:latitude, lng:longitude, link:`https://www.google.com/maps?q=${latitude},${longitude}` };
+      localStorage.setItem('baraka_location', JSON.stringify(userLocation));
+      showToast('Position mise à jour 📍');
+      renderCheckout();
+    },
+    ()=> showToast("Position refusée — saisissez votre adresse")
+  );
+}
+
+function sendOrder(){
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const discount = appliedPromo? Math.round(subtotal*appliedPromo.percent/100) : 0;
+  const total = subtotal - discount;
+
+  let msg = `🛍️ *Nouvelle commande BARAKA shop*\n\n`;
+  msg += `👤 *Client:* ${checkoutData.name}\n📞 *Téléphone:* ${checkoutData.phone}\n\n`;
+  msg += `*Articles:*\n`;
+  cart.forEach(i=>{ msg += `• ${i.name} x${i.qty} — ${fmt(i.price*i.qty)} F\n`; });
+  msg += `\nSous-total: ${fmt(subtotal)} F\n`;
+  if(appliedPromo) msg += `Code promo: ${appliedPromo.code} (−${appliedPromo.percent}%) — Affilié à créditer\n`;
+  msg += `*Total: ${fmt(total)} F*\n\n`;
+  msg += `📍 *Livraison:*\n`;
+  if(userLocation) msg += `Position GPS: ${userLocation.link}\n`;
+  if(checkoutData.manualAddress) msg += `Adresse indiquée: ${checkoutData.manualAddress}\n`;
+
+  const url = `https://wa.me/${SETTINGS.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+
+  cart = [];
+  localStorage.setItem('baraka_cart', '[]');
+  updateCartBadge();
+  closeCheckout();
+  closeCart();
+  showToast('Commande envoyée sur WhatsApp ✅');
+}
+
+/* ============ NAV / UTIL ============ */
+function showHome(){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('nav-home').classList.add('active');
+  closeCart();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+init();
 </script>
 </body>
 </html>
