@@ -2,743 +2,528 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>BARAKA shop — Vos achats, livrés avec bénédiction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BARAKA SHOP — Programme Affiliés</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --white:#FFFFFF;
-    --cream:#FFF7F5;
-    --pink:#FFE2E7;
-    --pink-soft:#FFF0F2;
-    --coral:#FF5A6E;
-    --coral-dark:#E8384F;
-    --red-deep:#C81E3A;
-    --ink:#2B1420;
-    --ink-soft:#6B4B52;
-    --gray:#A6898F;
-    --success:#2E9E5B;
-    --radius:22px;
-    --radius-sm:14px;
-    --shadow:0 10px 32px rgba(200,30,58,0.12);
-    --shadow-card:0 6px 20px rgba(200,30,58,0.10);
+    --bg:#10152b;
+    --surface:#171d3a;
+    --surface-2:#1f2748;
+    --border:rgba(255,255,255,0.09);
+    --text:#f3f1e9;
+    --muted:#9aa3c7;
+    --gold:#f2a93b;
+    --gold-dim:#f2a93b33;
+    --teal:#2fbf9f;
+    --teal-dim:#2fbf9f26;
+    --danger:#e8573f;
+    --radius:14px;
   }
-  [data-theme="dark"]{
-    --white:#241016;
-    --cream:#2B141C;
-    --pink:#3A1E27;
-    --pink-soft:#33191F;
-    --ink:#FFF3F4;
-    --ink-soft:#E8C8CE;
-    --gray:#B98D93;
-    --shadow:0 10px 32px rgba(0,0,0,0.35);
-    --shadow-card:0 6px 20px rgba(0,0,0,0.3);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
-    font-family:'Manrope',sans-serif;
-    background:var(--cream);
-    color:var(--ink);
-    min-height:100vh;
-    overflow-x:hidden;
-    transition:background .3s,color .3s;
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.display{font-family:'Fraunces',serif}
-  #phone-frame{max-width:480px;margin:0 auto;position:relative;min-height:100vh;background:var(--cream);box-shadow:none}
-  @media(min-width:560px){
-    body{background:var(--pink)}
-    #phone-frame{box-shadow:var(--shadow);min-height:100vh;overflow:hidden}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif; margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* subtle wax-pattern texture */
+  .texture{
+    position:absolute; inset:0; z-index:0; opacity:0.5; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 12% 20%, var(--gold-dim) 0, transparent 40%),
+      radial-gradient(circle at 85% 10%, var(--teal-dim) 0, transparent 35%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(-45deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px);
   }
 
-  /* SPLASH */
-  #splash{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,var(--coral),var(--red-deep));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:splashOut .6s ease 1.9s forwards}
-  #splash .seal{width:88px;height:88px;position:relative;animation:sealIn .7s cubic-bezier(.34,1.56,.64,1) .2s both}
-  #splash .seal svg{width:100%;height:100%}
-  #splash .logo-big{font-size:34px;font-weight:800;color:#fff;letter-spacing:.5px;animation:logoIn .7s ease .5s both}
-  #splash .logo-big span{color:#FFD9CF}
-  #splash p{color:#FFE4E8;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;animation:logoIn .7s ease .8s both}
-  @keyframes sealIn{from{opacity:0;transform:scale(.5) rotate(-20deg)}to{opacity:1;transform:scale(1) rotate(0)}}
-  @keyframes logoIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @keyframes splashOut{to{opacity:0;pointer-events:none;visibility:hidden}}
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:64px 20px 56px;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+  }
+  .hero-inner{position:relative; z-index:1; max-width:640px; margin:0 auto;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--gold); background:var(--gold-dim);
+    border:1px solid var(--gold-dim); padding:6px 14px; border-radius:999px;
+    margin-bottom:20px;
+  }
+  .hero h1{font-size:clamp(28px,5.5vw,42px); font-weight:700; letter-spacing:-0.01em;}
+  .hero h1 span{color:var(--gold);}
+  .hero p.lead{color:var(--muted); font-size:16px; margin:16px auto 28px; max-width:480px;}
 
-  /* CLOSED BANNER */
-  #closed-banner{display:none;position:fixed;inset:0;z-index:8000;background:rgba(43,20,32,.96);align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:32px;color:#fff}
-  #closed-banner .display{font-size:24px}
+  .stat-row{
+    display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
+    margin-bottom:30px;
+  }
+  .stat{text-align:left;}
+  .stat .num{font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--teal);}
+  .stat .lbl{font-size:12px; color:var(--muted);}
 
-  /* TOAST */
-  #toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--white);padding:12px 22px;border-radius:30px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:7000;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .cta-btn{
+    display:inline-block; background:var(--gold); color:#1a1408;
+    font-weight:600; font-size:15px; padding:14px 30px; border-radius:999px;
+    text-decoration:none; border:none; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 8px 24px -8px var(--gold-dim);
+  }
+  .cta-btn:hover{transform:translateY(-2px);}
+  .cta-btn:focus-visible{outline:3px solid var(--teal); outline-offset:3px;}
 
-  /* GEO CONSENT MODAL */
-  .overlay{position:fixed;inset:0;background:rgba(43,20,32,.55);z-index:6000;display:none;align-items:flex-end;justify-content:center}
-  @media(min-width:560px){.overlay{align-items:center}}
-  .overlay.show{display:flex}
-  .sheet{background:var(--white);width:100%;max-width:480px;border-radius:26px 26px 0 0;padding:28px 24px 30px;animation:sheetUp .35s ease both}
-  @media(min-width:560px){.sheet{border-radius:26px;margin:20px}}
-  @keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-  .sheet-icon{width:56px;height:56px;border-radius:18px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:26px}
-  .sheet h3{font-size:20px;margin-bottom:8px}
-  .sheet p{color:var(--ink-soft);font-size:14px;line-height:1.5;margin-bottom:22px}
-  .btn-row{display:flex;gap:10px}
-  .btn{flex:1;padding:15px;border:none;border-radius:16px;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
-  .btn-primary{background:linear-gradient(135deg,var(--coral),var(--red-deep));color:#fff}
-  .btn-primary:active{transform:scale(.97)}
-  .btn-ghost{background:var(--pink-soft);color:var(--ink)}
-  .btn-ghost:active{transform:scale(.97)}
-  .geo-status{margin-top:14px;font-size:12px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
-  .geo-status.ok{color:var(--success);font-weight:700}
+  main{max-width:600px; margin:0 auto; padding:44px 20px 90px;}
 
-  /* TOPBAR */
-  #topbar{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--cream);backdrop-filter:blur(8px)}
-  #topbar .logo{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
-  #topbar .logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--coral),var(--red-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800}
-  #topbar .logo span{color:var(--coral-dark)}
-  #theme-toggle{width:38px;height:38px;border-radius:12px;background:var(--pink-soft);border:none;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--ink)}
+  .section-title{margin-bottom:6px; font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); font-family:'JetBrains Mono',monospace;}
+  .section-desc{color:var(--muted); font-size:13px; margin-bottom:16px;}
 
-  /* HERO */
-  #hero{position:relative;margin:4px 20px 18px;border-radius:var(--radius);overflow:hidden;padding:30px 22px;background:linear-gradient(150deg,var(--coral) 0%,var(--red-deep) 100%);isolation:isolate}
-  #hero::before,#hero::after{content:'';position:absolute;border-radius:50%;filter:blur(2px);opacity:.35;z-index:-1}
-  #hero::before{width:150px;height:150px;background:#fff;top:-60px;right:-40px;animation:float1 7s ease-in-out infinite}
-  #hero::after{width:100px;height:100px;background:#FFD9CF;bottom:-40px;left:-20px;animation:float2 8s ease-in-out infinite}
-  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-14px,16px)}}
-  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(12px,-14px)}}
-  #hero .eyebrow{color:#FFE4E8;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
-  #hero h1{color:#fff;font-size:27px;line-height:1.15;margin-bottom:8px}
-  #hero p{color:#FFE4E8;font-size:13.5px;margin-bottom:18px;max-width:85%}
-  #hero button{background:#fff;color:var(--red-deep);border:none;padding:12px 22px;border-radius:14px;font-weight:800;font-size:13px;cursor:pointer}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px; margin-bottom:28px;
+  }
 
-  /* SEARCH */
-  #search-wrap{padding:0 20px 14px}
-  #search-input{width:100%;padding:13px 16px 13px 42px;border-radius:16px;border:none;background:var(--pink-soft);color:var(--ink);font-family:'Manrope',sans-serif;font-size:14px;outline:none;background-image:none}
-  #search-wrap{position:relative}
-  #search-wrap::before{content:'🔍';position:absolute;left:34px;top:12px;font-size:14px;opacity:.6}
+  label{display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:var(--text);}
+  .req{color:var(--teal);}
+  .field{margin-bottom:18px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:480px){.row2{grid-template-columns:1fr;}}
 
-  /* CATEGORIES */
-  #cats-scroll{display:flex;gap:8px;padding:0 20px 16px;overflow-x:auto;scrollbar-width:none}
-  #cats-scroll::-webkit-scrollbar{display:none}
-  .cat-chip{flex:none;padding:9px 16px;border-radius:20px;background:var(--pink-soft);color:var(--ink-soft);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.2s;border:1.5px solid transparent}
-  .cat-chip.active{background:var(--ink);color:var(--white)}
+  input[type=text], input[type=tel], input[type=email], select, textarea{
+    width:100%; background:var(--surface-2); border:1px solid var(--border);
+    color:var(--text); font-family:'Inter',sans-serif; font-size:14px;
+    padding:12px 14px; border-radius:10px; outline:none;
+    transition:border-color .15s ease;
+  }
+  input::placeholder, textarea::placeholder{color:#5f6890;}
+  input:focus, select:focus, textarea:focus{border-color:var(--teal);}
+  textarea{resize:vertical; min-height:80px;}
 
-  /* SECTION HEADER */
-  .section-header{display:flex;align-items:baseline;justify-content:space-between;padding:6px 20px 12px}
-  .section-header h2{font-size:18px}
-  .section-count{font-size:12px;color:var(--gray);font-weight:600}
+  .chip-group{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    position:relative;
+  }
+  .chip input{position:absolute; opacity:0; inset:0; cursor:pointer; margin:0; width:100%; height:100%;}
+  .chip .pill{
+    display:inline-block; padding:9px 16px; border-radius:999px; font-size:13px;
+    border:1px solid var(--border); background:var(--surface-2); color:var(--muted);
+    transition:all .15s ease; cursor:pointer;
+  }
+  .chip input:checked + .pill{
+    background:var(--teal-dim); border-color:var(--teal); color:var(--teal); font-weight:600;
+  }
+  .chip input:focus-visible + .pill{outline:2px solid var(--teal); outline-offset:2px;}
 
-  /* PRODUCTS GRID */
-  .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 20px 30px}
-  .product-card{background:var(--white);border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-card);cursor:pointer;position:relative;display:flex;flex-direction:column;transition:transform .15s}
-  .product-card:active{transform:scale(.97)}
-  .product-img{width:100%;aspect-ratio:1/1;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;overflow:hidden}
-  .product-img img{width:100%;height:100%;object-fit:cover}
-  .badge{position:absolute;top:8px;left:8px;background:var(--red-deep);color:#fff;font-size:9.5px;font-weight:800;padding:4px 8px;border-radius:8px;letter-spacing:.4px;text-transform:uppercase;z-index:2}
-  .product-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
-  .product-name{font-size:13px;font-weight:700;line-height:1.25}
-  .product-price-row{display:flex;align-items:baseline;gap:6px;margin-top:auto}
-  .product-price{font-size:14.5px;font-weight:800;color:var(--red-deep)}
-  .product-price-old{font-size:11px;color:var(--gray);text-decoration:line-through}
-  .quick-add{position:absolute;bottom:10px;right:10px;width:30px;height:30px;border-radius:10px;background:var(--ink);color:#fff;border:none;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
-  .no-results{text-align:center;padding:40px 20px;color:var(--gray);font-size:13px}
+  /* geolocation block */
+  .geo-box{
+    border:1px dashed var(--border); border-radius:12px; padding:20px; text-align:center;
+    background:var(--surface-2);
+  }
+  .radar{
+    position:relative; width:64px; height:64px; margin:0 auto 14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .radar .pin{
+    width:14px; height:14px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 4px var(--bg);
+    position:relative; z-index:2;
+  }
+  .radar .ring{
+    position:absolute; border:2px solid var(--teal); border-radius:50%;
+    opacity:0; animation:ping 2.2s ease-out infinite;
+  }
+  .radar .ring:nth-child(2){animation-delay:.5s;}
+  .radar .ring:nth-child(3){animation-delay:1s;}
+  @keyframes ping{
+    0%{width:14px; height:14px; opacity:.7;}
+    100%{width:64px; height:64px; opacity:0;}
+  }
+  .radar.idle .ring{display:none;}
+  .radar.idle .pin{background:#4b5480;}
 
-  /* BOTTOM NAV */
-  #bottom-nav{position:sticky;bottom:0;z-index:500;display:flex;background:var(--white);box-shadow:0 -4px 20px rgba(200,30,58,.08);padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
-  .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--gray);font-size:10px;font-weight:700;position:relative}
-  .nav-item.active{color:var(--red-deep)}
-  .nav-icon{font-size:19px}
-  .cart-badge{position:absolute;top:-4px;right:22%;background:var(--red-deep);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+  .geo-status{font-size:13px; color:var(--muted); margin-bottom:14px;}
+  .geo-status.found{color:var(--teal);}
+  .geo-status.error{color:var(--danger);}
+  .geo-coords{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold);
+    margin-top:8px; display:none;
+  }
+  .btn-secondary{
+    background:transparent; border:1px solid var(--teal); color:var(--teal);
+    font-weight:600; font-size:14px; padding:10px 22px; border-radius:999px; cursor:pointer;
+  }
+  .btn-secondary:hover{background:var(--teal-dim);}
+  .btn-secondary:disabled{opacity:.5; cursor:not-allowed;}
 
-  /* MODAL */
-  .modal-overlay{position:fixed;inset:0;background:rgba(43,20,32,.55);z-index:5000;display:none;align-items:flex-end;justify-content:center}
-  @media(min-width:560px){.modal-overlay{align-items:center}}
-  .modal-overlay.show{display:flex}
-  .modal-card{background:var(--white);width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-radius:26px 26px 0 0;animation:sheetUp .3s ease both}
-  @media(min-width:560px){.modal-card{border-radius:26px;margin:20px}}
-  .modal-drag{width:36px;height:4px;background:var(--pink);border-radius:2px;margin:10px auto}
-  #modal-img-wrap{width:100%;aspect-ratio:4/3;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden}
-  #modal-img-wrap img{width:100%;height:100%;object-fit:cover}
-  .modal-content{padding:20px 22px 26px}
-  .modal-name{font-size:20px;font-weight:700;margin-bottom:6px}
-  .modal-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px}
-  .modal-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:20px}
-  .modal-price{font-size:22px;font-weight:800;color:var(--red-deep)}
-  .modal-price-old{font-size:14px;color:var(--gray);text-decoration:line-through}
-  .qty-row{display:flex;align-items:center;gap:16px;margin-bottom:18px}
-  .qty-btn{width:36px;height:36px;border-radius:12px;background:var(--pink-soft);border:none;font-size:17px;cursor:pointer;font-weight:700;color:var(--ink)}
-  .qty-val{font-size:16px;font-weight:800;min-width:20px;text-align:center}
+  .consent{display:flex; align-items:flex-start; gap:10px; font-size:12.5px; color:var(--muted); margin-bottom:22px;}
+  .consent input{margin-top:3px;}
 
-  /* CART PAGE */
-  #cart-page{display:none;position:fixed;inset:0;z-index:4000;background:var(--cream);flex-direction:column}
-  #cart-page.show{display:flex}
-  .page-topbar{display:flex;align-items:center;gap:14px;padding:18px 20px;background:var(--white);box-shadow:0 2px 10px rgba(200,30,58,.06)}
-  .icon-btn{width:36px;height:36px;border-radius:11px;background:var(--pink-soft);border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-  .page-title{font-size:17px;font-weight:700}
-  #cart-content{flex:1;overflow-y:auto;padding:16px 20px 20px}
-  .cart-item{display:flex;gap:12px;background:var(--white);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;box-shadow:var(--shadow-card)}
-  .cart-item-img{width:60px;height:60px;border-radius:10px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;overflow:hidden}
-  .cart-item-img img{width:100%;height:100%;object-fit:cover}
-  .cart-item-info{flex:1;display:flex;flex-direction:column;gap:4px}
-  .cart-item-name{font-size:13px;font-weight:700}
-  .cart-item-price{font-size:12.5px;color:var(--red-deep);font-weight:700}
-  .cart-item-ctrl{display:flex;align-items:center;gap:10px}
-  .mini-btn{width:24px;height:24px;border-radius:8px;background:var(--pink-soft);border:none;font-size:13px;cursor:pointer;font-weight:700}
-  .remove-link{font-size:11px;color:var(--gray);text-decoration:underline;cursor:pointer;margin-left:auto}
-  .empty-state{text-align:center;padding:60px 20px;color:var(--gray)}
-  .empty-state .em{font-size:44px;margin-bottom:14px}
-  .cart-summary{background:var(--white);border-radius:var(--radius-sm);padding:16px;margin-top:6px;box-shadow:var(--shadow-card)}
-  .summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);margin-bottom:8px}
-  .summary-row.total{font-size:16px;font-weight:800;color:var(--ink);margin-top:6px;padding-top:10px;border-top:1px dashed var(--pink)}
-  .summary-row.discount{color:var(--success);font-weight:700}
-  #cart-checkout-bar{padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:var(--white);box-shadow:0 -4px 20px rgba(200,30,58,.08)}
+  .submit-btn{
+    width:100%; background:var(--gold); color:#1a1408; font-weight:700; font-size:15px;
+    padding:15px; border:none; border-radius:12px; cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .submit-btn:hover{transform:translateY(-1px);}
+  .submit-btn:disabled{opacity:.6; cursor:not-allowed; transform:none;}
 
-  /* CHECKOUT STEPS */
-  .step-dots{display:flex;gap:6px;justify-content:center;margin:14px 0 6px}
-  .step-dot{width:22px;height:4px;border-radius:2px;background:var(--pink)}
-  .step-dot.active{background:var(--red-deep)}
-  .field-group{margin-bottom:16px}
-  .field-label{font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:7px;display:block}
-  .field-input{width:100%;padding:13px 14px;border-radius:14px;border:1.5px solid var(--pink);background:var(--pink-soft);font-family:'Manrope',sans-serif;font-size:14px;color:var(--ink);outline:none}
-  .field-input:focus{border-color:var(--coral)}
-  .field-hint{font-size:11px;color:var(--gray);margin-top:6px}
-  .promo-status{font-size:12px;font-weight:700;margin-top:7px}
-  .promo-status.ok{color:var(--success)}
-  .promo-status.err{color:var(--red-deep)}
-  .loc-box{border:1.5px dashed var(--pink);border-radius:16px;padding:16px;text-align:center;margin-bottom:14px}
-  .loc-box.ok{border-style:solid;border-color:var(--success);background:rgba(46,158,91,.06)}
-  .recap-row{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-bottom:1px solid var(--pink-soft)}
-  .recap-row span:first-child{color:var(--ink-soft)}
-  .recap-row span:last-child{font-weight:700}
+  .error-text{color:var(--danger); font-size:12px; margin-top:5px; display:none;}
+  .field.invalid input, .field.invalid select{border-color:var(--danger);}
+  .field.invalid .error-text{display:block;}
 
-  ::selection{background:var(--pink)}
+  .form-alert{
+    display:none; background:var(--danger); color:#fff; font-size:13px;
+    padding:12px 16px; border-radius:10px; margin-bottom:18px; text-align:center;
+  }
+
+  /* success screen */
+  #success{display:none; text-align:center; padding:60px 20px;}
+  #success .check{
+    width:64px; height:64px; border-radius:50%; background:var(--teal-dim);
+    border:2px solid var(--teal); display:flex; align-items:center; justify-content:center;
+    margin:0 auto 20px; font-size:28px; color:var(--teal);
+  }
+  #success h2{font-size:24px; margin-bottom:10px;}
+  #success p{color:var(--muted); max-width:400px; margin:0 auto 24px;}
+
+  footer{text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:12px;}
+  footer a{color:var(--teal);}
+
+  @media (prefers-reduced-motion: reduce){
+    .radar .ring{animation:none; display:none;}
+  }
 </style>
 </head>
 <body>
 
-<div id="phone-frame">
-
-<!-- SPLASH -->
-<div id="splash">
-  <div class="seal">
-    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 5"/><text x="50" y="58" text-anchor="middle" font-size="34" fill="#fff" font-family="Fraunces, serif" font-weight="900">B</text></svg>
-  </div>
-  <div class="logo-big">BARAKA <span>shop</span></div>
-  <p>La bénédiction dans chaque achat</p>
-</div>
-
-<!-- CLOSED BANNER -->
-<div id="closed-banner">
-  <div class="display">Boutique fermée</div>
-  <p id="closed-msg" style="opacity:.85;font-size:13px">Nous préparons de belles nouveautés.<br>Revenez très bientôt !</p>
-</div>
-
-<!-- TOAST -->
-<div id="toast"></div>
-
-<!-- GEO CONSENT -->
-<div class="overlay" id="geo-overlay">
-  <div class="sheet">
-    <div class="sheet-icon">📍</div>
-    <h3>Où livrer vos articles ?</h3>
-    <p>Partagez votre position pour qu'on puisse préparer une livraison rapide et précise, où que vous soyez.</p>
-    <div class="btn-row">
-      <button class="btn btn-ghost" onclick="declineGeo()">Plus tard</button>
-      <button class="btn btn-primary" onclick="requestGeo()">Partager ma position</button>
+<div class="hero">
+  <div class="texture"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">● Programme Affiliés</span>
+    <h1>Gagnez avec <span>BARAKA SHOP</span></h1>
+    <p class="lead">Rejoignez le réseau d'affiliés BARAKA SHOP. Une commission par filleul actif et vérifié — versée directement sur votre Mobile Money.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="num">100%</div><div class="lbl">Gratuit à rejoindre</div></div>
+      <div class="stat"><div class="num">CI · BF</div><div class="lbl">Zones couvertes</div></div>
+      <div class="stat"><div class="num">48h</div><div class="lbl">Validation du dossier</div></div>
     </div>
-    <div class="geo-status" id="geo-status-text" style="display:none"></div>
+    <a href="#form" class="cta-btn">Remplir mon dossier d'affilié</a>
   </div>
 </div>
 
-<!-- MAIN APP -->
-<div id="app" style="display:none">
+<main>
 
-  <!-- TOPBAR -->
-  <div id="topbar">
-    <div class="logo"><div class="mark">B</div>BARAKA <span>shop</span></div>
-    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-  </div>
+  <form id="form">
 
-  <!-- HERO -->
-  <div id="hero">
-    <div class="eyebrow">Nouveautés &amp; promos</div>
-    <h1 class="display" id="hero-title">Vos coups de cœur,<br>à prix béni</h1>
-    <p id="hero-slogan">Articles sélectionnés, livraison suivie, petits prix.</p>
-    <button onclick="scrollToProducts()">Découvrir la boutique</button>
-  </div>
+    <div class="form-alert" id="formAlert">Merci de compléter les champs obligatoires avant d'envoyer.</div>
 
-  <!-- SEARCH -->
-  <div id="search-wrap">
-    <input type="text" id="search-input" placeholder="Rechercher un article..." oninput="filterProducts()">
-  </div>
-
-  <!-- CATEGORIES -->
-  <div id="cats-scroll"></div>
-
-  <!-- PRODUCTS -->
-  <div class="section-header" id="products-anchor">
-    <h2>Tous les articles</h2>
-    <div class="section-count" id="prod-count"></div>
-  </div>
-  <div class="products-grid" id="products-grid"></div>
-  <div class="no-results" id="no-results" style="display:none">Aucun article trouvé 😕</div>
-
-  <!-- BOTTOM NAV -->
-  <div id="bottom-nav">
-    <button class="nav-item active" id="nav-home" onclick="showHome()"><span class="nav-icon">🏠</span>Accueil</button>
-    <button class="nav-item" id="nav-search" onclick="focusSearch()"><span class="nav-icon">🔍</span>Recherche</button>
-    <button class="nav-item" id="nav-cart" onclick="openCart()"><span class="nav-icon">🛍️</span>Panier<span class="cart-badge" id="cart-badge" style="display:none">0</span></button>
-  </div>
-</div>
-
-<!-- PRODUCT DETAIL MODAL -->
-<div class="modal-overlay" id="prod-modal" onclick="closeModal(event)">
-  <div class="modal-card" onclick="event.stopPropagation()">
-    <div class="modal-drag"></div>
-    <div id="modal-img-wrap"></div>
-    <div class="modal-content">
-      <div id="modal-badge-wrap"></div>
-      <div class="modal-name" id="modal-name"></div>
-      <div class="modal-desc" id="modal-desc"></div>
-      <div class="modal-price-row">
-        <div class="modal-price" id="modal-price"></div>
-        <div class="modal-price-old" id="modal-price-old"></div>
+    <!-- Identité -->
+    <div class="section-title">01 · Identité</div>
+    <div class="section-desc">Vos informations personnelles pour créer votre profil affilié.</div>
+    <div class="card">
+      <div class="field">
+        <label>Nom complet <span class="req">*</span></label>
+        <input type="text" id="nom" placeholder="Ex : Konaté Aminata" required>
+        <div class="error-text">Le nom complet est requis.</div>
       </div>
-      <div class="qty-row">
-        <button class="qty-btn" onclick="changeQty(-1)">−</button>
-        <div class="qty-val" id="modal-qty">1</div>
-        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      <div class="row2">
+        <div class="field">
+          <label>Pays de résidence <span class="req">*</span></label>
+          <select id="pays" required>
+            <option value="">Sélectionner</option>
+            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Burkina Faso">Burkina Faso</option>
+            <option value="Autre">Autre</option>
+          </select>
+          <div class="error-text">Sélectionnez votre pays.</div>
+        </div>
+        <div class="field">
+          <label>Ville / Commune <span class="req">*</span></label>
+          <input type="text" id="ville" placeholder="Ex : Abidjan, Cocody" required>
+          <div class="error-text">La ville est requise.</div>
+        </div>
       </div>
-      <button class="btn btn-primary" style="width:100%;padding:15px" onclick="addFromModal()">Ajouter au panier</button>
+      <div class="field">
+        <label>Quartier (optionnel)</label>
+        <input type="text" id="quartier" placeholder="Ex : Angré 8e tranche">
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- CART PAGE -->
-<div id="cart-page">
-  <div class="page-topbar">
-    <button class="icon-btn" onclick="closeCart()">←</button>
-    <div class="page-title">Mon panier</div>
-  </div>
-  <div id="cart-content"></div>
-  <div id="cart-checkout-bar" style="display:none">
-    <button class="btn btn-primary" style="width:100%;padding:16px;font-size:15px" onclick="openCheckout()">Commander sur WhatsApp</button>
-  </div>
-</div>
+    <!-- Contact -->
+    <div class="section-title">02 · Contact</div>
+    <div class="section-desc">Pour vous transmettre votre lien affilié et vos gains.</div>
+    <div class="card">
+      <div class="row2">
+        <div class="field">
+          <label>Indicatif</label>
+          <select id="indicatif">
+            <option value="+225">🇨🇮 +225</option>
+            <option value="+226">🇧🇫 +226</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Numéro WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="whatsapp" placeholder="07 00 00 00 00" required>
+          <div class="error-text">Le numéro WhatsApp est requis.</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email (optionnel)</label>
+        <input type="email" id="email" placeholder="vous@email.com">
+      </div>
+    </div>
 
-<!-- CHECKOUT MODAL -->
-<div class="modal-overlay" id="checkout-modal">
-  <div class="modal-card" style="max-height:92vh">
-    <div class="modal-drag"></div>
-    <div class="modal-content" id="checkout-content"></div>
-  </div>
-</div>
+    <!-- Réseau -->
+    <div class="section-title">03 · Réseau de promotion</div>
+    <div class="section-desc">Comment allez-vous faire connaître BARAKA SHOP ?</div>
+    <div class="card">
+      <div class="field">
+        <label>Canaux principaux <span class="req">*</span></label>
+        <div class="chip-group" id="canaux">
+          <label class="chip"><input type="checkbox" value="WhatsApp"><span class="pill">WhatsApp</span></label>
+          <label class="chip"><input type="checkbox" value="Facebook"><span class="pill">Facebook</span></label>
+          <label class="chip"><input type="checkbox" value="Instagram"><span class="pill">Instagram</span></label>
+          <label class="chip"><input type="checkbox" value="TikTok"><span class="pill">TikTok</span></label>
+          <label class="chip"><input type="checkbox" value="Bouche-à-oreille"><span class="pill">Bouche-à-oreille</span></label>
+        </div>
+        <div class="error-text" id="canauxError">Sélectionnez au moins un canal.</div>
+      </div>
+      <div class="field">
+        <label>Audience estimée</label>
+        <select id="audience">
+          <option value="">Sélectionner</option>
+          <option>Moins de 100 contacts</option>
+          <option>100 – 500 contacts</option>
+          <option>500 – 2000 contacts</option>
+          <option>Plus de 2000 contacts</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Lien de votre profil principal (optionnel)</label>
+        <input type="text" id="lien" placeholder="Ex : lien Facebook, groupe WhatsApp...">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Comment comptez-vous promouvoir BARAKA SHOP ? (optionnel)</label>
+        <textarea id="strategie" placeholder="Ex : je partage dans mes groupes WhatsApp famille et quartier..."></textarea>
+      </div>
+    </div>
 
-</div><!-- /phone-frame -->
+    <!-- Localisation -->
+    <div class="section-title">04 · Localisation</div>
+    <div class="section-desc">Pour organiser la couverture des zones par affilié.</div>
+    <div class="card">
+      <div class="geo-box">
+        <div class="radar idle" id="radar">
+          <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+          <div class="pin"></div>
+        </div>
+        <div class="geo-status" id="geoStatus">Localisation non détectée</div>
+        <button type="button" class="btn-secondary" id="geoBtn">Partager ma position</button>
+        <div class="geo-coords" id="geoCoords"></div>
+      </div>
+      <div class="error-text" id="geoError" style="text-align:center; margin-top:10px;">La localisation est requise pour valider votre dossier.</div>
+    </div>
+
+    <!-- Paiement -->
+    <div class="section-title">05 · Paiement des commissions</div>
+    <div class="section-desc">Vos commissions vérifiées seront envoyées sur ce numéro.</div>
+    <div class="card">
+      <div class="row2">
+        <div class="field">
+          <label>Opérateur Mobile Money <span class="req">*</span></label>
+          <select id="operateur" required>
+            <option value="">Sélectionner</option>
+            <option>Orange Money</option>
+            <option>MTN Money</option>
+            <option>Moov Money</option>
+            <option>Wave</option>
+          </select>
+          <div class="error-text">Sélectionnez un opérateur.</div>
+        </div>
+        <div class="field">
+          <label>Numéro Mobile Money <span class="req">*</span></label>
+          <input type="tel" id="momo" placeholder="07 00 00 00 00" required>
+          <div class="error-text">Le numéro Mobile Money est requis.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="consent" required>
+      <label for="consent" style="margin:0;">J'accepte que mes informations (y compris ma localisation) soient utilisées par BARAKA SHOP dans le cadre du programme d'affiliation.</label>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Envoyer mon dossier d'affilié</button>
+  </form>
+
+  <div id="success">
+    <div class="check">✓</div>
+    <h2>Dossier envoyé !</h2>
+    <p>Merci, votre demande d'affiliation BARAKA SHOP a bien été enregistrée. Vous recevrez une confirmation sous 48h après vérification.</p>
+    <a href="#form" class="cta-btn" onclick="location.reload()">Envoyer un autre dossier</a>
+  </div>
+
+</main>
+
+<footer>
+  BARAKA SHOP — Programme Affiliés · Vos données restent confidentielles et servent uniquement à la gestion du programme.
+</footer>
 
 <script>
-/* ============ CONFIGURATION (à remplacer plus tard par Supabase) ============ */
-// TODO: quand tu me donneras l'URL + clé anon Supabase, on remplace PRODUCTS/SETTINGS/AFFILIATES
-// par des tables (ex: baraka_products, baraka_settings, baraka_affiliates, baraka_orders)
-// et loadData() ci-dessous fera un vrai fetch au lieu de lire ces variables locales.
+  // ⚠️ À CONFIGURER : remplacez par votre propre endpoint Formspree (gratuit sur formspree.io)
+  // pour recevoir chaque inscription par email automatiquement.
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/VOTRE_ID_FORMSPREE";
 
-const SETTINGS = {
-  shopOpen: true,
-  slogan: "Articles sélectionnés, livraison suivie, petits prix.",
-  whatsappNumber: "2250585728940", // sans le +
-  categories: ["Tout","Mode","Beauté","Maison","Électronique","Accessoires"],
-  affiliateDiscountPercent: 10
-};
+  let capturedLocation = null;
 
-const AFFILIATES = [
-  // codes d'exemple — à remplacer par la vraie source (site de parrainage à venir)
-  { code:"BARAKA10", active:true },
-  { code:"AMINA5", active:true }
-];
+  const radar = document.getElementById('radar');
+  const geoStatus = document.getElementById('geoStatus');
+  const geoCoords = document.getElementById('geoCoords');
+  const geoBtn = document.getElementById('geoBtn');
+  const geoErrorField = document.getElementById('geoError');
 
-let PRODUCTS = [
-  { id:1, name:"Robe wax élégante", desc:"Robe imprimée wax, coupe cintrée, idéale pour toutes occasions. Tissu 100% coton, entretien facile.", price:12000, promo:9500, cat:"Mode", emoji:"👗", img:"", badge:"promo" },
-  { id:2, name:"Sac à main tressé", desc:"Sac fait main en fibres tressées, doublure intérieure, fermeture zip. Léger et résistant.", price:8000, promo:null, cat:"Accessoires", emoji:"👜", img:"", badge:"" },
-  { id:3, name:"Baskets unisexe", desc:"Baskets confortables, semelle amortissante, plusieurs pointures disponibles.", price:15000, promo:12000, cat:"Mode", emoji:"👟", img:"", badge:"promo" },
-  { id:4, name:"Crème hydratante karité", desc:"Crème corporelle au beurre de karité pur, nourrit intensément la peau.", price:4500, promo:null, cat:"Beauté", emoji:"🧴", img:"", badge:"nouveau" },
-  { id:5, name:"Écouteurs sans fil", desc:"Écouteurs Bluetooth, autonomie 6h, boîtier de charge inclus.", price:18000, promo:14500, cat:"Électronique", emoji:"🎧", img:"", badge:"promo" },
-  { id:6, name:"Set de vaisselle 12 pièces", desc:"Assiettes et bols en céramique, design épuré, résistant au lave-vaisselle.", price:22000, promo:null, cat:"Maison", emoji:"🍽️", img:"", badge:"" },
-  { id:7, name:"Montre classique", desc:"Montre bracelet cuir, cadran minimaliste, étanche éclaboussures.", price:16000, promo:null, cat:"Accessoires", emoji:"⌚", img:"", badge:"nouveau" },
-  { id:8, name:"Lunettes de soleil", desc:"Monture légère, protection UV400, style intemporel.", price:6000, promo:4500, cat:"Mode", emoji:"🕶️", img:"", badge:"promo" }
-];
-
-/* ============ ÉTAT ============ */
-let cart = JSON.parse(localStorage.getItem('baraka_cart')||'[]');
-let currentCat = "Tout";
-let activeProduct = null;
-let modalQty = 1;
-let userLocation = null; // { lat, lng, link }
-let appliedPromo = null; // { code, percent }
-
-/* ============ INIT ============ */
-function init(){
-  applySettings();
-  renderCats();
-  renderProducts();
-  updateCartBadge();
-  const savedTheme = localStorage.getItem('baraka_theme');
-  if(savedTheme==='dark'){ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('theme-toggle').textContent='☀️'; }
-  const savedLoc = JSON.parse(localStorage.getItem('baraka_location')||'null');
-  if(savedLoc) userLocation = savedLoc;
-
-  setTimeout(()=>{
-    document.getElementById('app').style.display='block';
-    const askedBefore = localStorage.getItem('baraka_geo_asked');
-    if(!askedBefore){
-      document.getElementById('geo-overlay').classList.add('show');
+  geoBtn.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      geoStatus.textContent = "Géolocalisation non supportée par ce navigateur.";
+      geoStatus.className = "geo-status error";
+      return;
     }
-  }, 2000);
-}
+    radar.classList.remove('idle');
+    geoStatus.textContent = "Détection en cours...";
+    geoStatus.className = "geo-status";
+    geoBtn.disabled = true;
 
-function applySettings(){
-  if(!SETTINGS.shopOpen){
-    document.getElementById('closed-banner').style.display='flex';
-  }
-  document.getElementById('hero-slogan').textContent = SETTINGS.slogan;
-}
-
-function toggleTheme(){
-  const isDark = document.documentElement.getAttribute('data-theme')==='dark';
-  if(isDark){ document.documentElement.removeAttribute('data-theme'); document.getElementById('theme-toggle').textContent='🌙'; localStorage.setItem('baraka_theme','light'); }
-  else{ document.documentElement.setAttribute('data-theme','dark'); document.getElementById('theme-toggle').textContent='☀️'; localStorage.setItem('baraka_theme','dark'); }
-}
-
-/* ============ GEOLOCATION ============ */
-function requestGeo(){
-  const statusEl = document.getElementById('geo-status-text');
-  statusEl.style.display='flex';
-  statusEl.className='geo-status';
-  statusEl.textContent='Localisation en cours...';
-  if(!navigator.geolocation){
-    statusEl.textContent="La géolocalisation n'est pas disponible sur cet appareil.";
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    pos=>{
+    navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
-      userLocation = { lat:latitude, lng:longitude, link:`https://www.google.com/maps?q=${latitude},${longitude}` };
-      localStorage.setItem('baraka_location', JSON.stringify(userLocation));
-      localStorage.setItem('baraka_geo_asked','1');
-      statusEl.className='geo-status ok';
-      statusEl.textContent='✓ Position enregistrée';
-      showToast('Position partagée avec succès 📍');
-      setTimeout(()=>{ document.getElementById('geo-overlay').classList.remove('show'); }, 700);
-    },
-    err=>{
-      statusEl.textContent="Position non partagée — vous pourrez saisir votre adresse manuellement à la commande.";
-      localStorage.setItem('baraka_geo_asked','1');
-    }
-  );
-}
-function declineGeo(){
-  localStorage.setItem('baraka_geo_asked','1');
-  document.getElementById('geo-overlay').classList.remove('show');
-}
+      capturedLocation = { lat: latitude, lng: longitude, ville: null };
+      geoCoords.style.display = "block";
+      geoCoords.textContent = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
 
-/* ============ CATEGORIES & PRODUCTS ============ */
-function renderCats(){
-  const wrap = document.getElementById('cats-scroll');
-  wrap.innerHTML = SETTINGS.categories.map(c=>
-    `<div class="cat-chip ${c===currentCat?'active':''}" onclick="selectCat(this,'${c}')">${c}</div>`
-  ).join('');
-}
-function selectCat(el, cat){
-  currentCat = cat;
-  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderProducts();
-}
-function getFiltered(){
-  const q = document.getElementById('search-input').value.toLowerCase().trim();
-  return PRODUCTS.filter(p=>{
-    const matchCat = currentCat==='Tout' || p.cat===currentCat;
-    const matchSearch = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
-    return matchCat && matchSearch;
+      try {
+        const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`);
+        const data = await res.json();
+        const lieu = [data.locality, data.city, data.principalSubdivision, data.countryName].filter(Boolean);
+        const label = lieu.length ? lieu.slice(0,3).join(', ') : "Position détectée";
+        capturedLocation.ville = label;
+        geoStatus.textContent = `Position détectée : ${label}`;
+      } catch (e) {
+        geoStatus.textContent = "Position GPS détectée.";
+      }
+
+      geoStatus.className = "geo-status found";
+      radar.classList.add('idle');
+      geoBtn.disabled = false;
+      geoBtn.textContent = "Mettre à jour ma position";
+      geoErrorField.style.display = "none";
+    }, (err) => {
+      radar.classList.add('idle');
+      geoBtn.disabled = false;
+      geoStatus.textContent = "Localisation refusée ou indisponible. Autorisez l'accès pour continuer.";
+      geoStatus.className = "geo-status error";
+    }, { enableHighAccuracy: true, timeout: 12000 });
   });
-}
-function renderProducts(){
-  const list = getFiltered();
-  const grid = document.getElementById('products-grid');
-  document.getElementById('prod-count').textContent = list.length + (list.length>1?' articles':' article');
-  document.getElementById('no-results').style.display = list.length? 'none':'block';
-  grid.innerHTML = list.map(p=>{
-    const badgeText = p.badge==='promo' ? 'Promo' : p.badge==='nouveau' ? 'Nouveau' : '';
-    return `
-    <div class="product-card" onclick="openModal(${p.id})">
-      ${badgeText?`<div class="badge">${badgeText}</div>`:''}
-      <div class="product-img">${p.img?`<img src="${p.img}">`:p.emoji}</div>
-      <div class="product-body">
-        <div class="product-name">${p.name}</div>
-        <div class="product-price-row">
-          <div class="product-price">${fmt(p.promo||p.price)} F</div>
-          ${p.promo?`<div class="product-price-old">${fmt(p.price)} F</div>`:''}
-        </div>
-      </div>
-      <button class="quick-add" onclick="event.stopPropagation();quickAdd(${p.id})">+</button>
-    </div>`;
-  }).join('');
-}
-function filterProducts(){ renderProducts(); }
-function scrollToProducts(){ document.getElementById('products-anchor').scrollIntoView({behavior:'smooth'}); }
-function focusSearch(){ scrollToProducts(); document.getElementById('search-input').focus(); }
-function fmt(n){ return n.toLocaleString('fr-FR'); }
 
-/* ============ PRODUCT MODAL ============ */
-function openModal(id){
-  const p = PRODUCTS.find(x=>x.id===id);
-  if(!p) return;
-  activeProduct = p; modalQty = 1;
-  document.getElementById('modal-img-wrap').innerHTML = p.img? `<img src="${p.img}">` : p.emoji;
-  document.getElementById('modal-name').textContent = p.name;
-  document.getElementById('modal-desc').textContent = p.desc;
-  document.getElementById('modal-price').textContent = fmt(p.promo||p.price)+' F';
-  document.getElementById('modal-price-old').textContent = p.promo? fmt(p.price)+' F' : '';
-  document.getElementById('modal-qty').textContent = modalQty;
-  const badgeText = p.badge==='promo' ? 'Promo' : p.badge==='nouveau' ? 'Nouveau' : '';
-  document.getElementById('modal-badge-wrap').innerHTML = badgeText? `<div class="badge" style="position:static;display:inline-block;margin-bottom:10px">${badgeText}</div>` : '';
-  document.getElementById('prod-modal').classList.add('show');
-}
-function closeModal(e){ if(!e || e.target.id==='prod-modal'){ document.getElementById('prod-modal').classList.remove('show'); } }
-function changeQty(d){ modalQty = Math.max(1, modalQty+d); document.getElementById('modal-qty').textContent = modalQty; }
-function addFromModal(){ addToCart(activeProduct, modalQty); document.getElementById('prod-modal').classList.remove('show'); }
-function quickAdd(id){ const p = PRODUCTS.find(x=>x.id===id); addToCart(p,1); }
+  const form = document.getElementById('form');
+  const formAlert = document.getElementById('formAlert');
 
-/* ============ CART ============ */
-function addToCart(p, qty){
-  const existing = cart.find(i=>i.id===p.id);
-  if(existing) existing.qty += qty;
-  else cart.push({ id:p.id, name:p.name, price:p.promo||p.price, emoji:p.emoji, img:p.img, qty });
-  localStorage.setItem('baraka_cart', JSON.stringify(cart));
-  updateCartBadge();
-  showToast(`${p.name} ajouté au panier 🛍️`);
-}
-function updateCartBadge(){
-  const total = cart.reduce((s,i)=>s+i.qty,0);
-  const badge = document.getElementById('cart-badge');
-  if(total>0){ badge.style.display='flex'; badge.textContent = total; } else badge.style.display='none';
-}
-function openCart(){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('nav-cart').classList.add('active');
-  renderCart();
-  document.getElementById('cart-page').classList.add('show');
-}
-function closeCart(){
-  document.getElementById('cart-page').classList.remove('show');
-  document.getElementById('nav-cart').classList.remove('active');
-  document.getElementById('nav-home').classList.add('active');
-}
-function renderCart(){
-  const wrap = document.getElementById('cart-content');
-  const bar = document.getElementById('cart-checkout-bar');
-  if(cart.length===0){
-    wrap.innerHTML = `<div class="empty-state"><div class="em">🛍️</div>Votre panier est vide<br><span style="font-size:12px">Ajoutez des articles pour commencer</span></div>`;
-    bar.style.display='none';
-    return;
+  function setInvalid(fieldId, invalid) {
+    const el = document.getElementById(fieldId).closest('.field');
+    if (el) el.classList.toggle('invalid', invalid);
   }
-  bar.style.display='block';
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  wrap.innerHTML = cart.map(i=>`
-    <div class="cart-item">
-      <div class="cart-item-img">${i.img?`<img src="${i.img}">`:i.emoji}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${i.name}</div>
-        <div class="cart-item-price">${fmt(i.price)} F</div>
-        <div class="cart-item-ctrl">
-          <button class="mini-btn" onclick="changeCartQty(${i.id},-1)">−</button>
-          <span style="font-weight:700;font-size:12.5px">${i.qty}</span>
-          <button class="mini-btn" onclick="changeCartQty(${i.id},1)">+</button>
-          <span class="remove-link" onclick="removeFromCart(${i.id})">Retirer</span>
-        </div>
-      </div>
-    </div>`).join('') +
-    `<div class="cart-summary">
-      <div class="summary-row"><span>Sous-total</span><span>${fmt(subtotal)} F</span></div>
-      <div class="summary-row"><span>Livraison</span><span>À confirmer</span></div>
-      <div class="summary-row total"><span>Total estimé</span><span>${fmt(subtotal)} F</span></div>
-    </div>`;
-}
-function changeCartQty(id,d){
-  const item = cart.find(i=>i.id===id);
-  if(!item) return;
-  item.qty += d;
-  if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
-  localStorage.setItem('baraka_cart', JSON.stringify(cart));
-  renderCart(); updateCartBadge();
-}
-function removeFromCart(id){
-  cart = cart.filter(i=>i.id!==id);
-  localStorage.setItem('baraka_cart', JSON.stringify(cart));
-  renderCart(); updateCartBadge();
-}
 
-/* ============ CHECKOUT (3 étapes) ============ */
-let checkoutStep = 1;
-let checkoutData = { name:'', phone:'', promoCode:'', manualAddress:'' };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formAlert.style.display = "none";
 
-function openCheckout(){
-  checkoutStep = 1;
-  checkoutData = { name:'', phone:'', promoCode:'', manualAddress:'' };
-  appliedPromo = null;
-  renderCheckout();
-  document.getElementById('checkout-modal').classList.add('show');
-}
-function closeCheckout(){ document.getElementById('checkout-modal').classList.remove('show'); }
+    let valid = true;
+    const requiredText = ['nom','ville','whatsapp','momo'];
+    requiredText.forEach(id => {
+      const val = document.getElementById(id).value.trim();
+      const bad = !val;
+      setInvalid(id, bad);
+      if (bad) valid = false;
+    });
+    ['pays','operateur'].forEach(id => {
+      const bad = !document.getElementById(id).value;
+      setInvalid(id, bad);
+      if (bad) valid = false;
+    });
 
-function renderCheckout(){
-  const c = document.getElementById('checkout-content');
-  const dots = [1,2,3].map(n=>`<div class="step-dot ${n===checkoutStep?'active':''}"></div>`).join('');
+    const canaux = Array.from(document.querySelectorAll('#canaux input:checked')).map(c => c.value);
+    document.getElementById('canauxError').style.display = canaux.length ? "none" : "block";
+    if (!canaux.length) valid = false;
 
-  if(checkoutStep===1){
-    c.innerHTML = `
-      <div class="step-dots">${dots}</div>
-      <h3 style="margin:14px 0 18px;font-size:18px">Vos coordonnées</h3>
-      <div class="field-group">
-        <label class="field-label">Nom complet</label>
-        <input class="field-input" id="ck-name" placeholder="Ex: Awa Koné" value="${checkoutData.name}">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Numéro de téléphone</label>
-        <input class="field-input" id="ck-phone" type="tel" placeholder="Ex: 07 00 00 00 00" value="${checkoutData.phone}">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Code promo / parrainage (facultatif)</label>
-        <input class="field-input" id="ck-promo" placeholder="Ex: BARAKA10" value="${checkoutData.promoCode}" oninput="checkPromoLive()">
-        <div class="promo-status" id="promo-status"></div>
-      </div>
-      <button class="btn btn-primary" style="width:100%;padding:15px;margin-top:6px" onclick="goStep2()">Continuer</button>
-    `;
-  } else if(checkoutStep===2){
-    const hasLoc = !!userLocation;
-    c.innerHTML = `
-      <div class="step-dots">${dots}</div>
-      <h3 style="margin:14px 0 18px;font-size:18px">Lieu de livraison</h3>
-      <div class="loc-box ${hasLoc?'ok':''}" id="loc-box">
-        ${hasLoc
-          ? `<div style="font-size:24px;margin-bottom:6px">✅</div><div style="font-weight:700;font-size:13px">Position partagée</div><div class="field-hint">Vos coordonnées GPS seront jointes à la commande</div>`
-          : `<div style="font-size:24px;margin-bottom:6px">📍</div><div style="font-weight:700;font-size:13px">Aucune position partagée</div><div class="field-hint">Partagez votre position ou saisissez une adresse</div>`
-        }
-      </div>
-      <button class="btn btn-ghost" style="width:100%;padding:13px;margin-bottom:16px" onclick="requestGeoInCheckout()">${hasLoc? 'Mettre à jour ma position':'Partager ma position GPS'}</button>
-      <div class="field-group">
-        <label class="field-label">Ou décrivez votre adresse</label>
-        <input class="field-input" id="ck-address" placeholder="Ex: Cocody Angré, 8e tranche..." value="${checkoutData.manualAddress}">
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-ghost" onclick="checkoutStep=1;renderCheckout()">Retour</button>
-        <button class="btn btn-primary" onclick="goStep3()">Continuer</button>
-      </div>
-    `;
-  } else {
-    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-    const discount = appliedPromo? Math.round(subtotal*appliedPromo.percent/100) : 0;
-    const total = subtotal - discount;
-    c.innerHTML = `
-      <div class="step-dots">${dots}</div>
-      <h3 style="margin:14px 0 18px;font-size:18px">Récapitulatif</h3>
-      <div class="recap-row"><span>Client</span><span>${checkoutData.name||'—'}</span></div>
-      <div class="recap-row"><span>Téléphone</span><span>${checkoutData.phone||'—'}</span></div>
-      <div class="recap-row"><span>Livraison</span><span>${userLocation? 'Position GPS':(checkoutData.manualAddress||'Non précisée')}</span></div>
-      ${appliedPromo? `<div class="recap-row"><span>Code promo</span><span>${appliedPromo.code} (−${appliedPromo.percent}%)</span></div>`:''}
-      <div class="recap-row"><span>Sous-total</span><span>${fmt(subtotal)} F</span></div>
-      ${discount? `<div class="recap-row" style="color:var(--success)"><span>Réduction</span><span>−${fmt(discount)} F</span></div>`:''}
-      <div class="recap-row" style="border:none;font-size:16px;font-weight:800;margin-top:8px"><span>Total</span><span>${fmt(total)} F</span></div>
-      <div class="btn-row" style="margin-top:20px">
-        <button class="btn btn-ghost" onclick="checkoutStep=2;renderCheckout()">Retour</button>
-        <button class="btn btn-primary" onclick="sendOrder()">Envoyer sur WhatsApp</button>
-      </div>
-    `;
-  }
-}
+    if (!capturedLocation) {
+      geoErrorField.style.display = "block";
+      valid = false;
+    }
 
-function checkPromoLive(){
-  const val = document.getElementById('ck-promo').value.trim().toUpperCase();
-  const statusEl = document.getElementById('promo-status');
-  if(!val){ statusEl.textContent=''; appliedPromo=null; return; }
-  const found = AFFILIATES.find(a=>a.code.toUpperCase()===val && a.active);
-  if(found){
-    appliedPromo = { code: val, percent: SETTINGS.affiliateDiscountPercent };
-    statusEl.className='promo-status ok';
-    statusEl.textContent = `✓ Code valide — ${SETTINGS.affiliateDiscountPercent}% de réduction appliquée`;
-  } else {
-    appliedPromo = null;
-    statusEl.className='promo-status err';
-    statusEl.textContent = 'Code invalide';
-  }
-}
+    if (!document.getElementById('consent').checked) valid = false;
 
-function goStep2(){
-  const name = document.getElementById('ck-name').value.trim();
-  const phone = document.getElementById('ck-phone').value.trim();
-  if(!name || !phone){ showToast('Merci de renseigner votre nom et numéro'); return; }
-  checkoutData.name = name; checkoutData.phone = phone;
-  checkoutData.promoCode = document.getElementById('ck-promo').value.trim();
-  checkoutStep = 2; renderCheckout();
-}
-function goStep3(){
-  checkoutData.manualAddress = document.getElementById('ck-address').value.trim();
-  if(!userLocation && !checkoutData.manualAddress){ showToast('Partagez votre position ou décrivez votre adresse'); return; }
-  checkoutStep = 3; renderCheckout();
-}
-function requestGeoInCheckout(){
-  if(!navigator.geolocation){ showToast("Géolocalisation non disponible sur cet appareil"); return; }
-  showToast('Localisation en cours...');
-  navigator.geolocation.getCurrentPosition(
-    pos=>{
-      const { latitude, longitude } = pos.coords;
-      userLocation = { lat:latitude, lng:longitude, link:`https://www.google.com/maps?q=${latitude},${longitude}` };
-      localStorage.setItem('baraka_location', JSON.stringify(userLocation));
-      showToast('Position mise à jour 📍');
-      renderCheckout();
-    },
-    ()=> showToast("Position refusée — saisissez votre adresse")
-  );
-}
+    if (!valid) {
+      formAlert.style.display = "block";
+      formAlert.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
 
-function sendOrder(){
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const discount = appliedPromo? Math.round(subtotal*appliedPromo.percent/100) : 0;
-  const total = subtotal - discount;
+    const payload = {
+      nom: document.getElementById('nom').value.trim(),
+      pays: document.getElementById('pays').value,
+      ville: document.getElementById('ville').value.trim(),
+      quartier: document.getElementById('quartier').value.trim(),
+      whatsapp: document.getElementById('indicatif').value + " " + document.getElementById('whatsapp').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      canaux: canaux.join(', '),
+      audience: document.getElementById('audience').value,
+      lien_profil: document.getElementById('lien').value.trim(),
+      strategie: document.getElementById('strategie').value.trim(),
+      localisation_gps: `${capturedLocation.lat}, ${capturedLocation.lng}`,
+      localisation_lieu: capturedLocation.ville || "Non identifié",
+      operateur_momo: document.getElementById('operateur').value,
+      numero_momo: document.getElementById('momo').value.trim(),
+      date_inscription: new Date().toISOString(),
+      _subject: `Nouvelle inscription affilié BARAKA SHOP — ${document.getElementById('nom').value.trim()}`
+    };
 
-  let msg = `🛍️ *Nouvelle commande BARAKA shop*\n\n`;
-  msg += `👤 *Client:* ${checkoutData.name}\n📞 *Téléphone:* ${checkoutData.phone}\n\n`;
-  msg += `*Articles:*\n`;
-  cart.forEach(i=>{ msg += `• ${i.name} x${i.qty} — ${fmt(i.price*i.qty)} F\n`; });
-  msg += `\nSous-total: ${fmt(subtotal)} F\n`;
-  if(appliedPromo) msg += `Code promo: ${appliedPromo.code} (−${appliedPromo.percent}%) — Affilié à créditer\n`;
-  msg += `*Total: ${fmt(total)} F*\n\n`;
-  msg += `📍 *Livraison:*\n`;
-  if(userLocation) msg += `Position GPS: ${userLocation.link}\n`;
-  if(checkoutData.manualAddress) msg += `Adresse indiquée: ${checkoutData.manualAddress}\n`;
+    // Sauvegarde locale (backup, cohérent avec l'écosystème BARAKA)
+    try {
+      const existing = JSON.parse(localStorage.getItem('baraka_affiliate_signups') || '[]');
+      existing.push(payload);
+      localStorage.setItem('baraka_affiliate_signups', JSON.stringify(existing));
+    } catch(e) {}
 
-  const url = `https://wa.me/${SETTINGS.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi en cours...";
 
-  cart = [];
-  localStorage.setItem('baraka_cart', '[]');
-  updateCartBadge();
-  closeCheckout();
-  closeCart();
-  showToast('Commande envoyée sur WhatsApp ✅');
-}
+    try {
+      if (FORMSPREE_ENDPOINT.includes("VOTRE_ID_FORMSPREE")) {
+        console.warn("Formspree non configuré : le dossier est sauvegardé localement uniquement.");
+      } else {
+        await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      }
+    } catch (err) {
+      console.error("Erreur envoi email :", err);
+    }
 
-/* ============ NAV / UTIL ============ */
-function showHome(){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('nav-home').classList.add('active');
-  closeCart();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2200);
-}
-
-init();
+    form.style.display = "none";
+    document.getElementById('success').style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
+
 </body>
 </html>
