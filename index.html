@@ -367,9 +367,11 @@
 
   <div id="success">
     <div class="check">✓</div>
-    <h2>Dossier envoyé !</h2>
-    <p>Merci, votre demande d'affiliation BARAKA SHOP a bien été enregistrée. Vous recevrez une confirmation sous 48h après vérification.</p>
-    <a href="#form" class="cta-btn" onclick="location.reload()">Envoyer un autre dossier</a>
+    <h2>Presque terminé !</h2>
+    <p>Votre application mail va s'ouvrir avec votre dossier déjà rempli. Il ne vous reste qu'à cliquer sur <strong>Envoyer</strong>.</p>
+    <a href="#" id="openMailBtn" class="cta-btn">Ouvrir mon application mail</a>
+    <p style="margin-top:18px; font-size:12px;">L'application ne s'ouvre pas ? Appuyez sur le bouton ci-dessus, ou copiez-collez les infos manuellement.</p>
+    <div style="margin-top:22px;"><a href="#form" onclick="location.reload()" style="color:var(--muted); font-size:12px;">↺ Envoyer un autre dossier</a></div>
   </div>
 
 </main>
@@ -379,9 +381,8 @@
 </footer>
 
 <script>
-  // ⚠️ À CONFIGURER : remplacez par votre propre endpoint Formspree (gratuit sur formspree.io)
-  // pour recevoir chaque inscription par email automatiquement.
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/VOTRE_ID_FORMSPREE";
+  // L'adresse qui recevra chaque dossier d'affiliation.
+  const RECEIVER_EMAIL = "businessdelfa@gmail.com";
 
   let capturedLocation = null;
 
@@ -501,27 +502,49 @@
       localStorage.setItem('baraka_affiliate_signups', JSON.stringify(existing));
     } catch(e) {}
 
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Envoi en cours...";
+    // Construction de l'email pré-rempli
+    const subject = `Nouvelle inscription affilié BARAKA SHOP — ${payload.nom}`;
+    const body =
+`NOUVELLE INSCRIPTION AFFILIÉ — BARAKA SHOP
 
-    try {
-      if (FORMSPREE_ENDPOINT.includes("VOTRE_ID_FORMSPREE")) {
-        console.warn("Formspree non configuré : le dossier est sauvegardé localement uniquement.");
-      } else {
-        await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(payload)
-        });
-      }
-    } catch (err) {
-      console.error("Erreur envoi email :", err);
-    }
+— IDENTITÉ —
+Nom complet : ${payload.nom}
+Pays : ${payload.pays}
+Ville / Commune : ${payload.ville}
+Quartier : ${payload.quartier || "-"}
+
+— CONTACT —
+WhatsApp : ${payload.whatsapp}
+Email : ${payload.email || "-"}
+
+— RÉSEAU DE PROMOTION —
+Canaux : ${payload.canaux}
+Audience estimée : ${payload.audience || "-"}
+Lien profil : ${payload.lien_profil || "-"}
+Stratégie : ${payload.strategie || "-"}
+
+— LOCALISATION —
+Lieu détecté : ${payload.localisation_lieu}
+Coordonnées GPS : ${payload.localisation_gps}
+Voir sur la carte : https://www.google.com/maps?q=${capturedLocation.lat},${capturedLocation.lng}
+
+— PAIEMENT —
+Opérateur Mobile Money : ${payload.operateur_momo}
+Numéro Mobile Money : ${payload.numero_momo}
+
+— DATE —
+${new Date(payload.date_inscription).toLocaleString('fr-FR')}`;
+
+    const mailtoUrl = `mailto:${RECEIVER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     form.style.display = "none";
     document.getElementById('success').style.display = "block";
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    document.getElementById('openMailBtn').href = mailtoUrl;
+
+    // Ouverture automatique de l'application mail
+    window.location.href = mailtoUrl;
   });
 </script>
 
