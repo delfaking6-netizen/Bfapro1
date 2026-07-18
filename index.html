@@ -3,550 +3,675 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BARAKA SHOP — Programme Affiliés</title>
+<title>BARAKA admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#10152b;
-    --surface:#171d3a;
-    --surface-2:#1f2748;
-    --border:rgba(255,255,255,0.09);
-    --text:#f3f1e9;
-    --muted:#9aa3c7;
-    --gold:#f2a93b;
-    --gold-dim:#f2a93b33;
-    --teal:#2fbf9f;
-    --teal-dim:#2fbf9f26;
-    --danger:#e8573f;
-    --radius:14px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif; margin:0;}
-  .mono{font-family:'JetBrains Mono',monospace;}
+:root{
+  --white:#FFFFFF;--cream:#FFF7F5;--pink:#FFE2E7;--pink-soft:#FFF0F2;
+  --coral:#FF5A6E;--coral-dark:#E8384F;--red-deep:#C81E3A;
+  --ink:#2B1420;--ink-soft:#6B4B52;--gray:#A6898F;
+  --success:#2E9E5B;--warn:#D98A1E;--radius:20px;--radius-sm:14px;
+  --shadow-card:0 6px 20px rgba(200,30,58,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+h1,h2,h3,.display{font-family:'Fraunces',serif}
+input,select,textarea{font-family:'Manrope',sans-serif}
 
-  /* subtle wax-pattern texture */
-  .texture{
-    position:absolute; inset:0; z-index:0; opacity:0.5; pointer-events:none;
-    background-image:
-      radial-gradient(circle at 12% 20%, var(--gold-dim) 0, transparent 40%),
-      radial-gradient(circle at 85% 10%, var(--teal-dim) 0, transparent 35%),
-      repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px),
-      repeating-linear-gradient(-45deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px);
-  }
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:linear-gradient(160deg,var(--coral),var(--red-deep));display:flex;align-items:center;justify-content:center;padding:20px;z-index:999}
+.login-card{background:#fff;border-radius:24px;padding:36px 30px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-card .mark{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--coral),var(--red-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:800;margin:0 auto 16px}
+.login-card h1{font-size:22px;margin-bottom:6px}
+.login-card p{color:var(--ink-soft);font-size:13px;margin-bottom:22px}
+.field-input{width:100%;padding:13px 14px;border-radius:14px;border:1.5px solid var(--pink);background:var(--pink-soft);font-size:14px;outline:none;margin-bottom:10px;color:var(--ink)}
+.field-input:focus{border-color:var(--coral)}
+.btn{padding:13px 20px;border:none;border-radius:14px;font-weight:700;font-size:14px;cursor:pointer;transition:.15s}
+.btn-primary{background:linear-gradient(135deg,var(--coral),var(--red-deep));color:#fff;width:100%}
+.btn-primary:active{transform:scale(.98)}
+.login-err{color:var(--red-deep);font-size:12px;margin-top:8px;display:none;font-weight:700}
 
-  .hero{
-    position:relative;
-    overflow:hidden;
-    padding:64px 20px 56px;
-    text-align:center;
-    border-bottom:1px solid var(--border);
-  }
-  .hero-inner{position:relative; z-index:1; max-width:640px; margin:0 auto;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--gold); background:var(--gold-dim);
-    border:1px solid var(--gold-dim); padding:6px 14px; border-radius:999px;
-    margin-bottom:20px;
-  }
-  .hero h1{font-size:clamp(28px,5.5vw,42px); font-weight:700; letter-spacing:-0.01em;}
-  .hero h1 span{color:var(--gold);}
-  .hero p.lead{color:var(--muted); font-size:16px; margin:16px auto 28px; max-width:480px;}
+/* LAYOUT */
+#admin{display:none}
+#topbar{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 10px rgba(200,30,58,.06);padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+#topbar .logo{font-weight:800;font-size:17px;display:flex;align-items:center;gap:8px}
+#topbar .logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--coral),var(--red-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
+.status-pill{font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px}
+.status-pill.open{background:rgba(46,158,91,.12);color:var(--success)}
+.status-pill.closed{background:rgba(200,30,58,.1);color:var(--red-deep)}
+#logout-btn{background:var(--pink-soft);border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink)}
 
-  .stat-row{
-    display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
-    margin-bottom:30px;
-  }
-  .stat{text-align:left;}
-  .stat .num{font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:var(--teal);}
-  .stat .lbl{font-size:12px; color:var(--muted);}
+#tabs{display:flex;gap:6px;padding:14px 22px 0;overflow-x:auto;scrollbar-width:none}
+#tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex:none;padding:10px 16px;border-radius:12px;border:none;background:transparent;color:var(--ink-soft);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.tab-btn.active{background:var(--ink);color:#fff}
 
-  .cta-btn{
-    display:inline-block; background:var(--gold); color:#1a1408;
-    font-weight:600; font-size:15px; padding:14px 30px; border-radius:999px;
-    text-decoration:none; border:none; cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease;
-    box-shadow:0 8px 24px -8px var(--gold-dim);
-  }
-  .cta-btn:hover{transform:translateY(-2px);}
-  .cta-btn:focus-visible{outline:3px solid var(--teal); outline-offset:3px;}
+#content{padding:20px 22px 60px;max-width:1100px;margin:0 auto}
+.panel{display:none}
+.panel.active{display:block}
 
-  main{max-width:600px; margin:0 auto; padding:44px 20px 90px;}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:#fff;border-radius:var(--radius-sm);padding:18px;box-shadow:var(--shadow-card)}
+.stat-card .label{font-size:11px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.stat-card .value{font-size:24px;font-weight:800}
+.stat-card .value.red{color:var(--red-deep)}
+.stat-card .value.green{color:var(--success)}
+.card{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-card);margin-bottom:18px}
+.card h3{font-size:15px;margin-bottom:14px}
+.top-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--pink-soft);font-size:13px}
+.top-row:last-child{border:none}
 
-  .section-title{margin-bottom:6px; font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); font-family:'JetBrains Mono',monospace;}
-  .section-desc{color:var(--muted); font-size:13px; margin-bottom:16px;}
+/* PRODUCTS */
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.btn-sm{padding:9px 14px;font-size:12.5px;border-radius:10px}
+.prod-list{display:flex;flex-direction:column;gap:10px}
+.prod-row{background:#fff;border-radius:var(--radius-sm);padding:12px 14px;box-shadow:var(--shadow-card);display:flex;align-items:center;gap:12px}
+.prod-thumb{width:48px;height:48px;border-radius:10px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;overflow:hidden}
+.prod-thumb img{width:100%;height:100%;object-fit:cover}
+.prod-meta{flex:1;min-width:0}
+.prod-meta .n{font-weight:700;font-size:13.5px}
+.prod-meta .m{font-size:11.5px;color:var(--gray)}
+.prod-actions{display:flex;gap:6px}
+.icon-sm{width:32px;height:32px;border-radius:9px;border:none;background:var(--pink-soft);cursor:pointer;font-size:14px}
+.tag-inactive{opacity:.5}
+.badge-inline{font-size:9.5px;font-weight:800;padding:3px 7px;border-radius:6px;background:var(--red-deep);color:#fff;text-transform:uppercase}
 
-  .card{
-    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-    padding:24px; margin-bottom:28px;
-  }
+/* FORM MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(43,20,32,.55);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:22px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:26px}
+.modal-box h3{font-size:18px;margin-bottom:18px}
+.field-group{margin-bottom:14px}
+.field-label{font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;display:block}
+.field-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.switch-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.switch{position:relative;width:44px;height:26px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--pink);border-radius:20px;cursor:pointer;transition:.2s}
+.slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked + .slider{background:var(--success)}
+input:checked + .slider::before{transform:translateX(18px)}
+.chip-input-wrap{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:14px;border:1.5px solid var(--pink);background:var(--pink-soft);min-height:44px}
+.chip{background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 9px;border-radius:8px;display:flex;align-items:center;gap:5px}
+.chip span{cursor:pointer}
+.chip-input-wrap input{border:none;background:transparent;outline:none;flex:1;min-width:80px;font-size:12.5px}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.btn-ghost{background:var(--pink-soft);color:var(--ink)}
 
-  label{display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:var(--text);}
-  .req{color:var(--teal);}
-  .field{margin-bottom:18px;}
-  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-  @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+/* ORDERS */
+.order-card{background:#fff;border-radius:var(--radius-sm);padding:14px 16px;box-shadow:var(--shadow-card);margin-bottom:10px}
+.order-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.order-client{font-weight:700;font-size:13.5px}
+.order-date{font-size:11px;color:var(--gray)}
+.order-total{font-weight:800;color:var(--red-deep);font-size:14px}
+.order-items{font-size:12px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px}
+.order-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.status-select{padding:6px 10px;border-radius:8px;border:1.5px solid var(--pink);font-size:11.5px;font-weight:700;background:var(--pink-soft)}
+.promo-tag{font-size:11px;font-weight:800;color:var(--red-deep);background:rgba(200,30,58,.08);padding:3px 8px;border-radius:7px}
+.flag-tag{font-size:10.5px;font-weight:800;color:#fff;background:var(--warn);padding:3px 8px;border-radius:7px}
 
-  input[type=text], input[type=tel], input[type=email], select, textarea{
-    width:100%; background:var(--surface-2); border:1px solid var(--border);
-    color:var(--text); font-family:'Inter',sans-serif; font-size:14px;
-    padding:12px 14px; border-radius:10px; outline:none;
-    transition:border-color .15s ease;
-  }
-  input::placeholder, textarea::placeholder{color:#5f6890;}
-  input:focus, select:focus, textarea:focus{border-color:var(--teal);}
-  textarea{resize:vertical; min-height:80px;}
-
-  .chip-group{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{
-    position:relative;
-  }
-  .chip input{position:absolute; opacity:0; inset:0; cursor:pointer; margin:0; width:100%; height:100%;}
-  .chip .pill{
-    display:inline-block; padding:9px 16px; border-radius:999px; font-size:13px;
-    border:1px solid var(--border); background:var(--surface-2); color:var(--muted);
-    transition:all .15s ease; cursor:pointer;
-  }
-  .chip input:checked + .pill{
-    background:var(--teal-dim); border-color:var(--teal); color:var(--teal); font-weight:600;
-  }
-  .chip input:focus-visible + .pill{outline:2px solid var(--teal); outline-offset:2px;}
-
-  /* geolocation block */
-  .geo-box{
-    border:1px dashed var(--border); border-radius:12px; padding:20px; text-align:center;
-    background:var(--surface-2);
-  }
-  .radar{
-    position:relative; width:64px; height:64px; margin:0 auto 14px;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .radar .pin{
-    width:14px; height:14px; border-radius:50%; background:var(--teal);
-    box-shadow:0 0 0 4px var(--bg);
-    position:relative; z-index:2;
-  }
-  .radar .ring{
-    position:absolute; border:2px solid var(--teal); border-radius:50%;
-    opacity:0; animation:ping 2.2s ease-out infinite;
-  }
-  .radar .ring:nth-child(2){animation-delay:.5s;}
-  .radar .ring:nth-child(3){animation-delay:1s;}
-  @keyframes ping{
-    0%{width:14px; height:14px; opacity:.7;}
-    100%{width:64px; height:64px; opacity:0;}
-  }
-  .radar.idle .ring{display:none;}
-  .radar.idle .pin{background:#4b5480;}
-
-  .geo-status{font-size:13px; color:var(--muted); margin-bottom:14px;}
-  .geo-status.found{color:var(--teal);}
-  .geo-status.error{color:var(--danger);}
-  .geo-coords{
-    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold);
-    margin-top:8px; display:none;
-  }
-  .btn-secondary{
-    background:transparent; border:1px solid var(--teal); color:var(--teal);
-    font-weight:600; font-size:14px; padding:10px 22px; border-radius:999px; cursor:pointer;
-  }
-  .btn-secondary:hover{background:var(--teal-dim);}
-  .btn-secondary:disabled{opacity:.5; cursor:not-allowed;}
-
-  .consent{display:flex; align-items:flex-start; gap:10px; font-size:12.5px; color:var(--muted); margin-bottom:22px;}
-  .consent input{margin-top:3px;}
-
-  .submit-btn{
-    width:100%; background:var(--gold); color:#1a1408; font-weight:700; font-size:15px;
-    padding:15px; border:none; border-radius:12px; cursor:pointer;
-    transition:transform .15s ease;
-  }
-  .submit-btn:hover{transform:translateY(-1px);}
-  .submit-btn:disabled{opacity:.6; cursor:not-allowed; transform:none;}
-
-  .error-text{color:var(--danger); font-size:12px; margin-top:5px; display:none;}
-  .field.invalid input, .field.invalid select{border-color:var(--danger);}
-  .field.invalid .error-text{display:block;}
-
-  .form-alert{
-    display:none; background:var(--danger); color:#fff; font-size:13px;
-    padding:12px 16px; border-radius:10px; margin-bottom:18px; text-align:center;
-  }
-
-  /* success screen */
-  #success{display:none; text-align:center; padding:60px 20px;}
-  #success .check{
-    width:64px; height:64px; border-radius:50%; background:var(--teal-dim);
-    border:2px solid var(--teal); display:flex; align-items:center; justify-content:center;
-    margin:0 auto 20px; font-size:28px; color:var(--teal);
-  }
-  #success h2{font-size:24px; margin-bottom:10px;}
-  #success p{color:var(--muted); max-width:400px; margin:0 auto 24px;}
-
-  footer{text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:12px;}
-  footer a{color:var(--teal);}
-
-  @media (prefers-reduced-motion: reduce){
-    .radar .ring{animation:none; display:none;}
-  }
+/* AFFILIATES */
+.aff-card{background:#fff;border-radius:var(--radius-sm);padding:16px;box-shadow:var(--shadow-card);margin-bottom:12px}
+.aff-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.aff-name{font-weight:700;font-size:14px}
+.aff-detail{font-size:12px;color:var(--ink-soft);margin-bottom:3px}
+.status-badge{font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase}
+.status-badge.pending{background:rgba(217,138,30,.12);color:var(--warn)}
+.status-badge.approved{background:rgba(46,158,91,.12);color:var(--success)}
+.status-badge.rejected{background:rgba(200,30,58,.1);color:var(--red-deep)}
+.aff-actions{display:flex;gap:8px;margin-top:10px}
+.empty-hint{text-align:center;color:var(--gray);font-size:13px;padding:40px 20px}
+.demo-note{background:var(--pink-soft);border-radius:12px;padding:10px 14px;font-size:11.5px;color:var(--ink-soft);margin-bottom:16px}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="texture"></div>
-  <div class="hero-inner">
-    <span class="eyebrow">● Programme Affiliés</span>
-    <h1>Gagnez avec <span>BARAKA SHOP</span></h1>
-    <p class="lead">Rejoignez le réseau d'affiliés BARAKA SHOP. Une commission par filleul actif et vérifié — versée directement sur votre Mobile Money.</p>
-    <div class="stat-row">
-      <div class="stat"><div class="num">100%</div><div class="lbl">Gratuit à rejoindre</div></div>
-      <div class="stat"><div class="num">CI · BF</div><div class="lbl">Zones couvertes</div></div>
-      <div class="stat"><div class="num">48h</div><div class="lbl">Validation du dossier</div></div>
-    </div>
-    <a href="#form" class="cta-btn">Remplir mon dossier d'affilié</a>
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="mark">B</div>
+    <h1>BARAKA admin</h1>
+    <p>Entrez votre code d'accès pour gérer la boutique</p>
+    <input class="field-input" type="password" id="login-code" placeholder="Code d'accès admin" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn btn-primary" onclick="doLogin()">Se connecter</button>
+    <div class="login-err" id="login-err">Code incorrect</div>
   </div>
 </div>
 
-<main>
-
-  <form id="form">
-
-    <div class="form-alert" id="formAlert">Merci de compléter les champs obligatoires avant d'envoyer.</div>
-
-    <!-- Identité -->
-    <div class="section-title">01 · Identité</div>
-    <div class="section-desc">Vos informations personnelles pour créer votre profil affilié.</div>
-    <div class="card">
-      <div class="field">
-        <label>Nom complet <span class="req">*</span></label>
-        <input type="text" id="nom" placeholder="Ex : Konaté Aminata" required>
-        <div class="error-text">Le nom complet est requis.</div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>Pays de résidence <span class="req">*</span></label>
-          <select id="pays" required>
-            <option value="">Sélectionner</option>
-            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-            <option value="Burkina Faso">Burkina Faso</option>
-            <option value="Autre">Autre</option>
-          </select>
-          <div class="error-text">Sélectionnez votre pays.</div>
-        </div>
-        <div class="field">
-          <label>Ville / Commune <span class="req">*</span></label>
-          <input type="text" id="ville" placeholder="Ex : Abidjan, Cocody" required>
-          <div class="error-text">La ville est requise.</div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Quartier (optionnel)</label>
-        <input type="text" id="quartier" placeholder="Ex : Angré 8e tranche">
-      </div>
+<!-- ADMIN -->
+<div id="admin">
+  <div id="topbar">
+    <div class="logo"><div class="mark">B</div>BARAKA admin</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="status-pill" id="shop-status-pill"></span>
+      <button id="logout-btn" onclick="doLogout()">Déconnexion</button>
     </div>
-
-    <!-- Contact -->
-    <div class="section-title">02 · Contact</div>
-    <div class="section-desc">Pour vous transmettre votre lien affilié et vos gains.</div>
-    <div class="card">
-      <div class="row2">
-        <div class="field">
-          <label>Indicatif</label>
-          <select id="indicatif">
-            <option value="+225">🇨🇮 +225</option>
-            <option value="+226">🇧🇫 +226</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Numéro WhatsApp <span class="req">*</span></label>
-          <input type="tel" id="whatsapp" placeholder="07 00 00 00 00" required>
-          <div class="error-text">Le numéro WhatsApp est requis.</div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Email (optionnel)</label>
-        <input type="email" id="email" placeholder="vous@email.com">
-      </div>
-    </div>
-
-    <!-- Réseau -->
-    <div class="section-title">03 · Réseau de promotion</div>
-    <div class="section-desc">Comment allez-vous faire connaître BARAKA SHOP ?</div>
-    <div class="card">
-      <div class="field">
-        <label>Canaux principaux <span class="req">*</span></label>
-        <div class="chip-group" id="canaux">
-          <label class="chip"><input type="checkbox" value="WhatsApp"><span class="pill">WhatsApp</span></label>
-          <label class="chip"><input type="checkbox" value="Facebook"><span class="pill">Facebook</span></label>
-          <label class="chip"><input type="checkbox" value="Instagram"><span class="pill">Instagram</span></label>
-          <label class="chip"><input type="checkbox" value="TikTok"><span class="pill">TikTok</span></label>
-          <label class="chip"><input type="checkbox" value="Bouche-à-oreille"><span class="pill">Bouche-à-oreille</span></label>
-        </div>
-        <div class="error-text" id="canauxError">Sélectionnez au moins un canal.</div>
-      </div>
-      <div class="field">
-        <label>Audience estimée</label>
-        <select id="audience">
-          <option value="">Sélectionner</option>
-          <option>Moins de 100 contacts</option>
-          <option>100 – 500 contacts</option>
-          <option>500 – 2000 contacts</option>
-          <option>Plus de 2000 contacts</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Lien de votre profil principal (optionnel)</label>
-        <input type="text" id="lien" placeholder="Ex : lien Facebook, groupe WhatsApp...">
-      </div>
-      <div class="field" style="margin-bottom:0;">
-        <label>Comment comptez-vous promouvoir BARAKA SHOP ? (optionnel)</label>
-        <textarea id="strategie" placeholder="Ex : je partage dans mes groupes WhatsApp famille et quartier..."></textarea>
-      </div>
-    </div>
-
-    <!-- Localisation -->
-    <div class="section-title">04 · Localisation</div>
-    <div class="section-desc">Pour organiser la couverture des zones par affilié.</div>
-    <div class="card">
-      <div class="geo-box">
-        <div class="radar idle" id="radar">
-          <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-          <div class="pin"></div>
-        </div>
-        <div class="geo-status" id="geoStatus">Localisation non détectée</div>
-        <button type="button" class="btn-secondary" id="geoBtn">Partager ma position</button>
-        <div class="geo-coords" id="geoCoords"></div>
-      </div>
-      <div class="error-text" id="geoError" style="text-align:center; margin-top:10px;">La localisation est requise pour valider votre dossier.</div>
-    </div>
-
-    <!-- Paiement -->
-    <div class="section-title">05 · Paiement des commissions</div>
-    <div class="section-desc">Vos commissions vérifiées seront envoyées sur ce numéro.</div>
-    <div class="card">
-      <div class="row2">
-        <div class="field">
-          <label>Opérateur Mobile Money <span class="req">*</span></label>
-          <select id="operateur" required>
-            <option value="">Sélectionner</option>
-            <option>Orange Money</option>
-            <option>MTN Money</option>
-            <option>Moov Money</option>
-            <option>Wave</option>
-          </select>
-          <div class="error-text">Sélectionnez un opérateur.</div>
-        </div>
-        <div class="field">
-          <label>Numéro Mobile Money <span class="req">*</span></label>
-          <input type="tel" id="momo" placeholder="07 00 00 00 00" required>
-          <div class="error-text">Le numéro Mobile Money est requis.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="consent">
-      <input type="checkbox" id="consent" required>
-      <label for="consent" style="margin:0;">J'accepte que mes informations (y compris ma localisation) soient utilisées par BARAKA SHOP dans le cadre du programme d'affiliation.</label>
-    </div>
-
-    <button type="submit" class="submit-btn" id="submitBtn">Envoyer mon dossier d'affilié</button>
-  </form>
-
-  <div id="success">
-    <div class="check">✓</div>
-    <h2>Presque terminé !</h2>
-    <p>Votre application mail va s'ouvrir avec votre dossier déjà rempli. Il ne vous reste qu'à cliquer sur <strong>Envoyer</strong>.</p>
-    <a href="#" id="openMailBtn" class="cta-btn">Ouvrir mon application mail</a>
-    <p style="margin-top:18px; font-size:12px;">L'application ne s'ouvre pas ? Appuyez sur le bouton ci-dessus, ou copiez-collez les infos manuellement.</p>
-    <div style="margin-top:22px;"><a href="#form" onclick="location.reload()" style="color:var(--muted); font-size:12px;">↺ Envoyer un autre dossier</a></div>
   </div>
 
-</main>
+  <div id="tabs">
+    <button class="tab-btn active" data-tab="stats" onclick="switchTab('stats')">📊 Statistiques</button>
+    <button class="tab-btn" data-tab="products" onclick="switchTab('products')">🛍️ Produits</button>
+    <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')">📦 Commandes</button>
+    <button class="tab-btn" data-tab="blackdays" onclick="switchTab('blackdays')">⚡ Black Days &amp; Réglages</button>
+    <button class="tab-btn" data-tab="affiliation" onclick="switchTab('affiliation')">🤝 Affiliation</button>
+  </div>
 
-<footer>
-  BARAKA SHOP — Programme Affiliés · Vos données restent confidentielles et servent uniquement à la gestion du programme.
-</footer>
+  <div id="content">
 
+    <!-- STATS -->
+    <div class="panel active" id="panel-stats">
+      <div class="demo-note">📌 Données de démonstration — se connectera aux vraies commandes une fois Supabase branché.</div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="card">
+        <h3>Top produits vendus</h3>
+        <div id="top-products"></div>
+      </div>
+      <div class="card">
+        <h3>Revenus par code promo (affiliation)</h3>
+        <div id="promo-revenue"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="panel" id="panel-products">
+      <div class="toolbar">
+        <input class="field-input" style="margin:0;max-width:260px" id="prod-search" placeholder="Rechercher un produit..." oninput="renderProductsList()">
+        <button class="btn btn-primary btn-sm" onclick="openProductForm()">+ Nouveau produit</button>
+      </div>
+      <div class="prod-list" id="prod-list"></div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="panel" id="panel-orders">
+      <div class="demo-note">📌 Commandes de démonstration — les vraies commandes arriveront ici automatiquement une fois Supabase branché.</div>
+      <div id="fraud-alerts"></div>
+      <div id="orders-list"></div>
+    </div>
+
+    <!-- BLACKDAYS & SETTINGS -->
+    <div class="panel" id="panel-blackdays">
+      <div class="card">
+        <h3>État de la boutique</h3>
+        <div class="switch-row">
+          <div><b>Boutique ouverte</b><div style="font-size:12px;color:var(--gray)">Désactivez pour fermer temporairement les commandes</div></div>
+          <label class="switch"><input type="checkbox" id="shop-open-toggle" onchange="updateShopOpen()"><span class="slider"></span></label>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Message affiché quand la boutique est fermée</label>
+          <input class="field-input" id="closed-message" oninput="autoSaveSettings()">
+        </div>
+      </div>
+      <div class="card">
+        <h3>Black Days ⚡</h3>
+        <div class="switch-row">
+          <div><b>Activer les Black Days</b><div style="font-size:12px;color:var(--gray)">Applique une réduction supplémentaire sur toute la boutique</div></div>
+          <label class="switch"><input type="checkbox" id="bd-active" onchange="autoSaveSettings()"><span class="slider"></span></label>
+        </div>
+        <div class="field-row2">
+          <div class="field-group">
+            <label class="field-label">Nom de l'opération</label>
+            <input class="field-input" id="bd-label" oninput="autoSaveSettings()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Réduction (%)</label>
+            <input class="field-input" type="number" id="bd-percent" oninput="autoSaveSettings()">
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Fin de l'opération</label>
+          <input class="field-input" type="datetime-local" id="bd-end" oninput="autoSaveSettings()">
+        </div>
+      </div>
+      <div class="card">
+        <h3>Réglages généraux</h3>
+        <div class="field-group">
+          <label class="field-label">Slogan de la page d'accueil</label>
+          <input class="field-input" id="set-slogan" oninput="autoSaveSettings()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Catégories (séparées par une virgule)</label>
+          <input class="field-input" id="set-categories" oninput="autoSaveSettings()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Code d'accès admin</label>
+          <input class="field-input" id="set-admin-code" oninput="autoSaveSettings()">
+        </div>
+      </div>
+    </div>
+
+    <!-- AFFILIATION -->
+    <div class="panel" id="panel-affiliation">
+      <div class="demo-note">📌 Demandes de démonstration — les vraies demandes soumises sur BARAKA AFFILIATION apparaîtront ici une fois Supabase branché.</div>
+      <div class="stats-grid" id="aff-summary" style="margin-bottom:20px"></div>
+      <div id="aff-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PRODUCT FORM MODAL -->
+<div class="modal-overlay" id="prod-modal">
+  <div class="modal-box">
+    <h3 id="prod-form-title">Nouveau produit</h3>
+    <input type="hidden" id="pf-id">
+    <div class="field-group"><label class="field-label">Nom du produit</label><input class="field-input" id="pf-name"></div>
+    <div class="field-group"><label class="field-label">Description</label><input class="field-input" id="pf-desc"></div>
+    <div class="field-row2">
+      <div class="field-group"><label class="field-label">Prix (FCFA)</label><input class="field-input" type="number" id="pf-price"></div>
+      <div class="field-group"><label class="field-label">Prix promo (facultatif)</label><input class="field-input" type="number" id="pf-promo"></div>
+    </div>
+    <div class="field-row2">
+      <div class="field-group"><label class="field-label">Catégorie</label><input class="field-input" id="pf-cat"></div>
+      <div class="field-group"><label class="field-label">Badge</label>
+        <select class="field-input" id="pf-badge"><option value="">Aucun</option><option value="promo">Promo</option><option value="nouveau">Nouveau</option></select>
+      </div>
+    </div>
+    <div class="field-group"><label class="field-label">URL de la photo (facultatif — sinon emoji)</label><input class="field-input" id="pf-img" placeholder="https://..."></div>
+    <div class="field-group"><label class="field-label">Emoji (si pas de photo)</label><input class="field-input" id="pf-emoji" placeholder="🛍️"></div>
+    <div class="field-group">
+      <label class="field-label">Lieux de disponibilité</label>
+      <div class="chip-input-wrap" id="pf-locations-wrap">
+        <input id="pf-location-input" placeholder="Tapez une ville et Entrée" onkeydown="if(event.key==='Enter'){event.preventDefault();addLocationChip()}">
+      </div>
+    </div>
+    <div class="switch-row">
+      <div><b>Produit actif</b></div>
+      <label class="switch"><input type="checkbox" id="pf-active" checked><span class="slider"></span></label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeProductForm()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveProduct()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // L'adresse qui recevra chaque dossier d'affiliation.
-  const RECEIVER_EMAIL = "businessdelfa@gmail.com";
+/* ===================== SUPABASE ===================== */
+const SUPABASE_URL = "https://zbdhyumimrrepiahmscn.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpiZGh5dW1pbXJyZXBpYWhtc2NuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzNzQ3NDYsImV4cCI6MjA5OTk1MDc0Nn0.lPrtquv1d95CWGR7UT-izhe9FH_R1b7XYkJSGhEer9g";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let capturedLocation = null;
+/* ===================== DATA LAYER (Supabase) ===================== */
+function mapProduct(r){ return { id:r.id, name:r.name, desc:r.description||'', price:Number(r.price), promo:r.promo_price?Number(r.promo_price):null, cat:r.category||'', emoji:r.emoji||'🛍️', img:r.image_url||'', badge:r.badge||'', locations:r.locations||[], active:r.is_active!==false }; }
+function mapOrder(r){ return { id:r.id, token:r.token, client:r.client_name, phone:r.client_phone, items:r.items||[], total:Number(r.total), promo:r.promo_code, date:r.created_at, status:r.status, validated:!!r.validated }; }
+function mapAffiliate(r){ return { id:r.id, fullName:r.full_name, email:r.email, whatsapp:r.whatsapp_number, wave:r.wave_number, status:r.status, accessCode:r.access_code, promoCode:r.promo_code, discount:r.discount_percent, createdAt:r.created_at }; }
 
-  const radar = document.getElementById('radar');
-  const geoStatus = document.getElementById('geoStatus');
-  const geoCoords = document.getElementById('geoCoords');
-  const geoBtn = document.getElementById('geoBtn');
-  const geoErrorField = document.getElementById('geoError');
+const DB = {
+  async getProducts(){ const {data,error}=await sb.from('baraka_products').select('*').order('created_at',{ascending:false}); if(error){console.error(error);return [];} return data.map(mapProduct); },
+  async addProduct(p){ const {data,error}=await sb.from('baraka_products').insert({ name:p.name, description:p.desc, price:p.price, promo_price:p.promo, category:p.cat, emoji:p.emoji, image_url:p.img, badge:p.badge||null, locations:p.locations, is_active:p.active }).select().single(); if(error){console.error(error);return null;} return mapProduct(data); },
+  async updateProduct(id,p){ const {data,error}=await sb.from('baraka_products').update({ name:p.name, description:p.desc, price:p.price, promo_price:p.promo, category:p.cat, emoji:p.emoji, image_url:p.img, badge:p.badge||null, locations:p.locations, is_active:p.active }).eq('id',id).select().single(); if(error){console.error(error);return null;} return mapProduct(data); },
+  async deleteProduct(id){ const {error}=await sb.from('baraka_products').delete().eq('id',id); if(error) console.error(error); },
 
-  geoBtn.addEventListener('click', () => {
-    if (!navigator.geolocation) {
-      geoStatus.textContent = "Géolocalisation non supportée par ce navigateur.";
-      geoStatus.className = "geo-status error";
-      return;
-    }
-    radar.classList.remove('idle');
-    geoStatus.textContent = "Détection en cours...";
-    geoStatus.className = "geo-status";
-    geoBtn.disabled = true;
+  async getSettings(){ const {data,error}=await sb.from('baraka_settings').select('*').eq('id',1).single(); if(error||!data){ console.error(error); return { shopOpen:true, closedMessage:'', slogan:'', categories:'Tout', adminCode:'BARAKA2026', blackdaysActive:false, blackdaysLabel:'Black Days', blackdaysPercent:20, blackdaysEnd:'' }; }
+    return { shopOpen:data.shop_open, closedMessage:data.closed_message||'', slogan:data.slogan||'', categories:(data.categories||[]).join(','), adminCode:data.admin_access_code, blackdaysActive:data.blackdays_active, blackdaysLabel:data.blackdays_label||'Black Days', blackdaysPercent:data.blackdays_discount_percent||20, blackdaysEnd:data.blackdays_ends_at? data.blackdays_ends_at.slice(0,16) : '' };
+  },
+  async saveSettings(s){
+    const {error} = await sb.from('baraka_settings').update({
+      shop_open:s.shopOpen, closed_message:s.closedMessage, slogan:s.slogan,
+      categories:s.categories.split(',').map(c=>c.trim()).filter(Boolean),
+      admin_access_code:s.adminCode, blackdays_active:s.blackdaysActive, blackdays_label:s.blackdaysLabel,
+      blackdays_discount_percent:s.blackdaysPercent, blackdays_ends_at:s.blackdaysEnd||null
+    }).eq('id',1);
+    if(error) console.error(error);
+  },
 
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      capturedLocation = { lat: latitude, lng: longitude, ville: null };
-      geoCoords.style.display = "block";
-      geoCoords.textContent = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+  async getOrders(){ const {data,error}=await sb.from('baraka_orders').select('*').order('created_at',{ascending:false}); if(error){console.error(error);return [];} return data.map(mapOrder); },
+  async updateOrderStatus(id,status){ const {error}=await sb.from('baraka_orders').update({status}).eq('id',id); if(error) console.error(error); return { ok:!error, error }; },
+  async validateOrder(id){ const {error}=await sb.from('baraka_orders').update({validated:true}).eq('id',id); if(error) console.error(error); return { ok:!error, error }; },
 
-      try {
-        const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`);
-        const data = await res.json();
-        const lieu = [data.locality, data.city, data.principalSubdivision, data.countryName].filter(Boolean);
-        const label = lieu.length ? lieu.slice(0,3).join(', ') : "Position détectée";
-        capturedLocation.ville = label;
-        geoStatus.textContent = `Position détectée : ${label}`;
-      } catch (e) {
-        geoStatus.textContent = "Position GPS détectée.";
-      }
+  async getAffiliates(){ const {data,error}=await sb.from('baraka_affiliates').select('*').order('created_at',{ascending:false}); if(error){console.error(error);return [];} return data.map(mapAffiliate); },
+  async approveAffiliate(id, promoCode, discount){ const {error}=await sb.from('baraka_affiliates').update({ status:'approved', promo_code:promoCode, discount_percent:discount, validated_at:new Date().toISOString() }).eq('id',id); if(error) console.error(error); return { ok:!error, error }; },
+  async rejectAffiliate(id){ const {error}=await sb.from('baraka_affiliates').update({status:'rejected'}).eq('id',id); if(error) console.error(error); return { ok:!error, error }; }
+};
 
-      geoStatus.className = "geo-status found";
-      radar.classList.add('idle');
-      geoBtn.disabled = false;
-      geoBtn.textContent = "Mettre à jour ma position";
-      geoErrorField.style.display = "none";
-    }, (err) => {
-      radar.classList.add('idle');
-      geoBtn.disabled = false;
-      geoStatus.textContent = "Localisation refusée ou indisponible. Autorisez l'accès pour continuer.";
-      geoStatus.className = "geo-status error";
-    }, { enableHighAccuracy: true, timeout: 12000 });
-  });
+/* ===================== BARÈME DE COMMISSION À PALIERS ===================== */
+// Montant fixe reversé à l'affilié selon la tranche du total de la commande.
+// Ne s'applique qu'aux commandes VALIDÉES (paiement confirmé), jamais aux commandes en attente.
+function calculateCommission(total){
+  if(total >= 1000 && total <= 5000) return 50;
+  if(total > 5000 && total <= 15000) return 100;
+  if(total > 15000 && total <= 30000) return 200;
+  if(total > 30000) return 250;
+  return 0;
+}
 
-  const form = document.getElementById('form');
-  const formAlert = document.getElementById('formAlert');
+/* ===================== ÉTAT ===================== */
+let products = [], settings = {}, orders = [], affiliates = [];
+let editingLocations = [];
 
-  function setInvalid(fieldId, invalid) {
-    const el = document.getElementById(fieldId).closest('.field');
-    if (el) el.classList.toggle('invalid', invalid);
+/* ===================== LOGIN ===================== */
+async function doLogin(){
+  const btn = document.querySelector('.login-card .btn-primary');
+  if(btn){ btn.disabled=true; btn.textContent='Connexion...'; }
+  settings = await DB.getSettings();
+  const val = document.getElementById('login-code').value.trim();
+  if(val === settings.adminCode){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin').style.display='block';
+    sessionStorage.setItem('baraka_admin_logged','1');
+    initAdmin();
+  } else {
+    document.getElementById('login-err').style.display='block';
+    if(btn){ btn.disabled=false; btn.textContent='Se connecter'; }
   }
+}
+function doLogout(){
+  sessionStorage.removeItem('baraka_admin_logged');
+  location.reload();
+}
+if(sessionStorage.getItem('baraka_admin_logged')==='1'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('admin').style.display='block';
+  window.addEventListener('DOMContentLoaded', initAdmin);
+}
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formAlert.style.display = "none";
+/* ===================== INIT ===================== */
+async function initAdmin(){
+  [products, settings, orders, affiliates] = await Promise.all([
+    DB.getProducts(), DB.getSettings(), DB.getOrders(), DB.getAffiliates()
+  ]);
+  renderShopStatus();
+  renderStats();
+  renderProductsList();
+  renderOrders();
+  renderSettingsForm();
+  renderAffiliates();
+}
 
-    let valid = true;
-    const requiredText = ['nom','ville','whatsapp','momo'];
-    requiredText.forEach(id => {
-      const val = document.getElementById(id).value.trim();
-      const bad = !val;
-      setInvalid(id, bad);
-      if (bad) valid = false;
-    });
-    ['pays','operateur'].forEach(id => {
-      const bad = !document.getElementById(id).value;
-      setInvalid(id, bad);
-      if (bad) valid = false;
-    });
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+}
 
-    const canaux = Array.from(document.querySelectorAll('#canaux input:checked')).map(c => c.value);
-    document.getElementById('canauxError').style.display = canaux.length ? "none" : "block";
-    if (!canaux.length) valid = false;
+function renderShopStatus(){
+  const pill = document.getElementById('shop-status-pill');
+  pill.textContent = settings.shopOpen ? 'Boutique ouverte' : 'Boutique fermée';
+  pill.className = 'status-pill ' + (settings.shopOpen?'open':'closed');
+}
 
-    if (!capturedLocation) {
-      geoErrorField.style.display = "block";
-      valid = false;
-    }
+/* ===================== STATS ===================== */
+function renderStats(){
+  const validOrders = orders.filter(o=>o.validated);
+  const totalRevenue = validOrders.reduce((s,o)=>s+o.total,0);
+  const totalOrders = validOrders.length;
+  const pendingCount = orders.filter(o=>!o.validated).length;
+  const today = new Date().toISOString().slice(0,10);
+  const todayOrders = validOrders.filter(o=>o.date.startsWith(today)).length;
+  const avgBasket = totalOrders? Math.round(totalRevenue/totalOrders) : 0;
 
-    if (!document.getElementById('consent').checked) valid = false;
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card"><div class="label">Revenu validé</div><div class="value red">${fmt(totalRevenue)} F</div></div>
+    <div class="stat-card"><div class="label">Commandes validées</div><div class="value">${totalOrders}</div></div>
+    <div class="stat-card"><div class="label">En attente de validation</div><div class="value" style="color:var(--warn)">${pendingCount}</div></div>
+    <div class="stat-card"><div class="label">Panier moyen</div><div class="value">${fmt(avgBasket)} F</div></div>
+  `;
 
-    if (!valid) {
-      formAlert.style.display = "block";
-      formAlert.scrollIntoView({ behavior:'smooth', block:'center' });
-      return;
-    }
+  const salesByProduct = {};
+  validOrders.forEach(o=>o.items.forEach(i=>{ salesByProduct[i.name] = (salesByProduct[i.name]||0) + i.qty; }));
+  const top = Object.entries(salesByProduct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('top-products').innerHTML = top.length? top.map(([name,qty])=>`<div class="top-row"><span>${name}</span><span><b>${qty}</b> vendus</span></div>`).join('') : `<div class="empty-hint">Aucune vente validée pour l'instant</div>`;
 
-    const payload = {
-      nom: document.getElementById('nom').value.trim(),
-      pays: document.getElementById('pays').value,
-      ville: document.getElementById('ville').value.trim(),
-      quartier: document.getElementById('quartier').value.trim(),
-      whatsapp: document.getElementById('indicatif').value + " " + document.getElementById('whatsapp').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      canaux: canaux.join(', '),
-      audience: document.getElementById('audience').value,
-      lien_profil: document.getElementById('lien').value.trim(),
-      strategie: document.getElementById('strategie').value.trim(),
-      localisation_gps: `${capturedLocation.lat}, ${capturedLocation.lng}`,
-      localisation_lieu: capturedLocation.ville || "Non identifié",
-      operateur_momo: document.getElementById('operateur').value,
-      numero_momo: document.getElementById('momo').value.trim(),
-      date_inscription: new Date().toISOString(),
-      _subject: `Nouvelle inscription affilié BARAKA SHOP — ${document.getElementById('nom').value.trim()}`
-    };
+  const byPromo = {};
+  validOrders.filter(o=>o.promo).forEach(o=>{ byPromo[o.promo] = (byPromo[o.promo]||0) + o.total; });
+  const promoEntries = Object.entries(byPromo);
+  document.getElementById('promo-revenue').innerHTML = promoEntries.length? promoEntries.map(([code,rev])=>`<div class="top-row"><span>${code}</span><span><b>${fmt(rev)} F</b> générés</span></div>`).join('') : `<div class="empty-hint">Aucun code promo utilisé pour l'instant</div>`;
+}
 
-    // Sauvegarde locale (backup, cohérent avec l'écosystème BARAKA)
-    try {
-      const existing = JSON.parse(localStorage.getItem('baraka_affiliate_signups') || '[]');
-      existing.push(payload);
-      localStorage.setItem('baraka_affiliate_signups', JSON.stringify(existing));
-    } catch(e) {}
-
-    // Construction de l'email pré-rempli
-    const subject = `Nouvelle inscription affilié BARAKA SHOP — ${payload.nom}`;
-    const body =
-`NOUVELLE INSCRIPTION AFFILIÉ — BARAKA SHOP
-
-— IDENTITÉ —
-Nom complet : ${payload.nom}
-Pays : ${payload.pays}
-Ville / Commune : ${payload.ville}
-Quartier : ${payload.quartier || "-"}
-
-— CONTACT —
-WhatsApp : ${payload.whatsapp}
-Email : ${payload.email || "-"}
-
-— RÉSEAU DE PROMOTION —
-Canaux : ${payload.canaux}
-Audience estimée : ${payload.audience || "-"}
-Lien profil : ${payload.lien_profil || "-"}
-Stratégie : ${payload.strategie || "-"}
-
-— LOCALISATION —
-Lieu détecté : ${payload.localisation_lieu}
-Coordonnées GPS : ${payload.localisation_gps}
-Voir sur la carte : https://www.google.com/maps?q=${capturedLocation.lat},${capturedLocation.lng}
-
-— PAIEMENT —
-Opérateur Mobile Money : ${payload.operateur_momo}
-Numéro Mobile Money : ${payload.numero_momo}
-
-— DATE —
-${new Date(payload.date_inscription).toLocaleString('fr-FR')}`;
-
-    const mailtoUrl = `mailto:${RECEIVER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    form.style.display = "none";
-    document.getElementById('success').style.display = "block";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    document.getElementById('openMailBtn').href = mailtoUrl;
-
-    // Ouverture automatique de l'application mail
-    window.location.href = mailtoUrl;
+/* ===================== PRODUCTS ===================== */
+function renderProductsList(){
+  const q = (document.getElementById('prod-search').value||'').toLowerCase();
+  const list = products.filter(p=>p.name.toLowerCase().includes(q));
+  document.getElementById('prod-list').innerHTML = list.map(p=>`
+    <div class="prod-row ${p.active?'':'tag-inactive'}">
+      <div class="prod-thumb">${p.img?`<img src="${p.img}">`:p.emoji||'🛍️'}</div>
+      <div class="prod-meta">
+        <div class="n">${p.name} ${p.badge?`<span class="badge-inline">${p.badge}</span>`:''}</div>
+        <div class="m">${fmt(p.promo||p.price)} F ${p.promo?`· au lieu de ${fmt(p.price)} F`:''} · ${p.cat||'—'} · ${(p.locations||[]).join(', ')||'Aucun lieu défini'}</div>
+      </div>
+      <div class="prod-actions">
+        <button class="icon-sm" onclick="editProduct(${p.id})">✏️</button>
+        <button class="icon-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('') || `<div class="empty-hint">Aucun produit trouvé</div>`;
+}
+function openProductForm(){
+  document.getElementById('prod-form-title').textContent = 'Nouveau produit';
+  ['pf-id','pf-name','pf-desc','pf-price','pf-promo','pf-cat','pf-img','pf-emoji'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pf-badge').value='';
+  document.getElementById('pf-active').checked = true;
+  editingLocations = [];
+  renderLocationChips();
+  document.getElementById('prod-modal').classList.add('show');
+}
+function editProduct(id){
+  const p = products.find(x=>x.id===id);
+  document.getElementById('prod-form-title').textContent = 'Modifier le produit';
+  document.getElementById('pf-id').value = p.id;
+  document.getElementById('pf-name').value = p.name;
+  document.getElementById('pf-desc').value = p.desc||'';
+  document.getElementById('pf-price').value = p.price;
+  document.getElementById('pf-promo').value = p.promo||'';
+  document.getElementById('pf-cat').value = p.cat||'';
+  document.getElementById('pf-badge').value = p.badge||'';
+  document.getElementById('pf-img').value = p.img||'';
+  document.getElementById('pf-emoji').value = p.emoji||'';
+  document.getElementById('pf-active').checked = p.active!==false;
+  editingLocations = [...(p.locations||[])];
+  renderLocationChips();
+  document.getElementById('prod-modal').classList.add('show');
+}
+function closeProductForm(){ document.getElementById('prod-modal').classList.remove('show'); }
+function addLocationChip(){
+  const inp = document.getElementById('pf-location-input');
+  const val = inp.value.trim();
+  if(val && !editingLocations.includes(val)){ editingLocations.push(val); renderLocationChips(); }
+  inp.value='';
+}
+function renderLocationChips(){
+  const wrap = document.getElementById('pf-locations-wrap');
+  const input = document.getElementById('pf-location-input');
+  wrap.querySelectorAll('.chip').forEach(c=>c.remove());
+  editingLocations.forEach(loc=>{
+    const chip = document.createElement('div');
+    chip.className='chip';
+    chip.innerHTML = `${loc} <span onclick="removeLocationChip('${loc}')">✕</span>`;
+    wrap.insertBefore(chip, input);
   });
-</script>
+}
+function removeLocationChip(loc){ editingLocations = editingLocations.filter(l=>l!==loc); renderLocationChips(); }
+async function saveProduct(){
+  const name = document.getElementById('pf-name').value.trim();
+  if(!name){ alert('Le nom du produit est obligatoire'); return; }
+  const idVal = document.getElementById('pf-id').value;
+  const data = {
+    name,
+    desc: document.getElementById('pf-desc').value.trim(),
+    price: Number(document.getElementById('pf-price').value)||0,
+    promo: document.getElementById('pf-promo').value? Number(document.getElementById('pf-promo').value) : null,
+    cat: document.getElementById('pf-cat').value.trim(),
+    badge: document.getElementById('pf-badge').value,
+    img: document.getElementById('pf-img').value.trim(),
+    emoji: document.getElementById('pf-emoji').value.trim() || '🛍️',
+    locations: [...editingLocations],
+    active: document.getElementById('pf-active').checked
+  };
+  const saveBtn = document.querySelector('#prod-modal .btn-primary');
+  if(saveBtn){ saveBtn.disabled=true; saveBtn.textContent='Enregistrement...'; }
+  if(idVal){
+    const updated = await DB.updateProduct(Number(idVal), data);
+    if(updated){ const idx = products.findIndex(p=>p.id===Number(idVal)); products[idx]=updated; }
+  } else {
+    const created = await DB.addProduct(data);
+    if(created) products.unshift(created);
+  }
+  if(saveBtn){ saveBtn.disabled=false; saveBtn.textContent='Enregistrer'; }
+  renderProductsList();
+  closeProductForm();
+}
+async function deleteProduct(id){
+  if(!confirm('Supprimer ce produit ?')) return;
+  await DB.deleteProduct(id);
+  products = products.filter(p=>p.id!==id);
+  renderProductsList();
+}
 
+/* ===================== ORDERS (avec repérage anti-fraude simple) ===================== */
+function renderOrders(){
+  // Alerte simple : même téléphone utilisant le même code promo plusieurs fois
+  const counts = {};
+  orders.forEach(o=>{ if(o.promo){ const key=o.phone+'|'+o.promo; counts[key]=(counts[key]||0)+1; } });
+  const flagged = new Set(Object.keys(counts).filter(k=>counts[k]>=2));
+
+  const alerts = Object.keys(counts).filter(k=>counts[k]>=2);
+  document.getElementById('fraud-alerts').innerHTML = alerts.length? `
+    <div class="card" style="border:1.5px solid var(--warn)">
+      <h3>⚠️ Vérifications suggérées</h3>
+      ${alerts.map(k=>{ const [phone,code]=k.split('|'); return `<div class="top-row"><span>${phone} a utilisé le code <b>${code}</b> ${counts[k]} fois</span></div>`; }).join('')}
+    </div>` : '';
+
+  document.getElementById('orders-list').innerHTML = orders.slice().reverse().map(o=>{
+    const key = o.phone+'|'+o.promo;
+    const isFlagged = o.promo && flagged.has(key);
+    const commission = o.promo? calculateCommission(o.total) : 0;
+    return `
+    <div class="order-card">
+      <div class="order-head">
+        <div>
+          <div class="order-client">${o.client} ${isFlagged?'<span class="flag-tag">À vérifier</span>':''} ${o.validated?'<span class="promo-tag" style="background:rgba(46,158,91,.12);color:var(--success)">✓ Validée</span>':'<span class="flag-tag" style="background:var(--gray)">En attente de validation</span>'}</div>
+          <div class="order-date">${o.phone} · ${new Date(o.date).toLocaleString('fr-FR')}</div>
+        </div>
+        <div class="order-total">${fmt(o.total)} F</div>
+      </div>
+      <div class="order-items">${o.items.map(i=>`${i.qty}× ${i.name}`).join(' · ')}</div>
+      <div class="order-foot">
+        ${o.promo?`<span class="promo-tag">Code: ${o.promo} · commission ${fmt(commission)} F</span>`:'<span></span>'}
+        <select class="status-select" onchange="updateOrderStatus(${o.id}, this.value)">
+          <option value="nouvelle" ${o.status==='nouvelle'?'selected':''}>Nouvelle</option>
+          <option value="en_livraison" ${o.status==='en_livraison'?'selected':''}>En livraison</option>
+          <option value="livree" ${o.status==='livree'?'selected':''}>Livrée</option>
+          <option value="annulee" ${o.status==='annulee'?'selected':''}>Annulée</option>
+        </select>
+      </div>
+      ${!o.validated? `<button class="btn btn-primary btn-sm" style="width:100%;margin-top:10px" onclick="validateOrder(${o.id})">✓ Confirmer le paiement reçu &amp; valider</button>` : `<div class="field-hint" style="margin-top:8px">Lien de validation : ...?id=${o.id}&token=${o.token}</div>`}
+    </div>`;
+  }).join('') || `<div class="empty-hint">Aucune commande</div>`;
+}
+async function validateOrder(id){
+  const o = orders.find(x=>x.id===id);
+  if(!confirm(`Confirmer que le paiement de ${o.client} (${fmt(o.total)} F) a bien été reçu ?\n\nCette action valide la commande et déclenche la commission de l'affilié si un code promo a été utilisé.`)) return;
+  const res = await DB.validateOrder(id);
+  if(!res.ok){ alert("Échec de la validation : " + (res.error?.message || 'erreur inconnue') + "\n\nRéessayez, ou vérifie les policies Supabase."); return; }
+  o.validated = true;
+  renderOrders();
+  renderStats();
+  renderAffiliates();
+}
+async function updateOrderStatus(id, status){
+  const o = orders.find(x=>x.id===id);
+  const previous = o.status;
+  o.status = status;
+  const res = await DB.updateOrderStatus(id, status);
+  if(!res.ok){ o.status = previous; renderOrders(); alert("Échec de la mise à jour du statut : " + (res.error?.message || 'erreur inconnue')); }
+}
+
+/* ===================== SETTINGS / BLACKDAYS ===================== */
+function renderSettingsForm(){
+  document.getElementById('shop-open-toggle').checked = settings.shopOpen;
+  document.getElementById('closed-message').value = settings.closedMessage;
+  document.getElementById('bd-active').checked = settings.blackdaysActive;
+  document.getElementById('bd-label').value = settings.blackdaysLabel;
+  document.getElementById('bd-percent').value = settings.blackdaysPercent;
+  document.getElementById('bd-end').value = settings.blackdaysEnd;
+  document.getElementById('set-slogan').value = settings.slogan;
+  document.getElementById('set-categories').value = settings.categories;
+  document.getElementById('set-admin-code').value = settings.adminCode;
+}
+async function updateShopOpen(){
+  settings.shopOpen = document.getElementById('shop-open-toggle').checked;
+  await DB.saveSettings(settings);
+  renderShopStatus();
+}
+let saveSettingsTimer = null;
+function autoSaveSettings(){
+  settings.closedMessage = document.getElementById('closed-message').value;
+  settings.blackdaysActive = document.getElementById('bd-active').checked;
+  settings.blackdaysLabel = document.getElementById('bd-label').value;
+  settings.blackdaysPercent = Number(document.getElementById('bd-percent').value)||0;
+  settings.blackdaysEnd = document.getElementById('bd-end').value;
+  settings.slogan = document.getElementById('set-slogan').value;
+  settings.categories = document.getElementById('set-categories').value;
+  settings.adminCode = document.getElementById('set-admin-code').value;
+  clearTimeout(saveSettingsTimer);
+  saveSettingsTimer = setTimeout(()=>DB.saveSettings(settings), 500);
+}
+
+/* ===================== AFFILIATION ===================== */
+function affiliateRevenueAndCommission(promoCode){
+  const validOrders = orders.filter(o=>o.promo===promoCode && o.validated);
+  const revenue = validOrders.reduce((s,o)=>s+o.total,0);
+  const commission = validOrders.reduce((s,o)=>s+calculateCommission(o.total),0);
+  return { revenue, commission, count: validOrders.length };
+}
+function renderAffiliates(){
+  const pending = affiliates.filter(a=>a.status==='pending').length;
+  const approved = affiliates.filter(a=>a.status==='approved');
+  const totalCommission = approved.reduce((sum,a)=> sum + affiliateRevenueAndCommission(a.promoCode).commission, 0);
+
+  document.getElementById('aff-summary').innerHTML = `
+    <div class="stat-card"><div class="label">En attente</div><div class="value" style="color:var(--warn)">${pending}</div></div>
+    <div class="stat-card"><div class="label">Affiliés actifs</div><div class="value green">${approved.length}</div></div>
+    <div class="stat-card"><div class="label">Commissions à payer (fin de mois)</div><div class="value red">${fmt(totalCommission)} F</div></div>
+  `;
+
+  document.getElementById('aff-list').innerHTML = affiliates.slice().reverse().map(a=>{
+    const { revenue, commission, count } = a.promoCode? affiliateRevenueAndCommission(a.promoCode) : {revenue:0,commission:0,count:0};
+    return `
+    <div class="aff-card">
+      <div class="aff-head">
+        <div class="aff-name">${a.fullName}</div>
+        <div class="status-badge ${a.status}">${a.status==='pending'?'En attente':a.status==='approved'?'Validé':'Refusé'}</div>
+      </div>
+      <div class="aff-detail">📧 ${a.email}</div>
+      <div class="aff-detail">📱 WhatsApp: ${a.whatsapp}</div>
+      <div class="aff-detail">💳 Wave: ${a.wave}</div>
+      <div class="aff-detail">🔑 Code d'accès: <b>${a.accessCode}</b></div>
+      ${a.status==='approved'?`<div class="aff-detail">🏷️ Code promo attribué: <b>${a.promoCode}</b> (−${a.discount}% pour le client)</div><div class="aff-detail">💰 ${count} vente(s) validée(s) · Revenu: ${fmt(revenue)} F · Commission (barème à paliers): <b>${fmt(commission)} F</b></div>`:''}
+      <div class="aff-actions">
+        ${a.status==='pending'?`
+          <button class="btn btn-primary btn-sm" onclick="approveAffiliate(${a.id})">Valider &amp; générer le code promo</button>
+          <button class="btn btn-ghost btn-sm" onclick="rejectAffiliate(${a.id})">Refuser</button>
+        `:''}
+      </div>
+    </div>`;
+  }).join('') || `<div class="empty-hint">Aucune demande d'affiliation</div>`;
+}
+async function approveAffiliate(id){
+  const a = affiliates.find(x=>x.id===id);
+  const suggested = a.fullName.split(' ')[0].toUpperCase().slice(0,6) + Math.floor(Math.random()*90+10);
+  const code = prompt("Code promo à attribuer à "+a.fullName+" :", suggested);
+  if(!code) return;
+  const discount = Number(prompt("Réduction accordée au client (%)", "10")) || 10;
+  const res = await DB.approveAffiliate(id, code.toUpperCase(), discount);
+  if(!res.ok){ alert("Échec de la validation : " + (res.error?.message || 'erreur inconnue') + "\n\nLe code promo est peut-être déjà utilisé par un autre affilié — réessaie avec un code différent."); return; }
+  a.status='approved'; a.promoCode=code.toUpperCase(); a.discount=discount;
+  // La commission n'est plus un %, elle suit désormais le barème à paliers (calculateCommission)
+  renderAffiliates();
+}
+async function rejectAffiliate(id){
+  if(!confirm('Refuser cette demande ?')) return;
+  const a = affiliates.find(x=>x.id===id);
+  const res = await DB.rejectAffiliate(id);
+  if(!res.ok){ alert("Échec : " + (res.error?.message || 'erreur inconnue')); return; }
+  a.status='rejected';
+  renderAffiliates();
+}
+
+function fmt(n){ return (n||0).toLocaleString('fr-FR'); }
+</script>
 </body>
 </html>
